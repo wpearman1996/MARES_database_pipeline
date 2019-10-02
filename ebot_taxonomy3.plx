@@ -1,6 +1,6 @@
 #!/opt/perl-5.8.8/bin/perl
-
-#This script was edited by Teresita M. Porter for the publication Porter and Hajibabaei, 2018 biorXiv doi: https://doi.org/10.1101/353904 
+#This script was modified from the modified script from Teresita M. Porter from the publication
+#Porter and Hajibabaei, 2018 biorXiv doi: https://doi.org/10.1101/353904 
 #Note that your email address needs to be added to line 85 below before running
 #The purpose of this script is to retrieve all the taxonomy ids for Eukaryote species in the NCBI taxonomy database
 
