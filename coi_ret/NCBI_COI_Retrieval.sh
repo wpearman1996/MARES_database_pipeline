@@ -1,6 +1,5 @@
 ## it might be wise to make a new conda environment for this to install all the dependenies into to avoid any issues - especially if you're
 ## a bioinformatics guru
-
 ##### Much of this process is based on https://github.com/terrimporter/COI_NCBI_2018 to download COI sequences from NCBI
 ##### additionally many of the scripts have been modified or copied from the above repository.
 ##### First step is we decide on what taxonomy we wish to work with
