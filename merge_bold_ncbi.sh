@@ -8,6 +8,7 @@ taxon="Marine_Euk"
 ###################################################################################################################################################################
 
 	#2.1. Write COI-5P (standard barcoding region) sequences into a new file: 
+cat *bold.fasta > tmp/${taxon}_BOLD.fasta
 
 awk '/^>/ { ok=index($0,"COI-5P")!=0;} {if(ok) print;}'  tmp/${taxon}_BOLD.fasta > tmp/${taxon}_BOLD_COI.fasta
 
