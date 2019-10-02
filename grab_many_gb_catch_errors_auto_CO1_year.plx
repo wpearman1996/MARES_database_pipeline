@@ -1,5 +1,6 @@
 #!/usr/bin/perl
-#Teresita M. Porter 2018
+#This script was modified from the modified script from Teresita M. Porter from the publication
+#Porter and Hajibabaei, 2018 biorXiv doi: https://doi.org/10.1101/353904 
 #Script to grab COI records from NCBI nucleotide database using 4 COI search terms, for all Eukaryota, for one year at a time, with and without the BARCODE keyword
 #edit the search term below for one year or many years ex. 2017 or 2003:2017[PDAT]
 #edit whether you want to match the BARCODE in the keyword field ex. BARCODE[KYWD]
