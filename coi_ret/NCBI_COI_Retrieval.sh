@@ -9,10 +9,10 @@ sed 's/$/[ORGN]+AND+species[RANK]/' taxa.list > taxa.list_ebot
 #change directory into a new folder - since we're about to fill it up with as many files as there are taxa
 #!/bin/bash
 while IFS= read -r line; do
-  perl ../COI_NCBI_2018/Scripts/ebot_taxonomy3.plx "$line" "$line"
-done < ../taxa.list_ebot
+  perl ./coi_ret/ebot_taxonomy3.plx "$line" "$line"
+done < ./taxa.list_ebot
 
-cat * > ../taxonomy.taxid
+cat * > ./taxonomy.taxid
 
 ### Now we convert these to genus_species, this requires the modification of the script to include the location of the 
 ### nodes.dmp and names.dmp from ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
@@ -21,11 +21,11 @@ perl taxonomy_crawl_for_genus_species_list.plx taxonomy.taxid
 
 mkdir taxids
 cd taxids
-split -l 100 ../Genus_species.txt
+split -l 100 ./Genus_species.txt
 
 ### Now what we're doing is reformatting the list so that it works for NCBI Entrez and then doing
 ### some directory admin
-ls | grep '^x' | parallel -j 23 "perl ../COI_NCBI_2018/Scripts/reformat_list_for_entrez_taxonomy.plx {}"
+ls | grep '^x' | parallel -j 23 "perl ./coi_ret/reformat_list_for_entrez_taxonomy.plx {}"
 mkdir reformatted_taxids
 mv *.txt reformatted_taxids/.
 mv reformatted_taxids/Genus_species.txt .
@@ -35,7 +35,7 @@ cd reformatted_taxids
 
 #### Here we download all relevant genbank files
 
-ls | grep .txt | parallel -j 1 "perl /home/william/vanessawork/database_paper_work_30Sept/COI_NCBI_2018/Scripts/grab_many_gb_catch_errors_auto_CO1_year.plx {}"
+ls | grep .txt | parallel -j 1 "perl ../coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx {}"
 
 #### Now we'll cat them together and convert to fasta using the script from: https://rocaplab.ocean.washington.edu/tools/genbank_to_fasta/
 
