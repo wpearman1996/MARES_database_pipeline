@@ -83,13 +83,13 @@ my $base = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 #*************************************************************
 #** SCRIPT MAIN BODY *****************************************
 
-$params{email} = ""; ### Put your email address here ###
+$params{email} = "wpearman1996@gmail.com"; ### Put your email address here ###
 $params{db} = "taxonomy";
 $params{tool} = "ebot";
-$params{term} = "Eukaryota[ORGN]+AND+species[RANK]";
+$params{term} = $ARGV[0];
 %params = esearch(%params);
 
-$params{outfile} = "taxonomy.taxid";
+$params{outfile} = "taxonomy.taxid".$ARGV[1];
 @uids = get_uids(%params);
 open(OUTFILE, ">$params{outfile}");
 foreach (@uids) { print OUTFILE "$_\n"; }

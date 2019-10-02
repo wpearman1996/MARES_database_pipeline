@@ -25,10 +25,10 @@ open (IN, "<", $ARGV[0]) || die "Error cannot open infile: $!\n";
 $taxonlist = $in[0];
 chomp $taxonlist;
 
-$term = "(\"CO1\"[GENE] OR \"COI\"[GENE] OR \"COX1\"[GENE] OR \"COXI\"[GENE]) AND \"Eukaryota\"[ORGN] AND 2017[PDAT] AND \"BARCODE\"[KYWD]) AND (".$taxonlist.")";
+$term = "(\"CO1\"[GENE] OR \"COI\"[GENE] OR \"COX1\"[GENE] OR \"COXI\"[GENE]) AND 2003:2019[PDAT] AND \"BARCODE\"[KYWD]) AND (".$taxonlist.")";
 
 $factory = Bio::DB::EUtilities -> new (-eutil => 'esearch',
-										-email => '', ### Add your email here
+										-email => 'wpearman1996@gmail.com', ### Add your email here
 										-db => 'nucleotide',
 										-term => $term,
 										-usehistory => 'y');
@@ -45,7 +45,7 @@ $factory -> set_parameters (-eutil => 'efetch',
 							-history => $hist);
 
 $retry = 0;
-my ($retmax, $retstart) = (500,0);
+my ($retmax, $retstart) = (1000,0);
 
 $filename = $ARGV[0];
 $filename =~ s/\.txt//;
