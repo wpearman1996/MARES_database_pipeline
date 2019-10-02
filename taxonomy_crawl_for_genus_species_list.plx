@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+#This script was modified from the modified script from Teresita M. Porter from the publication
+#Porter and Hajibabaei, 2018 biorXiv doi: https://doi.org/10.1101/353904 
 #Be sure to update the hard coded path to names.dmp on line 29; path to nodes.dmp on line 30
 #names.dmp and nodes.dmp comes from ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz and these files should be kept current
 #Script to use a list of taxonids to grab the name at each rank for lineage
