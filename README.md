@@ -1,6 +1,6 @@
 # custom_metabarcoding_databases
 
-# step 1: NCBI COI Retrieval
+## step 1: NCBI COI Retrieval
 
 First it is necessary to make a taxa.list file - this file contains a list of taxa that you're interested in. You can use different lists
 for BOLD or NCBI, or the same for both. You will need to modify a few scripts to make this work for you. 
