@@ -18,15 +18,15 @@ cat * > ./taxonomy.taxid
 ### Now we convert these to genus_species, this requires the modification of the script to include the location of the 
 ### nodes.dmp and names.dmp from ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
 
-perl taxonomy_crawl_for_genus_species_list.plx taxonomy.taxid
+perl ./coi_ret/taxonomy_crawl_for_genus_species_list.plx taxonomy.taxid
 
 mkdir taxids
 cd taxids
-split -l 100 ./Genus_species.txt
+split -l 100 ../Genus_species.txt
 
 ### Now what we're doing is reformatting the list so that it works for NCBI Entrez and then doing
 ### some directory admin
-ls | grep '^x' | parallel -j 23 "perl ./coi_ret/reformat_list_for_entrez_taxonomy.plx {}"
+ls | grep '^x' | parallel -j 23 "perl ../coi_ret/reformat_list_for_entrez_taxonomy.plx {}"
 mkdir reformatted_taxids
 mv *.txt reformatted_taxids/.
 mv reformatted_taxids/Genus_species.txt .
@@ -43,12 +43,10 @@ ls | grep .txt | parallel -j 1 "perl ../coi_ret/grab_many_gb_catch_errors_auto_C
 for FILE in *gb
 do
 echo $FILE 
-python2 genbank_to_fasta.py -i $FILE -o ${FILE/gb/fasta} -s whole -d 'pipe' -a 'accessions,organism'
+python2 ../../genbank_to_fasta.py -i $FILE -o ${FILE/gb/fasta} -s whole -d 'pipe' -a 'accessions,organism'
 gzip $FILE
 done
 
-cat *.fasta > ../genbank_coi.fasta
-cd ..
-cp ./genbank_coi.fasta ../
+cat *.fasta > ../../genbank_coi.fasta
 cd ..
 awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < genbank_coi.fasta > genbank_coi_sl.fasta
