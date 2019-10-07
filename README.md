@@ -35,3 +35,5 @@ This step identifies any synonyms and updates them so that all species within th
 
 Then we generate two lists of sequence names - the first is the original sequence names, for sequences that have taxids. The second is the new set of names for the sequences, that now are in a standardized format, with taxid included in the seq name.
 We use these lists to rename and generate a new fasta called `Marine_Euk_BOLD_NCBI_sl_reformatted.fasta` which is now our completed database.
+
+To do this step use the `taxid_addition.r` script. You will need to edit this script to modify directories etc, as well as to ensure the appropriate packages are installed. 
