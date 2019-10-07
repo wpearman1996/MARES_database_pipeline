@@ -26,3 +26,9 @@ For this part you will want to run the R script `retrieve_bold.r`. You may need 
 Specifically if you are trying to obtain sequences for a large taxonomic group, then this file may be very large or even timeout when connecting to BOLD. In this case it may be wise to replace your taxlist without this group, and instead list each subtaxa so that each subtaxa is retrieved separately to avoid timing out. 
 
 ## step 3: merger
+
+
+# step 4: process for taxids
+Because many tools using lowest common ancestor approaches for taxonomic classifications, these tools often rely on the NCBI taxonomy. However, many species don't have taxids, or have been uploaded with synonyms as names - this makes it problematic to get reliable taxonomic classifications.
+
+This step identifies any synonyms and updates them so that all species within the database have the same name, and identifies the approach taxids. If a taxa does not have a taxid, we them take the first word, generally the genus, and checks this for taxids - and then updates the classification to be at the genus level rather than species. Finally if the taxa still has no taxid, it is completely dropped from the database.  
