@@ -32,6 +32,8 @@ This part is largely taken and modified from `Macher J, Macher T, Leese F (2017)
 This process takens the BOLD file and ensures it is for the COI-5P region. Then it processes the names to enable dereplication sequences and merges them into a single file. At this point the files are dereplicated to remove duplicated sequences. Now the headers are changed to an appropriate format, and then we convert them to single line fastas.
 
 ## step 4: process for taxids
+The first step is to export a list of sequence names from the merged database
+
 Because many tools using lowest common ancestor approaches for taxonomic classifications, these tools often rely on the NCBI taxonomy. However, many species don't have taxids, or have been uploaded with synonyms as names - this makes it problematic to get reliable taxonomic classifications.
 
 This step identifies any synonyms and updates them so that all species within the database have the same name, and identifies the approach taxids. If a taxa does not have a taxid, we them take the first word, generally the genus, and checks this for taxids - and then updates the classification to be at the genus level rather than species. Finally if the taxa still has no taxid, it is completely dropped from the database.  
