@@ -1,4 +1,5 @@
-setwd("C://Users/wpear/Dropbox/vanessa_data/database_newgen_october_7_19/")
+setwd("./4_database/Marine_Euk/taxid_process") #This will need to updated so that "Marine_Euk" represents your taxon from
+## line 5 step3_merge_bold_ncbi.sh
 me_wo_names<-read.delim("./seqnames_marine_euk_nobarcode.txt",sep=" ",stringsAsFactors=FALSE,head=F)
 library(stringr)
 convert2name<-function(seqnames){
