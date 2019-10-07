@@ -51,3 +51,7 @@ To do this step use the `taxid_addition.r` script. You will need to edit this sc
 `taxize`
 `dplyr`
 `bold`
+
+## Other dependencies
+`vsearch`
+`cpan-m`
