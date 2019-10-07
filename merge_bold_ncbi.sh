@@ -1,3 +1,4 @@
+#!/bin/bash
 ### A large part of this script has copied and modified from https://doi.org/10.3897/mbmg.1.22262
 ### Modifications include removal of non-ascii characters to allow error free dereplication, and modification of sed scripts on line 14 and 16
 ## First specify the taxa of interest here - your bold and ncbi files must be names like ${taxon}_BOLD.fasta or  ${taxon}_NCBI.fasta
