@@ -40,3 +40,11 @@ Then we generate two lists of sequence names - the first is the original sequenc
 We use these lists to rename and generate a new fasta called `Marine_Euk_BOLD_NCBI_sl_reformatted.fasta` which is now our completed database.
 
 To do this step use the `taxid_addition.r` script. You will need to edit this script to modify directories etc, as well as to ensure the appropriate packages are installed. 
+
+# Dependency List
+## R packages
+`stringr`
+`rvest`
+`httr`
+`taxize`
+`dplyr`
