@@ -35,3 +35,5 @@ vsearch -derep_fulllength tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta -
 	#6. Now change the headers so that Megan can read them later
 mkdir 4_database/${taxon}
 LC_CTYPE=C && LANG=C tr '|' ' ' < tmp/${taxon}_BOLD_NCBI_derep.fasta > 4_database/${taxon}/${taxon}_BOLD_NCBI_final.fasta
+
+awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < 4_database/${taxon}/${taxon}_BOLD_NCBI_final.fasta > 4_database/${taxon}/${taxon}_BOLD_NCBI_final_sl.fasta
