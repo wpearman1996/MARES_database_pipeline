@@ -33,4 +33,5 @@ Because many tools using lowest common ancestor approaches for taxonomic classif
 
 This step identifies any synonyms and updates them so that all species within the database have the same name, and identifies the approach taxids. If a taxa does not have a taxid, we them take the first word, generally the genus, and checks this for taxids - and then updates the classification to be at the genus level rather than species. Finally if the taxa still has no taxid, it is completely dropped from the database.  
 
-Then we generate two lists of sequence nanmes - the first is the original sequence names, for sequences that have taxids. The second is the new set of names for the sequences, that now are in a standardized format, with taxid included in the seq name.
+Then we generate two lists of sequence names - the first is the original sequence names, for sequences that have taxids. The second is the new set of names for the sequences, that now are in a standardized format, with taxid included in the seq name.
+We use these lists to rename and generate a new fasta called `Marine_Euk_BOLD_NCBI_sl_reformatted.fasta` which is now our completed database.
