@@ -32,3 +32,5 @@ Specifically if you are trying to obtain sequences for a large taxonomic group, 
 Because many tools using lowest common ancestor approaches for taxonomic classifications, these tools often rely on the NCBI taxonomy. However, many species don't have taxids, or have been uploaded with synonyms as names - this makes it problematic to get reliable taxonomic classifications.
 
 This step identifies any synonyms and updates them so that all species within the database have the same name, and identifies the approach taxids. If a taxa does not have a taxid, we them take the first word, generally the genus, and checks this for taxids - and then updates the classification to be at the genus level rather than species. Finally if the taxa still has no taxid, it is completely dropped from the database.  
+
+Then we generate two lists of sequence nanmes - the first is the original sequence names, for sequences that have taxids. The second is the new set of names for the sequences, that now are in a standardized format, with taxid included in the seq name.
