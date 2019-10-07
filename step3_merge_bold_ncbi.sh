@@ -38,4 +38,4 @@ mkdir 4_database/${taxon}
 LC_CTYPE=C && LANG=C tr '|' ' ' < tmp/${taxon}_BOLD_NCBI_derep.fasta > 4_database/${taxon}/${taxon}_BOLD_NCBI_final.fasta
 
 awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < 4_database/${taxon}/${taxon}_BOLD_NCBI_final.fasta > 4_database/${taxon}/${taxon}_BOLD_NCBI_final_sl.fasta
-grep -e ">" ${taxon}_BOLD_NCBI_final_sl.fasta > seqnames_marine_euk_nobarcode.txt
+grep -e ">" ${taxon}_BOLD_NCBI_final_sl.fasta > seqnames_${taxon}_nobarcode.txt
