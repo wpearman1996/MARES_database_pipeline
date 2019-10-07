@@ -48,3 +48,4 @@ To do this step use the `taxid_addition.r` script. You will need to edit this sc
 `httr`
 `taxize`
 `dplyr`
+`bold`
