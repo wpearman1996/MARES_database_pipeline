@@ -36,8 +36,8 @@ cd reformatted_taxids
 
 #### Here we download all relevant genbank files
 
-ls | grep .txt | parallel -j 1 "perl ../coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx {}"
-
+ls | grep .txt | parallel -j 1 "perl ../../coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx {}"
+gunzip *_seqs.gb.gz 
 #### Now we'll cat them together and convert to fasta using the script from: https://rocaplab.ocean.washington.edu/tools/genbank_to_fasta/
 
 for FILE in *gb
