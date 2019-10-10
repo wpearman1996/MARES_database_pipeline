@@ -8,6 +8,8 @@ taxon="Marine_Euk"
 ######################################################     BOLD_NCBI_MERGER 0.1     #####################################################################
 ###################################################################################################################################################################
 
+mkdir tmp
+cd ./tmp
 	#2.1. Write COI-5P (standard barcoding region) sequences into a new file: 
 cat *bold.fasta > tmp/${taxon}_BOLD.fasta
 
@@ -16,7 +18,7 @@ awk '/^>/ { ok=index($0,"COI-5P")!=0;} {if(ok) print;}'  tmp/${taxon}_BOLD.fasta
 	#3. Change BOLD & NCBI files so that usearch can dereplicate them without cutting the header:
 
 LC_CTYPE=C && LANG=C cat tmp/${taxon}_BOLD_COI.fasta | sed 's/ /|/g' | sed 's/\t/|/g' > tmp/${taxon}_BOLD_COI_usearch.fasta
-
+mv ../genbank_coi_sl.fasta ./${taxon}_NCBI.fasta
 LC_CTYPE=C && LANG=C cat tmp/${taxon}_NCBI.fasta | sed 's/ /|/g' | sed 's/\t/|/g' > tmp/${taxon}_NCBI_usearch.fasta
 
 	#4. concatenate BOLD and NCBI files
@@ -34,10 +36,11 @@ vsearch -derep_fulllength tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta -
 
 
 	#6. Now change the headers so that Megan can read them later
-mkdir 4_database/${taxon}
-LC_CTYPE=C && LANG=C tr '|' ' ' < tmp/${taxon}_BOLD_NCBI_derep.fasta > 4_database/${taxon}/${taxon}_BOLD_NCBI_final.fasta
+mkdir ../4_database_${taxon}
+LC_CTYPE=C && LANG=C tr '|' ' ' < ./${taxon}_BOLD_NCBI_derep.fasta > ../4_database_${taxon}/${taxon}_BOLD_NCBI_final.fasta
+cd ..
 mkdir taxid_process
-awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < 4_database/${taxon}/${taxon}_BOLD_NCBI_final.fasta > 4_database/${taxon}/taxid_process/${taxon}_BOLD_NCBI_final_sl.fasta
+awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < ./4_database_${taxon}/${taxon}_BOLD_NCBI_final.fasta > ./taxid_process/${taxon}_BOLD_NCBI_final_sl.fasta
 cd ./taxid_process
 grep -e ">" ${taxon}_BOLD_NCBI_final_sl.fasta > seqnames_${taxon}_nobarcode.txt
 
