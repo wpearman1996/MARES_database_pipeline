@@ -9,16 +9,15 @@ taxon="Marine_Euk"
 ###################################################################################################################################################################
 
 mkdir tmp
-cd ./tmp
 	#2.1. Write COI-5P (standard barcoding region) sequences into a new file: 
-cat *bold.fasta > tmp/${taxon}_BOLD.fasta
+cat ./taxaBOLD/*bold.fasta > tmp/${taxon}_BOLD.fasta
 
 awk '/^>/ { ok=index($0,"COI-5P")!=0;} {if(ok) print;}'  tmp/${taxon}_BOLD.fasta > tmp/${taxon}_BOLD_COI.fasta
 
 	#3. Change BOLD & NCBI files so that usearch can dereplicate them without cutting the header:
 
 LC_CTYPE=C && LANG=C cat tmp/${taxon}_BOLD_COI.fasta | sed 's/ /|/g' | sed 's/\t/|/g' > tmp/${taxon}_BOLD_COI_usearch.fasta
-mv ../genbank_coi_sl.fasta ./${taxon}_NCBI.fasta
+mv genbank_coi_sl.fasta ./tmp/${taxon}_NCBI.fasta
 LC_CTYPE=C && LANG=C cat tmp/${taxon}_NCBI.fasta | sed 's/ /|/g' | sed 's/\t/|/g' > tmp/${taxon}_NCBI_usearch.fasta
 
 	#4. concatenate BOLD and NCBI files
