@@ -50,6 +50,8 @@ taxlist2<-c("Cephalorhyncha","Rhombozoa","Orthonectida","Chlorarachniophyta","Co
            "Scombriformes","Scombrolabraciformes","Scorpaeniformes","Siluriformes","Spariformes","Stomiiformes",
            "Stylephoriformes","Synbranchiformes","Syngnathiformes","Tetraodontiformes","Trachichthyiformes",
            "Trachiniformes","Zeiformes")
+dir.create("./taxaBOLD")
+setwd("./taxaBOLD")
 library(bold)
 for (i in 1:length(taxlist2)) {
   tryCatch({
