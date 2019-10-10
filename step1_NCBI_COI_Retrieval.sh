@@ -8,9 +8,10 @@
 ##### This is done by using the following scripts (modified from terrimporter/COI_NCBI_2018)
 sed 's/$/[ORGN]+AND+species[RANK]/' taxa.list > taxa.list_ebot 
 #change directory into a new folder - since we're about to fill it up with as many files as there are taxa
-#!/bin/bash
+mkdir taxaNCBI
+cd ./taxaNCBI
 while IFS= read -r line; do
-  perl ./coi_ret/ebot_taxonomy3.plx "$line" "$line"
+  perl ../coi_ret/ebot_taxonomy3.plx "$line" "$line"
 done < ./taxa.list_ebot
 
 cat * > ./taxonomy.taxid
@@ -18,10 +19,10 @@ cat * > ./taxonomy.taxid
 ### Now we convert these to genus_species, this requires the modification of the script to include the location of the 
 ### nodes.dmp and names.dmp from ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
 
-perl ./coi_ret/taxonomy_crawl_for_genus_species_list.plx taxonomy.taxid
+perl ../coi_ret/taxonomy_crawl_for_genus_species_list.plx taxonomy.taxid
 
-mkdir taxids
-cd taxids
+mkdir ../taxids
+cd ../taxids
 split -l 100 ../Genus_species.txt
 
 ### Now what we're doing is reformatting the list so that it works for NCBI Entrez and then doing
