@@ -35,11 +35,12 @@ vsearch -derep_fulllength tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta -
 
 
 	#6. Now change the headers so that Megan can read them later
-mkdir ../4_database_${taxon}
-LC_CTYPE=C && LANG=C tr '|' ' ' < ./${taxon}_BOLD_NCBI_derep.fasta > ../4_database_${taxon}/${taxon}_BOLD_NCBI_final.fasta
+mkdir database_${taxon}
+cd ./database_${taxon}
+LC_CTYPE=C && LANG=C tr '|' ' ' < ../tmp/${taxon}_BOLD_NCBI_derep.fasta > ./${taxon}_BOLD_NCBI_final.fasta
 cd ..
 mkdir taxid_process
-awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < ./4_database_${taxon}/${taxon}_BOLD_NCBI_final.fasta > ./taxid_process/${taxon}_BOLD_NCBI_final_sl.fasta
+awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < ./database_${taxon}/${taxon}_BOLD_NCBI_final.fasta > ./taxid_process/${taxon}_BOLD_NCBI_final_sl.fasta
 cd ./taxid_process
 grep -e ">" ${taxon}_BOLD_NCBI_final_sl.fasta > seqnames_${taxon}_nobarcode.txt
 
