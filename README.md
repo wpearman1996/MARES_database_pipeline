@@ -43,6 +43,11 @@ We use these lists to rename and generate a new fasta called `Marine_Euk_BOLD_NC
 
 To do this step use the `taxid_addition.r` script. You will need to edit this script to modify directories etc, as well as to ensure the appropriate packages are installed. 
 
+## Step 5
+At this point we want to format it for a kraken database. For this to work the header for each fasta needs to be `kraken:taxid|{taxid}`. Here we format the fasta to have this structure and then provide instructions on how to build the database.
+
+#Database Comparison
+
 # Dependency List
 ## R packages
 `stringr`
