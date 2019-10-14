@@ -1,5 +1,5 @@
 #!/bin/bash
-grep -P -o " [0-9]+ " seqs_newnames2.txt > kraken_taxids.txt
+grep -P -o " [0-9]+ " newnames3.txt > kraken_taxids.txt
 sed -i 's/ //g' kraken_taxids.txt
 sed -i -e 's/^/>kraken:taxid|/' kraken_taxids.txt
 awk 'NR%2==0' Marine_Euk_BOLD_NCBI_sl_reformatted.fasta | paste -d'\n' kraken_taxids.txt - > Marine_Euk_BOLD_NCBI_sl_kraken.fasta
