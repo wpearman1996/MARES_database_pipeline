@@ -59,4 +59,12 @@ At this point we want to format it for a kraken database. For this to work the h
 
 ## Other dependencies
 `vsearch`
-`cpan-m`
+`cpanminus`
+`Bio::Lite::Taxonomy::NCBI`
+`Bio::DB::EUtilities`
+`parallel`
+`perl`
+`r`
+`python2`
+
+`seqtk`
