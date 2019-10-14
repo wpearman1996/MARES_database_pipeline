@@ -60,6 +60,7 @@ At this point we want to format it for a kraken database. For this to work the h
 ## Other dependencies
 `vsearch`
 `cpanminus`
+`biopython`
 `Bio::Lite::Taxonomy::NCBI`
 `Bio::DB::EUtilities`
 `parallel`
