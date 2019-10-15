@@ -69,3 +69,11 @@ At this point we want to format it for a kraken database. For this to work the h
 `python2`
 
 `seqtk`
+
+# To Do List
+* Make blast db 
+* Make krakendb
+* Classify OTUs with blast and kraken
+* Re-run database generation scripts
+* Do database comparisons/discriminant analysis
+
