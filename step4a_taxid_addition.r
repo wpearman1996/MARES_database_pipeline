@@ -1,8 +1,9 @@
-setwd("./taxid_process") #This will need to updated so that "Marine_Euk" represents your taxon from
+setwd("./taxid_process") #This will need to updated so that Marine_Euk represents your taxon from
 ## line 5 step3_merge_bold_ncbi.sh
-me_wo_names<-readLines("./seqnames_Marine_Euk_w_brcd__nobarcode.txt")#,sep=" ",stringsAsFactors=FALSE,head=F)
+file<-"./seqnames_Marine_Euk_wobrcd__nobarcode.txt" ## File containing sequence names
+me_wo_names<-readLines(file)#,sep=" ",stringsAsFactors=FALSE,head=F)
 me_wo_names<-strsplit(me_wo_names," ")
-me_wo_names<-lapply(me_wo_names,subset,subset=c(T,T,T,F,F,F,F,F,F,F,F,F,F))
+me_wo_names<-lapply(me_wo_names,head,3)
 me_wo_names<-as.data.frame(do.call("rbind",me_wo_names))
 library(stringr)
 convert2name<-function(seqnames){
@@ -56,9 +57,9 @@ taxids<-taxids %>%
 generate_newnames<-function(taxidtable,seqnames){
   taxidtable$`preferred name`<-ifelse(taxidtable$`preferred name`==" ",
                                       taxidtable$name,taxidtable$`preferred name`)
-  seqnames<-strsplit(seqnames," ")
-  seqnames<-lapply(seqnames,subset,subset=c(T,T,T,F,F,F,F,F,F,F,F,F,F))
-  seqnames<-as.data.frame(do.call("rbind",seqnames))
+ # seqnames<-strsplit(seqnames," ")
+  #seqnames<-lapply(seqnames,head,3)
+  #seqnames<-as.data.frame(do.call("rbind",seqnames))
   me_wo_uni<-unique(convert2name((seqnames)))
   me_wo_uni<-data.frame(me_wo_uni)
   me_wo_uni$newname<-taxidtable$`preferred name`[match(me_wo_uni$me_wo_uni,taxids$name)]
@@ -75,7 +76,7 @@ generate_newnames<-function(taxidtable,seqnames){
 library(stringr)
 temp<-generate_newnames(taxids,me_wo_names)
 accessions<-temp$seqnames.V1
-me_wo_names<-readLines("./seqnames_Marine_Euk_w_brcd__nobarcode.txt")
+me_wo_names<-readLines(file)
 accesion_old<-gsub(">", "",word(me_wo_names,1))
 accesion_old<-gsub(">","",accesion_old)
 accessions<-gsub(">","",accessions)
