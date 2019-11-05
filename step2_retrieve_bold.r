@@ -50,6 +50,28 @@ taxlist2<-c("Cephalorhyncha","Rhombozoa","Orthonectida","Chlorarachniophyta","Co
            "Scombriformes","Scombrolabraciformes","Scorpaeniformes","Siluriformes","Spariformes","Stomiiformes",
            "Stylephoriformes","Synbranchiformes","Syngnathiformes","Tetraodontiformes","Trachichthyiformes",
            "Trachiniformes","Zeiformes")
+
+
+get_subtaxa<-function(taxid){
+  require(dplyr)
+  require(rvest)
+tax_page<-paste0("http://www.boldsystems.org/index.php/Taxbrowser_Taxonpage?taxid=",taxid)
+info <- read_html(tax_page) %>% html_nodes(xpath = '//*[@class="ibox float-e-margins"]') 
+x<-paste(info)
+x<-x[grepl("<lh>",x)]
+x<-strsplit(x,"\"")
+x<-as.vector(do.call("rbind",x))
+x<-x[grepl(">",x)]
+x<-gsub("].*","",x)
+x<-gsub(">","",x,fixed = T)
+x<-gsub("[","",x,fixed= T)
+subtax<-(do.call("rbind",strsplit(x," "))[,1:2])
+subtax<-as.data.frame(subtax[2:nrow(subtax),])
+colnames(subtax)<-c("Taxa","Number of Records")
+subtax
+}
+
+
 dir.create("./taxaBOLD")
 setwd("./taxaBOLD")
 library(bold)
