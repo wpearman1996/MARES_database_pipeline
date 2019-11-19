@@ -23,8 +23,9 @@ cat * > ./taxonomy.taxid
 perl ../coi_ret/taxonomy_crawl_for_genus_species_list.plx taxonomy.taxid
 
 mkdir ../taxids
+mv Genus_species.txt ../taxids
 cd ../taxids
-split -l 100 ../Genus_species.txt
+split -l 100 Genus_species.txt
 
 ### Now what we're doing is reformatting the list so that it works for NCBI Entrez and then doing
 ### some directory admin
