@@ -69,7 +69,7 @@ At this point we want to format it for a kraken database. For this to work the h
 `perl`
 `r`
 `python2`
-
+`Entrez-Direct` - Eutils
 `seqtk`
 
 # To Do List
