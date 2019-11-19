@@ -33,6 +33,8 @@ This part is largely taken and modified from `Macher J, Macher T, Leese F (2017)
 
 This process takens the BOLD file and ensures it is for the COI-5P region. Then it processes the names to enable dereplication sequences and merges them into a single file. At this point the files are dereplicated to remove duplicated sequences. Now the headers are changed to an appropriate format, and then we convert them to single line fastas.
 
+For this part, you need to modify  `Step3_merge_bold_ncbi.sh` on line 6 to specify the taxon name for your reference database
+
 ## step 4: process for taxids
 The first step is to export a list of sequence names from the merged database
 
