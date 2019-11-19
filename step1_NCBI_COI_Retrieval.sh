@@ -51,5 +51,5 @@ gzip $FILE
 done
 
 cat *.fasta > ../../genbank_coi.fasta
-cd ..
+cd ../../
 awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < genbank_coi.fasta > genbank_coi_sl.fasta
