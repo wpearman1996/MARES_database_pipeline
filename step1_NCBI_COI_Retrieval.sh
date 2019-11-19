@@ -9,6 +9,7 @@
 sed 's/$/[ORGN]+AND+species[RANK]/' taxa.list > taxa.list_ebot 
 #change directory into a new folder - since we're about to fill it up with as many files as there are taxa
 mkdir taxaNCBI
+mv taxa.list_ebot ./taxaNCBI
 cd ./taxaNCBI
 while IFS= read -r line; do
   perl ../coi_ret/ebot_taxonomy3.plx "$line" "$line"
