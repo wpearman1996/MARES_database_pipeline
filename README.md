@@ -65,6 +65,9 @@ At this point we want to format it for a kraken database. For this to work the h
 `biopython`
 `Bio::Lite::Taxonomy::NCBI`
 `Bio::DB::EUtilities`
+'HTTP::Date'
+'LWP::Simple'
+'LWP::UserAgent'
 `parallel`
 `perl`
 `r`
