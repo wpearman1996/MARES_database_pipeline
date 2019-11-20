@@ -23,11 +23,12 @@ This does the following:
 4) Searchs genbank and downloads ALL relevant genbank files.
 
 ## step 2: BOLD Retrieval
+
 For this part you will want to run the R script `retrieve_bold.r`. You may need to make modifications to this file. Specifically this script takes a list of taxa and retrieves the BOLD data, and formats this data into a fasta file. This can take a while and may be problematic if you do not have large amounts of RAM. 
 
 Specifically if you are trying to obtain sequences for a large taxonomic group, then this file may be very large or even timeout when connecting to BOLD. In this case it may be wise to replace your taxlist without this group, and instead list each subtaxa so that each subtaxa is retrieved separately to avoid timing out. 
 
-## step 3: merger
+## step 3: The BOLD_NCBI merger
 
 This part is largely taken and modified from `Macher J, Macher T, Leese F (2017) Combining NCBI and BOLD databases for OTU assignment in metabarcoding and metagenomic datasets: The BOLD_NCBI _Merger. Metabarcoding and Metagenomics 1: e22262. https://doi.org/10.3897/mbmg.1.22262`
 
@@ -35,7 +36,8 @@ This process takens the BOLD file and ensures it is for the COI-5P region. Then 
 
 For this part, you need to modify  `Step3_merge_bold_ncbi.sh` on line 6 to specify the taxon name for your reference database
 
-## step 4: process for taxids
+## step 4: Normalise taxonomy IDs
+
 The first step is to export a list of sequence names from the merged database
 
 Because many tools using lowest common ancestor approaches for taxonomic classifications, these tools often rely on the NCBI taxonomy. However, many species don't have taxids, or have been uploaded with synonyms as names - this makes it problematic to get reliable taxonomic classifications.
@@ -47,8 +49,13 @@ We use these lists to rename and generate a new fasta called `Marine_Euk_BOLD_NC
 
 To do this step use the `taxid_addition.r` script. You will need to edit this script to modify directories etc, as well as to ensure the appropriate packages are installed. 
 
-## Step 5
+## Step 5: Formatted for taxonomy classifiers
+
+### 5a : Prepare to KRAKEN 
 At this point we want to format it for a kraken database. For this to work the header for each fasta needs to be `kraken:taxid|{taxid}`. Here we format the fasta to have this structure and then provide instructions on how to build the database.
+
+### 5b : Prepare to MEGAN 
+In this step, we built a local database from our custom reference database and blast it against your metabarcoding sample file. The output is a .txt file in the MEGAN_db folder that can be imported into MEGAN (Husson et al. 2007) for taxonomic assignment.  
 
 # Database Comparison
 
@@ -63,6 +70,7 @@ At this point we want to format it for a kraken database. For this to work the h
 
 ## Other dependencies
 `vsearch`
+`BLAST+`
 `cpanminus`
 `biopython`
 `Bio::Lite::Taxonomy::NCBI`
