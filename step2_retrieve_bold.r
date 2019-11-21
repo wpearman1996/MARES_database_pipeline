@@ -30,9 +30,9 @@ taxlist<-c("Acanthocephala","Annelida","Brachiopoda","Bryozoa","Cephalorhyncha",
            "Gnathostomulida","Hemichordata","Mollusca","Nematoda","Nemertea","Onychophora","Orthonectida",
            "Phoronida","Placozoa","Platyhelminthes","Porifera","Rotifera","Sipuncula","Tardigrada",
            "Xenacoelomorpha","Chlorophyta","Rhodophyta","Chlorarachniophyta","Ciliophora","Heterokontophyta",
-           "Pyrrophycophyta","Branchiopoda","Cephalocarida","Chilopoda","Diplopoda","Diplura","Hexanauplia",
-           "Malacostraca","Maxillopoda","Merostomata","Ostracoda","Pauropoda","Protura","Pycnogonida","Remipedia",
-           "Symphyla","Pentastomida","Actinopterygii","Amphibia","Appendicularia","Ascidiacea","Aves","Cephalaspidomorphi",
+           "Pyrrophycophyta","Branchiopoda","Cephalocarida","Diplura","Hexanauplia","Malacostraca","Maxillopoda",
+           "Merostomata","Ostracoda","Protura","Pycnogonida","Remipedia",
+           "Pentastomida","Actinopterygii","Amphibia","Appendicularia","Ascidiacea","Aves","Cephalaspidomorphi",
            "Elasmobranchii","Holocephali","Leptocardii","Mammalia","Myxini","Reptilia","Sarcopterygii","Thaliacea")
 
 
@@ -48,9 +48,14 @@ taxlist2<-c("Cephalorhyncha","Rhombozoa","Orthonectida","Chlorarachniophyta","Co
            "Notacanthiformes","Ophidiiformes","Osmeriformes","Osteoglossiformes","Ovalentaria","Perciformes",
            "Percopsiformes","Pleuronectiformes","Polymixiiformes","Polypteriformes","Salmoniformes",
            "Scombriformes","Scombrolabraciformes","Scorpaeniformes","Siluriformes","Spariformes","Stomiiformes",
-           "Stylephoriformes","Synbranchiformes","Syngnathiformes","Tetraodontiformes","Trachichthyiformes",
-           "Trachiniformes","Zeiformes")
-
+           "Stylephoriformes","Synbranchiformes","Syngnathiformes","Tetraodontiformes","Trachichthyiformes")
+		   
+taxlist3 <- c("Akysidae","Amblycipitidae","Amphiliidae","Ariidae","Aspredinidae", "Astroblepidae",
+            "Auchenipteridae","Austroglanididae","Bagridae","Callichthyidae","Cetopsidae","Chacidae","Clariidae",
+            "Claroteidae","Cranoglanididae","Diplomystidae","Doradidae","Erethistidae","Heptapteridae",
+            "Heteropneustidae","Horabagridae","Ictaluridae","Kryptoglanidae","Loricariidae","Malapteruridae",
+            "Mochokidae","Nematogenyidae","Pangasiidae","Pimelodidae", "Plotosidae","Pseudopimelodidae","Ritidae",
+            "Schilbeidae", "Scoloplacidae","Siluridae","Sisoridae","Trichomycteridae")
 
 get_subtaxa<-function(taxid){
   require(dplyr)
