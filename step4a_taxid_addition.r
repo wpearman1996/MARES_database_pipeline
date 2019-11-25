@@ -2,6 +2,7 @@ setwd("./taxid_process") #This will need to updated so that Marine_Euk represent
 ## line 5 step3_merge_bold_ncbi.sh
 file<-"./seqnames_Marine_Euk_wobrcd__nobarcode.txt" ## File containing sequence names
 me_wo_names<-readLines(file)#,sep=" ",stringsAsFactors=FALSE,head=F)
+me_wo_names<-gsub("^ *|(?<= ) | *$", "", me_wo_names, perl = TRUE)
 me_wo_names<-strsplit(me_wo_names," ")
 me_wo_names<-lapply(me_wo_names,head,3)
 me_wo_names<-as.data.frame(do.call("rbind",me_wo_names))
