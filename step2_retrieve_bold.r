@@ -24,38 +24,15 @@ get_fasta<-function(taxon,filename){
   writeLines(fastaLines,filename)
 }
 
-
 taxlist<-c("Acanthocephala","Annelida","Brachiopoda","Bryozoa","Cephalorhyncha","Chaetognatha",
            "Cnidaria","Cycliophora","Ctenophora","Dicyemida","Echinodermata","Entoprocta","Gastrotricha",
            "Gnathostomulida","Hemichordata","Mollusca","Nematoda","Nemertea","Onychophora","Orthonectida",
            "Phoronida","Placozoa","Platyhelminthes","Porifera","Rotifera","Sipuncula","Tardigrada",
            "Xenacoelomorpha","Chlorophyta","Rhodophyta","Chlorarachniophyta","Ciliophora","Heterokontophyta",
            "Pyrrophycophyta","Branchiopoda","Cephalocarida","Diplura","Hexanauplia","Malacostraca","Maxillopoda",
-           "Merostomata","Ostracoda","Protura","Pycnogonida","Remipedia",
+           "Merostomata","Ostracoda","Protura","Pycnogonida","Remipedia", "Rhombozoa","Branchiura",
            "Pentastomida","Actinopterygii","Amphibia","Appendicularia","Ascidiacea","Aves","Cephalaspidomorphi",
            "Elasmobranchii","Holocephali","Leptocardii","Mammalia","Myxini","Reptilia","Sarcopterygii","Thaliacea")
-
-
-taxlist2<-c("Cephalorhyncha","Rhombozoa","Orthonectida","Chlorarachniophyta","Copepoda","Thecostraca","Branchiura","Mystacocarida",
-           "Tantulocarida","Pentastomida","Acanthuriformes","Acipenseriformes","Albuliformes","Alepocephaliformes",
-           "Amiiformes","Anabantiformes","Anguilliformes","Argentiniformes","Ateleopodiformes","Atheriniformes",
-           "Aulopiformes","Batrachoidiformes","Beloniformes","Beryciformes","Blenniiformes","Callionymiformes",
-           "Caproiformes","Carangiformes","Cetomimiformes","Characiformes","Cichliformes","Clupeiformes",
-           "Cypriniformes","Cyprinodontiformes","Echinorhiniformes","Elopiformes","Esociformes","Gadiformes",
-           "Galaxiiformes","Gobiesociformes","Gobiiformes","Gonorynchiformes","Gymnotiformes","Hiodontiformes",
-           "Holocentriformes","Icosteiformes","Istiophoriformes","Kurtiformes","Labriformes","Lampriformes",
-           "Lepidogalaxiiformes","Lepisosteiformes","Lophiiformes","Moroniformes","Mugiliformes","Myctophiformes",
-           "Notacanthiformes","Ophidiiformes","Osmeriformes","Osteoglossiformes","Ovalentaria","Perciformes",
-           "Percopsiformes","Pleuronectiformes","Polymixiiformes","Polypteriformes","Salmoniformes",
-           "Scombriformes","Scombrolabraciformes","Scorpaeniformes","Siluriformes","Spariformes","Stomiiformes",
-           "Stylephoriformes","Synbranchiformes","Syngnathiformes","Tetraodontiformes","Trachichthyiformes")
-		   
-taxlist3 <- c("Akysidae","Amblycipitidae","Amphiliidae","Ariidae","Aspredinidae", "Astroblepidae",
-            "Auchenipteridae","Austroglanididae","Bagridae","Callichthyidae","Cetopsidae","Chacidae","Clariidae",
-            "Claroteidae","Cranoglanididae","Diplomystidae","Doradidae","Erethistidae","Heptapteridae",
-            "Heteropneustidae","Horabagridae","Ictaluridae","Kryptoglanidae","Loricariidae","Malapteruridae",
-            "Mochokidae","Nematogenyidae","Pangasiidae","Pimelodidae", "Plotosidae","Pseudopimelodidae","Ritidae",
-            "Schilbeidae", "Scoloplacidae","Siluridae","Sisoridae","Trichomycteridae")
 
 get_subtaxa<-function(taxid){
   require(dplyr)
@@ -80,9 +57,9 @@ subtax
 dir.create("./taxaBOLD")
 setwd("./taxaBOLD")
 library(bold)
-for (i in 1:length(taxlist2)) {
-   cat("Processing ", taxlist3[i], "\n")
+for (i in 1:length(taxlist)) {
+   cat("Processing ", taxlist[i], "\n")
    tryCatch({
-    get_fasta(taxlist2[i],paste0(taxlist2[i],"bold",".fasta"))
+    get_fasta(taxlist[i],paste0(taxlist[i],"bold",".fasta"))
    }, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
 }
