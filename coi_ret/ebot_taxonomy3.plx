@@ -83,7 +83,7 @@ my $base = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/";
 #*************************************************************
 #** SCRIPT MAIN BODY *****************************************
 
-$params{email} = "wpearman1996@gmail.com"; ### Put your email address here ###
+$params{email} = "EMAIL@HERE"; ### Put your email address here ###
 $params{db} = "taxonomy";
 $params{tool} = "ebot";
 $params{term} = $ARGV[0];
