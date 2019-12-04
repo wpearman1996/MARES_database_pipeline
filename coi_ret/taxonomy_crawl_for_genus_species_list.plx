@@ -23,8 +23,8 @@ my @taxids;
 my @species;
 
 $taxDB = Bio::LITE::Taxonomy::NCBI->new(		db	=>	"nt",
-												names	=>	"/data/databases/nt80/taxonomy/names.dmp",
-												nodes	=>	"/data/databases/nt80/taxonomy/nodes.dmp");  ### be sure to keep *.dmp files current ###
+												names	=>	"names.dmp",
+												nodes	=>	"nodes.dmp");  ### be sure to keep *.dmp files current ###
 
 open (IN,"<",$ARGV[0]) || die "Error cannot read in taxid infile: $!|n";
 @taxids = <IN>;
