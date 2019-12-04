@@ -17,7 +17,7 @@ owendb2<-gsub("'","",owendb2)
 owendb2<-owendb2[!grepl("\\.",owendb2)]
 owen_acc<-owendb2[grepl(">",owendb2)]
 library(taxize)
-ENTREZ_KEY<-"3fe8284b58ebcaf28460422fc90764973208"
+ENTREZ_KEY<-"QWERTY" # INSERT YOUR ENTREZ KEY HERE
 acc_det<-genbank2uid(owen_acc,key = ENTREZ_KEY)
 acc_det_tax<-do.call("rbind",acc_det)
 acc_det_tax<-acc_det_tax[!is.na(acc_det_tax)]
