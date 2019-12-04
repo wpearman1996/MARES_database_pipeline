@@ -81,7 +81,8 @@ dir.create("./taxaBOLD")
 setwd("./taxaBOLD")
 library(bold)
 for (i in 1:length(taxlist2)) {
-  tryCatch({
+   cat("Processing ", taxlist3[i], "\n")
+   tryCatch({
     get_fasta(taxlist2[i],paste0(taxlist2[i],"bold",".fasta"))
-   }, error=function(e){cat("ERROR :",conditionMessage(e), "\n",taxlist2[i])})
+   }, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
 }
