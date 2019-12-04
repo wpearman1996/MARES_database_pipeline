@@ -1,11 +1,4 @@
----
-title: "Database Comparisons"
-output: html_notebook
----
 
-
-First we'll fix the owen db
-```{r}
 owendb<-read.delim("./owen_seqnamest.txt",head=F)
 owendb2<-sub(".*species_name=", "", owendb$V1)
 owendb2<-sub(';.*', '', owendb2)
@@ -36,10 +29,7 @@ countSpaces <- function(s) { sapply(gregexpr(" ", s), function(p) { sum(p>=0) } 
 t<-countSpaces(owendb2)
 owendb2<-(owendb2[t !=0])
 
-```
 
-Now we'll fix genbank
-```{r}
 genbank<-read.delim("./genbank_seqnames.txt",head=F,sep="|")
 genbank<-unique(genbank$V2)
 genbank<-as.character(genbank)
@@ -57,11 +47,7 @@ genbank<-gsub("\\[","",genbank)
 genbank<-gsub("\\]","",genbank)
 genbank<-gsub("\\(","",genbank)
 genbank<-unique(genbank)
-```
 
-Now for BOLD
-
-```{r}
 bold<-read.delim("./bold_seqnames.txt",head=F,sep="|")
 bold<-bold$V2
 bold<-as.character(unique(bold))
@@ -75,10 +61,7 @@ bold<-(bold[t !=0])
 bold<-bold[!grepl("\\.",bold)]
 bold<-sub("^(\\S*\\s+\\S+).*", "\\1", bold)
 bold<-unique(bold)
-```
 
-Now for marine eukaryotes - no barcode
-```{r}
 me_wo<-read.delim("../ME_wo_barcodes_seqnames.txt",sep=" ",stringsAsFactors=FALSE,head=F)
 me_wo<-paste(me_wo$V2,me_wo$V3)
 me_wo<-unique(me_wo)
@@ -95,12 +78,7 @@ me_wo<-unique(me_wo)
 me_wo<-stringr::str_replace_all(me_wo, "(\\w)N(\\w)", "\\1-\\2")
 me_wo<-(me_wo[!grepl(" CMF",me_wo)]);me_wo<-(me_wo[!grepl(" JLE",me_wo)]);me_wo<-(me_wo[!grepl(" RW",me_wo)])
 me_wo<-me_wo[!ifelse(word(me_wo,2)=="sp",TRUE,FALSE)]
-```
 
-
-
-Now for marine eukaryotes - with barcode
-```{r}
 me_bar<-read.delim("../ME_barcode_seqnames.txt",sep=" ",stringsAsFactors=FALSE,head=F)
 me_bar<-paste(me_bar$V2,me_bar$V3)
 me_bar<-unique(me_bar)
@@ -120,11 +98,6 @@ me_bar<-stringr::str_replace_all(me_bar, "(\\w)N(\\w)", "\\1-\\2")
 me_bar<-(me_bar[!grepl(" CMF",me_bar)]);me_bar<-(me_bar[!grepl(" JLE",me_bar)]); me_bar<-(me_bar[!grepl(" RW",me_bar)])
 me_bar<-me_bar[!ifelse(word(me_bar,2)=="sp",TRUE,FALSE)]
 
-```
-
-and final MIDORI
-
-```{r}
 midori<-read.delim("./MIDORI_LONGEST_20180221_COI.taxon",
                    head=F,sep=";")
 midori_spec<-(midori$V7)
@@ -141,9 +114,7 @@ midori_spec<-sub("^(\\S*\\s+\\S+).*", "\\1", midori_spec)
 midori_spec<-midori_spec[!grepl("\\.",midori_spec)]
 midori_spec<-unique(midori_spec)
 midori_spec[8]<-NA;midori_spec<-midori_spec[!is.na(midori_spec)]
-```
 
-```{r}
 library(stringr)
 anacapa<-read.delim("C:/Users/wpear/Downloads/CO1_filtered_01102018.tar/CO1_filtered_01102018/CO1_db_filtered_to_remove_ambigous_taxonomy/CO1_fasta_and_taxonomy/CO1_taxonomy.txt",head=F)
 anacapa_spec<-sub('.*\\;', '', anacapa$V2)
@@ -155,11 +126,7 @@ anacapa_spec<-anacapa_spec[word(anacapa_spec, 2) != "sp"]
 anacapa_spec<-anacapa_spec[word(anacapa_spec, 2) != "pr"]
 anacapa_spec<-anacapa_spec[word(anacapa_spec, 2) != "nr"]
 anacapa_spec<-unique(anacapa_spec)
-```
 
-Now we make PresAb matrix
-
-```{r}
 all_spec<-c(midori_spec,bold,genbank,
                 owendb2,me_wo,me_bar,anacapa_spec)
 all_spec<-unique(all_spec)
@@ -187,9 +154,7 @@ me_wo<-me_wo[me_wo %in% all_spec]
 owendb2<-owendb2[owendb2 %in% all_spec]
 anacapa_spec<-anacapa_spec[anacapa_spec %in% all_spec]
 
-names<-split(all_spec, ceiling(seq_along(all_spec)/50000))
-names<-lapply(names,as.character)
-writeLines(names[[5]],"./allspec_names5.txt")
+
 #install.packages("splitstackshape")
 library(splitstackshape)
 out <- t(splitstackshape:::charMat(listOfValues = mget(c("midori_spec","bold","genbank",
@@ -204,7 +169,7 @@ write.csv(out,"./presab_allspec_alldatabases.csv")
 #outdist<-vegdist(t(outsub))
 #library(BiodiversityR)
 #xx<-CAPdiscrim(outsub~fac,data=outsub,dist="jaccard")
-```
+
 
 
 
