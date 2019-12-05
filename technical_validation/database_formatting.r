@@ -10,7 +10,7 @@ library(splitstackshape)
 
 ## 1. db_COI_MBPK_March (Wangensteen, Owen S., et al.  2018)
 
-mbpkdb2 <-read.delim("./owen_seqnamest.txt",head=F)
+mbpkdb2 <-read.delim("./Reference_db/MTBPK_seqnames.txt",head=F)
 mbpkdb2<-sub(".*species_name=", "", mbpkdb$V1)
 mbpkdb2<-sub(';.*', '', mbpkdb2)
 mbpkdb2<-unique(mbpkdb2)
@@ -19,7 +19,6 @@ mbpkdb2<-gsub("'","",mbpkdb2)
 
 mbpkdb2<-mbpkdb2[!grepl("\\.",mbpkdb2)]
 mbpk_acc<-mbpkdb2[grepl(">",mbpkdb2)]
-library(taxize)
 ENTREZ_KEY<-"QWERTY" # INSERT YOUR ENTREZ KEY HERE
 acc_det<-genbank2uid(mbpk_acc,key = ENTREZ_KEY)
 acc_det_tax<-do.call("rbind",acc_det)
@@ -41,7 +40,7 @@ mbpkdb2<-(mbpkdb2[t !=0])
 
 ## 2. Genbank Eukaryota COI without the Keyword = Barcode (Benson et al. 2015)
 
-genbank<-read.delim("./genbank_seqnames.txt",head=F,sep="|")
+genbank<-read.delim("./Reference_db/genbank_seqnames.txt",head=F,sep="|")
 genbank<-unique(genbank$V2)
 genbank<-as.character(genbank)
 genbank<-(genbank[!grepl("\\d",genbank)])
@@ -61,7 +60,7 @@ genbank<-unique(genbank)
 
 ## 3. BOLD all taxon list (Ratnasingham and Hebert 2007)
 
-bold<-read.delim("./bold_seqnames.txt",head=F,sep="|")
+bold<-read.delim("./Reference_db/bold_seqnames.txt",head=F,sep="|")
 bold<-bold$V2
 bold<-as.character(unique(bold))
 bold<-(bold[!grepl("\\d",bold)])
@@ -76,8 +75,7 @@ bold<-unique(bold)
 
 ## 4. Anacapa COI BOLD all taxon list (Curd et al. 2019)
 
-anacapa<-read.delim("C:/Users/wpear/Downloads/CO1_filtered_01102018.tar/CO1_filtered_01102018/CO1_db_filtered_to_remove_ambigous_taxonomy/CO1_fasta_and_taxonomy/CO1_taxonomy.txt",head=F)
-anacapa_spec<-sub('.*\\;', '', anacapa$V2)
+anacapa<-read.delim("Reference_db/anacapa_seqnames.txt",head=F)anacapa_spec<-sub('.*\\;', '', anacapa$V2)
 anacapa_spec<-stringr::word(anacapa_spec,1,2)
 
 anacapa_spec<-gsub("(?! )[[:punct:]]", "", anacapa_spec, perl=TRUE)
@@ -89,7 +87,7 @@ anacapa_spec<-unique(anacapa_spec)
 
 ## 5. MIDORI COI_LONGEST (Machida et al. 2017)
 
-midori<-read.delim("./MIDORI_LONGEST_20180221_COI.taxon",
+midori<-read.delim("Reference_db/MIDORI_LONGEST_20180221_COI.taxon",
                    head=F,sep=";")
 midori_spec<-(midori$V7)
 midori<-(midori[!grepl("\\d",midori)])
@@ -108,7 +106,7 @@ midori_spec[8]<-NA;midori_spec<-midori_spec[!is.na(midori_spec)]
 
 ## 6. MARES_wo_barcode
 
-mares_wo<-read.delim("../ME_wo_barcodes_seqnames.txt",sep=" ",stringsAsFactors=FALSE,head=F)
+mares_wo<-read.delim("Reference_db/MARES_wo_barcodes_seqnames.txt",sep=" ",stringsAsFactors=FALSE,head=F)
 mares_wo<-paste(mares_wo$V2,mares_wo$V3)
 mares_wo<-unique(mares_wo)
 mares_wo<-(mares_wo[!grepl("\\d",mares_wo)])
@@ -127,7 +125,7 @@ mares_wo<-mares_wo[!ifelse(word(mares_wo,2)=="sp",TRUE,FALSE)]
 
 ## 6. MARES_w_barcode
 
-mares_bar<-read.delim("../mares_barcode_seqnames.txt",sep=" ",stringsAsFactors=FALSE,head=F)
+mares_bar<-read.delim("Reference_db/MARES_barcode_seqnames.txt",sep=" ",stringsAsFactors=FALSE,head=F)
 mares_bar<-paste(mares_bar$V2,mares_bar$V3)
 mares_bar<-unique(mares_bar)
 mares_bar<-(mares_bar[!grepl("\\d",mares_bar)])
