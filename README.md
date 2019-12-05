@@ -55,7 +55,11 @@ To do this step use the `taxid_addition.r` script. You will need to edit this sc
 At this point we want to format it for a kraken database. For this to work the header for each fasta needs to be `kraken:taxid|{taxid}`. Here we format the fasta to have this structure and then provide instructions on how to build the database.
 
 ### 5b : Prepare to MEGAN 
-In this step, we built a local database from our custom reference database and blast it against your metabarcoding sample file. The output is a .txt file in the MEGAN_db folder that can be imported into MEGAN (Husson et al. 2007) for taxonomic assignment.  
+In this step, we built a local database from our custom reference database and blast it against your metabarcoding sample file.
+
+The fasta file containing your sample file (query.fasta) should be added to the custom_metabarcoding_database folder. And modify the Blast parameters as you prefer in line 17. 
+
+The output is a .txt file in the MEGAN_db folder that can be imported into MEGAN (Husson et al. 2007) for taxonomic assignment.  
 
 # Database Comparison
 
