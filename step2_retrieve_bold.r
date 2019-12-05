@@ -31,8 +31,22 @@ taxlist<-c("Acanthocephala","Annelida","Brachiopoda","Bryozoa","Cephalorhyncha",
            "Xenacoelomorpha","Chlorophyta","Rhodophyta","Chlorarachniophyta","Ciliophora","Heterokontophyta",
            "Pyrrophycophyta","Branchiopoda","Cephalocarida","Diplura","Hexanauplia","Malacostraca","Maxillopoda",
            "Merostomata","Ostracoda","Protura","Pycnogonida","Remipedia", "Rhombozoa","Branchiura",
-           "Pentastomida","Actinopterygii","Amphibia","Appendicularia","Ascidiacea","Aves","Cephalaspidomorphi",
+           "Pentastomida","Amphibia","Appendicularia","Ascidiacea","Aves","Cephalaspidomorphi",
            "Elasmobranchii","Holocephali","Leptocardii","Mammalia","Myxini","Reptilia","Sarcopterygii","Thaliacea")
+
+# Actinopterygii classes
+taxlist2<-c("Acanthuriformes","Acipenseriformes","Albuliformes","Alepocephaliformes",
+           "Amiiformes","Anabantiformes","Anguilliformes","Argentiniformes","Ateleopodiformes","Atheriniformes",
+           "Aulopiformes","Batrachoidiformes","Beloniformes","Beryciformes","Blenniiformes","Callionymiformes",
+           "Caproiformes","Carangiformes","Cetomimiformes","Characiformes","Cichliformes","Clupeiformes",
+           "Cypriniformes","Cyprinodontiformes","Echinorhiniformes","Elopiformes","Esociformes","Gadiformes",
+           "Galaxiiformes","Gobiesociformes","Gobiiformes","Gonorynchiformes","Gymnotiformes","Hiodontiformes",
+           "Holocentriformes","Icosteiformes","Istiophoriformes","Kurtiformes","Labriformes","Lampriformes",
+           "Lepidogalaxiiformes","Lepisosteiformes","Lophiiformes","Moroniformes","Mugiliformes","Myctophiformes",
+           "Notacanthiformes","Ophidiiformes","Osmeriformes","Osteoglossiformes","Ovalentaria","Perciformes",
+           "Percopsiformes","Pleuronectiformes","Polymixiiformes","Polypteriformes","Salmoniformes",
+           "Scombriformes","Scombrolabraciformes","Scorpaeniformes","Siluriformes","Spariformes","Stomiiformes",
+           "Stylephoriformes","Synbranchiformes","Syngnathiformes","Tetraodontiformes","Trachichthyiformes", "Zeiformes")
 
 get_subtaxa<-function(taxid){
   require(dplyr)
