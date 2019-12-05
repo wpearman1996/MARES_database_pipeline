@@ -86,13 +86,14 @@ The output is a .txt file in the MEGAN_db folder that can be imported into MEGAN
 `perl`
 `r`
 `python2`
-`Entrez-Direct` - Eutils
 `seqtk`
+`Kraken`
+
+
 
 # To Do List
-* Make blast db 
-* Make krakendb
-* Classify OTUs with blast and kraken
-* Re-run database generation scripts
-* Do database comparisons/discriminant analysis
+* Explain what it does the technical validation in the readme part 
+* Add the compared databases files to the TEchVal folder 
+* Change database names (Owens and MARES) 
+* Check the flow chart, add captions to the FC and the database comparisons table
 
