@@ -1,0 +1,61 @@
+Acanthocephala
+Annelida
+Brachiopoda
+Bryozoa
+Cephalorhyncha
+Chaetognatha
+ "Cnidaria"
+Cycliophora
+Ctenophora
+Dicyemida
+Echinodermata
+Entoprocta
+Gastrotricha
+ "Gnathostomulida"
+Hemichordata
+Mollusca
+Nematoda
+Nemertea
+Onychophora
+Orthonectida
+ "Phoronida"
+Placozoa
+Platyhelminthes
+Porifera
+Rotifera
+Sipuncula
+Tardigrada
+ "Xenacoelomorpha"
+Chlorophyta
+Rhodophyta
+Chlorarachniophyta
+Ciliophora
+Heterokontophyta
+ "Pyrrophycophyta"
+Branchiopoda
+Cephalocarida
+Diplura
+Hexanauplia
+Malacostraca
+Maxillopoda
+ "Merostomata"
+Ostracoda
+Protura
+Pycnogonida
+Remipedia
+ "Rhombozoa"
+Branchiura
+ "Pentastomida"
+Amphibia
+Appendicularia
+Ascidiacea
+Aves
+Cephalaspidomorphi
+ "Elasmobranchii"
+Holocephali
+Leptocardii
+Mammalia
+Myxini
+Reptilia
+Sarcopterygii
+Thaliacea
