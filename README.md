@@ -26,7 +26,7 @@ This does the following:
 
 For this part you will want to run the R script `retrieve_bold.r`. You may need to make modifications to this file. Specifically this script takes a list of taxa and retrieves the BOLD data, and formats this data into a fasta file. This can take a while and may be problematic if you do not have large amounts of RAM. 
 
-Specifically if you are trying to obtain sequences for a large taxonomic group, then this file may be very large or even timeout when connecting to BOLD. In this case it may be wise to replace your taxlist without this group, and instead list each subtaxa so that each subtaxa is retrieved separately to avoid timing out. 
+Specifically if you are trying to obtain sequences for a large taxonomic group, then this file may be very large or even timeout when connecting to BOLD. In this case it may be wise to replace your taxlist without this group, and instead list each subtaxa so that each subtaxa is retrieved separately to avoid timing out. It is for this reason we have two taxlist_bold files in our example.
 
 ## step 3: The BOLD_NCBI merger
 
