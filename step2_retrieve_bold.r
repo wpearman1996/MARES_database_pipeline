@@ -24,29 +24,10 @@ get_fasta<-function(taxon,filename){
   writeLines(fastaLines,filename)
 }
 
-taxlist<-c("Acanthocephala","Annelida","Brachiopoda","Bryozoa","Cephalorhyncha","Chaetognatha",
-           "Cnidaria","Cycliophora","Ctenophora","Dicyemida","Echinodermata","Entoprocta","Gastrotricha",
-           "Gnathostomulida","Hemichordata","Mollusca","Nematoda","Nemertea","Onychophora","Orthonectida",
-           "Phoronida","Placozoa","Platyhelminthes","Porifera","Rotifera","Sipuncula","Tardigrada",
-           "Xenacoelomorpha","Chlorophyta","Rhodophyta","Chlorarachniophyta","Ciliophora","Heterokontophyta",
-           "Pyrrophycophyta","Branchiopoda","Cephalocarida","Diplura","Hexanauplia","Malacostraca","Maxillopoda",
-           "Merostomata","Ostracoda","Protura","Pycnogonida","Remipedia", "Rhombozoa","Branchiura",
-           "Pentastomida","Amphibia","Appendicularia","Ascidiacea","Aves","Cephalaspidomorphi",
-           "Elasmobranchii","Holocephali","Leptocardii","Mammalia","Myxini","Reptilia","Sarcopterygii","Thaliacea")
+taxlist<-readLines(taxlist_bold1.txt)
 
 # Actinopterygii classes
-taxlist2<-c("Acanthuriformes","Acipenseriformes","Albuliformes","Alepocephaliformes",
-           "Amiiformes","Anabantiformes","Anguilliformes","Argentiniformes","Ateleopodiformes","Atheriniformes",
-           "Aulopiformes","Batrachoidiformes","Beloniformes","Beryciformes","Blenniiformes","Callionymiformes",
-           "Caproiformes","Carangiformes","Cetomimiformes","Characiformes","Cichliformes","Clupeiformes",
-           "Cypriniformes","Cyprinodontiformes","Echinorhiniformes","Elopiformes","Esociformes","Gadiformes",
-           "Galaxiiformes","Gobiesociformes","Gobiiformes","Gonorynchiformes","Gymnotiformes","Hiodontiformes",
-           "Holocentriformes","Icosteiformes","Istiophoriformes","Kurtiformes","Labriformes","Lampriformes",
-           "Lepidogalaxiiformes","Lepisosteiformes","Lophiiformes","Moroniformes","Mugiliformes","Myctophiformes",
-           "Notacanthiformes","Ophidiiformes","Osmeriformes","Osteoglossiformes","Ovalentaria","Perciformes",
-           "Percopsiformes","Pleuronectiformes","Polymixiiformes","Polypteriformes","Salmoniformes",
-           "Scombriformes","Scombrolabraciformes","Scorpaeniformes","Siluriformes","Spariformes","Stomiiformes",
-           "Stylephoriformes","Synbranchiformes","Syngnathiformes","Tetraodontiformes","Trachichthyiformes", "Zeiformes")
+taxlist2<-readLines(taxlist_bold2.txt)
 
 get_subtaxa<-function(taxid){
   require(dplyr)
