@@ -4,54 +4,54 @@ Brachiopoda
 Bryozoa
 Cephalorhyncha
 Chaetognatha
- "Cnidaria"
+Cnidaria
 Cycliophora
 Ctenophora
 Dicyemida
 Echinodermata
 Entoprocta
 Gastrotricha
- "Gnathostomulida"
+Gnathostomulida
 Hemichordata
 Mollusca
 Nematoda
 Nemertea
 Onychophora
 Orthonectida
- "Phoronida"
+Phoronida
 Placozoa
 Platyhelminthes
 Porifera
 Rotifera
 Sipuncula
 Tardigrada
- "Xenacoelomorpha"
+Xenacoelomorpha
 Chlorophyta
 Rhodophyta
 Chlorarachniophyta
 Ciliophora
 Heterokontophyta
- "Pyrrophycophyta"
+Pyrrophycophyta
 Branchiopoda
 Cephalocarida
 Diplura
 Hexanauplia
 Malacostraca
 Maxillopoda
- "Merostomata"
+Merostomata
 Ostracoda
 Protura
 Pycnogonida
 Remipedia
- "Rhombozoa"
+Rhombozoa
 Branchiura
- "Pentastomida"
+Pentastomida
 Amphibia
 Appendicularia
 Ascidiacea
 Aves
 Cephalaspidomorphi
- "Elasmobranchii"
+Elasmobranchii
 Holocephali
 Leptocardii
 Mammalia
