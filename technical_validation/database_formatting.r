@@ -75,7 +75,8 @@ bold<-unique(bold)
 
 ## 4. Anacapa COI BOLD all taxon list (Curd et al. 2019)
 
-anacapa<-read.delim("Reference_db/anacapa_seqnames.txt",head=F)anacapa_spec<-sub('.*\\;', '', anacapa$V2)
+anacapa<-read.delim("Reference_db/anacapa_seqnames.txt",head=F)
+anacapa_spec<-sub('.*\\;', '', anacapa$V2)
 anacapa_spec<-stringr::word(anacapa_spec,1,2)
 
 anacapa_spec<-gsub("(?! )[[:punct:]]", "", anacapa_spec, perl=TRUE)
