@@ -7,7 +7,6 @@ Chaetognatha
 Cnidaria
 Cycliophora
 Ctenophora
-Dicyemida
 Echinodermata
 Entoprocta
 Gastrotricha
@@ -15,9 +14,9 @@ Gnathostomulida
 Hemichordata
 Mollusca
 Nematoda
+Nematomorpha
 Nemertea
 Onychophora
-Orthonectida
 Phoronida
 Placozoa
 Platyhelminthes
