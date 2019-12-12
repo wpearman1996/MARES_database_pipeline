@@ -64,7 +64,10 @@ The fasta file containing your sample file (query.fasta) should be added to the 
 
 The output is a .txt file in the MEGAN_db folder that can be imported into MEGAN (Husson et al. 2007) for taxonomic assignment.  
 
-# Database Comparison
+## Technical Validation
+
+## Accessibility
+Copies of each database and the list of taxa in each database (used in the techical validation) are available on the Open Science Framework with the following link: https://osf.io/8rdqk/
 
 # Dependency List
 ## R packages
