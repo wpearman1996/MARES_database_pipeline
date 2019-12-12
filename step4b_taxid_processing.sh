@@ -12,4 +12,4 @@ Rscript ../newname_filt.r
 awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < ./Marine_Euk_BOLD_NCBI_sl_s4.fasta > ./Marine_Euk_BOLD_NCBI_final_sl_s5.fasta
 tail -n +2 Marine_Euk_BOLD_NCBI_final_sl_s5.fasta > Marine_Euk_BOLD_NCBI_final_sl_s6.fasta
 #awk 'BEGIN {RS = ">" ; FS = "\n" ; ORS = ""} {if ($2) print ">"$0}' Marine_Euk_BOLD_NCBI_final_sl_s6.fasta > Marine_Euk_BOLD_NCBI_final_sl_s7.fasta
-awk 'NR%2==0' Marine_Euk_BOLD_NCBI_final_sl_s6.fasta | paste -d'\n' newnames3.txt - > Marine_Euk_BOLD_NCBI_sl_reformatted.fasta
+awk 'NR%2==0' Marine_Euk_BOLD_NCBI_final_sl_s6.fasta | paste -d'\n' newnames3.txt - > MARES_BAR_BOLD_NCBI_sl_reformatted.fasta
