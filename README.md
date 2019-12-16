@@ -1,7 +1,8 @@
 # custom_metabarcoding_databases
 
 These scripts are designed to be run using a linux OS, and were developed on Ubuntu 16.04. If you use windows, you may be able to use the windows linux subsystem (https://docs.microsoft.com/en-us/windows/wsl/install-win10) but you may have additional dependencies to install that aren't covered by this list below.
-![Flowchart](https://github.com/wpearman1996/custom_metabarcoding_databases/blob/master/Flowchart_metabarcodingdb.svg)
+![Flowchart](https://github.com/wpearman1996/custom_metabarcoding_databases/blob/master/Flowchart_metabarcodingdb.svg)*
+*Bioinformatic pipeline for generating a custom reference database combining sequences retrieved from BOLD and GenBank for a taxonomic group of interest. Shaded boxes detail the workflow for each numbered step described in the methods and the name of the script required for each step (available on github: hyperlink). Smaller open boxes describe the subroutines including the functions, packages, and software required (in italics). Boxes with solid outlines indicate input files and boxes with dotted-lined boxes indicate the output files. Asterisks indicate original contributions to the MARES pipeline*
 ## step 1: NCBI COI Retrieval
 
 First it is necessary to make a taxa.list file - this file contains a list of taxa that you're interested in. You can use different lists
