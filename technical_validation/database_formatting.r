@@ -19,6 +19,7 @@ mbpkdb2<-gsub("'","",mbpkdb2)
 
 mbpkdb2<-mbpkdb2[!grepl("\\.",mbpkdb2)]
 mbpk_acc<-mbpkdb2[grepl(">",mbpkdb2)]
+mbpk_acc <- gsub(">","",mbpk_acc)
 ENTREZ_KEY<-"QWERTY" # INSERT YOUR ENTREZ KEY HERE
 acc_det<-genbank2uid(mbpk_acc,key = ENTREZ_KEY)
 acc_det_tax<-do.call("rbind",acc_det)
