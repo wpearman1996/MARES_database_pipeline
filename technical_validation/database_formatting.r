@@ -11,7 +11,7 @@ library(splitstackshape)
 ## 1. db_COI_MBPK_March (Wangensteen, Owen S., et al.  2018)
 
 mbpkdb2 <-read.delim("./Reference_db/MTBPK_seqnames.txt",head=F)
-mbpkdb2<-sub(".*species_name=", "", mbpkdb$V1)
+mbpkdb2<-sub(".*species_name=", "", mbpkdb2$V1)
 mbpkdb2<-sub(';.*', '', mbpkdb2)
 mbpkdb2<-unique(mbpkdb2)
 mbpkdb2<-gsub("_"," ",mbpkdb2)
