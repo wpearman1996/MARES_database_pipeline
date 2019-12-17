@@ -65,6 +65,24 @@ The output is a .txt file in the MEGAN_db folder that can be imported into MEGAN
 
 ## Technical Validation
 
+To highlight the value and potential utility of our curated reference databases (MARES_COI_BAR and MARES_COI_NOBAR) we compared with previously published reference databases for the metabarcoding locus COI. 
+
+To compare the MARES databases with other published COI reference databases in terms of taxonomic composition, we used pairwise beta (β)‐diversity measures based on the presence and absence of taxa within each database. Additionally, we calculated the proportion of marine species out of the total of unique species names for each database.
+
+The scripts to reproduce our comparisons are in Technical validation folder. 
+
+The script *database_formatting.R* first re-format the species names of each database to find the unique species names after a quality control procedure for retaining fully identified taxa with binomial species names. For this step the sequence names of each reference databases are needed, it can be found in XXXX . Next, all the species names from all database were merged and a presence/absence species matrix was generated to use as input for the script bdiv_database_comparison.R. Lastly, the species list from all the databases was checked against WORMS database to identify the marine species and calculate the proportion present in each database.  
+
+The script *bdiv_database_comparison.R* include the calculations for the pairwise beta (β)‐diversity measures between databases. 
+
+Databases included in this comparison: 
+-	BOLD 
+-	Genbank
+-	MiDori-LONGEST
+-	db_COI_MBPK
+-	Anacapa CO1
+
+
 ## Accessibility
 Copies of the MARES databases (as fasta files) and the list of taxa in each database (used in the technical validation) are available on the Open Science Framework with the following link: https://osf.io/8rdqk/
 
@@ -76,6 +94,10 @@ Copies of the MARES databases (as fasta files) and the list of taxa in each data
 `taxize`
 `dplyr`
 `bold`
+`betapart`
+`stingi`
+`qdapDictionaries`
+`splitstackshape`
 
 ## Other dependencies
 `vsearch`
@@ -105,4 +127,4 @@ The genbank_to_fasta.py script was developed by the Rocap Lab https://rocaplab.o
 ## Questions
 If there are any questions or issues - please email William Pearman (wpearman1996@gmail.com) or Vanessa Arranz (vanearranz@hotmail.com), or alternatively leave comment on this repository.
 
-Please refer to the publication: Arranz, Pearman, Aguirre, Liggins. MARES: [insert title from updated draft!]. In preparation
+Please refer to the publication: Arranz, Vanessa, Pearman, William S., Aguirre, J. David and Liggins, Libby. (2019). "MARES: a replicable pipeline and curated reference database for marine (COI) metabarcoding". Manuscript submitted for publication.
