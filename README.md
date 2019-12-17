@@ -1,4 +1,4 @@
-# custom_metabarcoding_databases
+# Building custom reference databases for metabarcoding
 
 These scripts support the MARES (MARine Eukaryote Species) pipeline used to create the MARES database of COI sequences for metabarcoding studies (presented in Arranz, Pearman, Aguirre, Liggins, in prep.). The scripts are designed to be run using a Linux OS, and were developed on Ubuntu 16.04. If you use windows, you may be able to use the Windows Linux subsystem (https://docs.microsoft.com/en-us/windows/wsl/install-win10) but you may have additional dependencies to install that aren't covered by the list below. 
 
