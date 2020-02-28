@@ -35,12 +35,12 @@ This process takes the BOLD file, ensures it is for the COI-5P region, and proce
 You may need to modify Step3_merge_bold_ncbi.sh on line 6 to specify the taxon name for your reference database.
 
 ## Step 4: Normalise taxonomy IDs
-
+Note: You will need to modify the step4b_taxid_generation.sh file to update the location of the nodes and names dmp files.
 To normalise the taxonomic IDs we first need to export a list of sequence names from the merged database.
 
 Many pipelines and software use lowest common ancestor approaches for taxonomic classification, and rely on the NCBI taxonomy to do this.  However, many species don't have taxids in NCBI or have been uploaded with synonyms as names, making the retrieval of reliable taxonomic classifications difficult.
 
-In our pipeline, we identify any synonyms and consolidate them so that each taxon has only one name, and is provided with the appropriate taxid. If a taxon does not have a taxid assigned, we then take the first word, generally the genus, and check it for a matching taxid, updating the classification to the genus level if a match is found. Last,  if the taxon still has no taxid, it is removed from the database.
+In our pipeline, we identify any synonyms and consolidate them so that each taxon has only one name, and is provided with the appropriate taxid. If a taxon does not have a taxid assigned, we assign one based on the genus name and incorporate this into the nodes and names dmp files. If a taxid cannot be assigned because the genus was not able to be identified, then the sequence is removed from the database.
 
 We then generate two lists of sequence names - the first is the original sequence names, for sequences that have taxids. The second is the new set of names for the sequences, that now are in a standardized format, with taxid included in the seq name. We use these lists to rename and generate a new fasta called Marine_Euk_BOLD_NCBI_sl_reformatted.fasta which is now our completed database.
 To do this step, use the taxid_addition.r script. You will need to edit this script to modify directories, as well as to ensure the appropriate packages are installed.
