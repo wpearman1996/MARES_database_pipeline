@@ -16,6 +16,7 @@ convert2name<-function(seqnames){
 me_wo<-convert2name(me_wo_names)
 me_wo_uni<-unique(me_wo)
 
+
 get_taxinfo<-function(taxnames){
   names<-paste(taxnames,"\n")
   names<-split(names, ceiling(seq_along(names)/10000))
@@ -46,18 +47,31 @@ x<-get_taxinfo(me_wo_uni)
 
 
 notaxids<-as.character(x$name[x$code==3])
-notaxids<-word(notaxids,1)
+notaxids_genus<-word(notaxids,1)
 
-notaxids_info<-get_taxinfo(notaxids)
+notaxids_info<-get_taxinfo(notaxids_genus)
+notaxids_spec <- get_taxinfo(notaxids)
+notaxids_info <- notaxids_info[2:nrow(notaxids_info),]
+notaxids_info$taxid <-   gsub("^$", NA, trimws(notaxids_info$taxid))
+notaxids_info <- notaxids_info[notaxids_info$code==1,]
+taxids<-rbind(x[x$code != 3,],notaxids_info[notaxids_info$code == 1,])
 
-taxids<-rbind(x[x$code != 3,],notaxids_info[notaxids_info$code != 3,])
 library(dplyr)
 taxids<-taxids %>%
- mutate_all(as.character)
+  mutate_all(as.character)
 
+genus_taxids <- notaxids_info[notaxids_info$code == 1,]
+genus_taxids <- unique(genus_taxids)
 
-notaxids_df<-data.frame(notaxids,as.character(x$name[x$code==3]),notaxids_info$taxid[notaxids_info$code != 3])
-write.csv(notaxids_df,"./notaxid_forgeneration.csv")
+                        
+#Data frame with genus, old name, taxid
+parentdetails<-data.frame(notaxids)
+colnames(parentdetails)<-c("oldname")
+parentdetails$Genus <- word(parentdetails$oldname,1)
+parentdetails$GenusTaxid <- genus_taxids$taxid[match(parentdetails$Genus,genus_taxids$name)]
+parentdetails<-parentdetails[complete.cases(parentdetails),]
+write.csv(parentdetails,"./notaxid_forgeneration.csv")
+
 
 # Post revisions the following has been superceded by a new method
 
