@@ -127,4 +127,13 @@ The genbank_to_fasta.py script was developed by the Rocap Lab https://rocaplab.o
 ## Questions
 If there are any questions or issues - please email William Pearman (wpearman1996@gmail.com) or Vanessa Arranz (vanearranz@hotmail.com), or alternatively leave comment on this repository.
 
+
+# Suggested Citation
+
 Please refer to the publication: Arranz, Vanessa, Pearman, William S., Aguirre, J. David and Liggins, Libby. (2019). "MARES: a replicable pipeline and curated reference database for marine (COI) metabarcoding". Manuscript submitted for publication.
+
+
+In addition, if you make use of this pipeline, please also cite the following publications:
+Macher, Jan-Niklas, Till-Hendrik Macher, and Florian Leese. "Combining NCBI and BOLD databases for OTU assignment in metabarcoding and metagenomic datasets: The BOLD_NCBI _Merger." Metabarcoding and Metagenomics 1 (2017): e22262.
+
+Porter, Teresita M., and Mehrdad Hajibabaei. "Over 2.5 million COI sequences in GenBank and growing." PloS one 13.9 (2018): e0200177.
