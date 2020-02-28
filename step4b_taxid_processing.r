@@ -25,6 +25,15 @@ generate_newnames<-function(taxidtable,seqnames){
   newseqnames
 }
 library(stringr)
+newtaxids <- readLines("../newtaxids.txt")
+newtaxids <- word(newtaxids,5)
+newtaxids <- gsub('.{1}$', '', newtaxids)
+
+newtaxids<-data.frame("1",parentdetails$oldname," ",newtaxids)
+colnames(newtaxids) <- colnames(taxids)
+taxids<-rbind(taxids,newtaxids)
+
+
 temp<-generate_newnames(taxids,me_wo_names)
 accessions<-temp$seqnames.V1
 me_wo_names<-readLines(file)
