@@ -20,7 +20,7 @@ cat taxonomy.taxid* > ./taxonomy.taxid
 ### Now we convert these to genus_species, this requires the modification of the script to include the location of the 
 ### nodes.dmp and names.dmp from ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz
 
-perl ../coi_ret/taxonomy_crawl_for_genus_species_list.plx taxonomy.taxid
+perl ../coi_ret/taxonomy_crawl_for_genus_species_list.plx taxonomy.taxid > Genus_species.txt
 
 mkdir ../taxids
 mv Genus_species.txt ../taxids
