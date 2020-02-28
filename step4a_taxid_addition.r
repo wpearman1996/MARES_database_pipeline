@@ -70,7 +70,7 @@ colnames(parentdetails)<-c("oldname")
 parentdetails$Genus <- word(parentdetails$oldname,1)
 parentdetails$GenusTaxid <- genus_taxids$taxid[match(parentdetails$Genus,genus_taxids$name)]
 parentdetails<-parentdetails[complete.cases(parentdetails),]
-write.csv(parentdetails,"./notaxid_forgeneration.csv",row.names = F,quote=F)
+write.table(parentdetails,"./notaxid_forgeneration.csv",row.names = F, col.names = F,quote = F,sep=",")
 
 # Post revisions the following has been superceded by a new method
 
