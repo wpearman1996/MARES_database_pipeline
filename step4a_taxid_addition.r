@@ -45,45 +45,48 @@ x<-get_taxinfo(me_wo_uni)
 
 
 
-
 notaxids<-as.character(x$name[x$code==3])
 notaxids<-word(notaxids,1)
+
 notaxids_info<-get_taxinfo(notaxids)
 
 taxids<-rbind(x[x$code != 3,],notaxids_info[notaxids_info$code != 3,])
 library(dplyr)
 taxids<-taxids %>%
-  mutate_all(as.character)
+ mutate_all(as.character)
 
-generate_newnames<-function(taxidtable,seqnames){
-  taxidtable$`preferred name`<-ifelse(taxidtable$`preferred name`==" ",
-                                      taxidtable$name,taxidtable$`preferred name`)
- # seqnames<-strsplit(seqnames," ")
-  #seqnames<-lapply(seqnames,head,3)
-  #seqnames<-as.data.frame(do.call("rbind",seqnames))
-  me_wo_uni<-unique(convert2name((seqnames)))
-  me_wo_uni<-data.frame(me_wo_uni)
-  me_wo_uni$newname<-taxidtable$`preferred name`[match(me_wo_uni$me_wo_uni,taxids$name)]
-  me_wo_uni$taxid<-taxidtable$taxid[match(me_wo_uni$me_wo_uni,taxidtable$name)]
-  seqnames$spec<-paste(seqnames$V2,seqnames$V3)
-  seqnames$spec<-trimws(gsub("\\w*[0-9]+\\w*\\s*", "", seqnames$spec))
-  seqnames$spec<-trimws(gsub("\\w*\\.+\\w*\\s*", "", seqnames$spec))
-  seqnames$newspec<-me_wo_uni$newname[match(seqnames$spec,me_wo_uni$newname)]
-  seqnames$taxid<-me_wo_uni$taxid[match(seqnames$spec,me_wo_uni$newname)]
-  newseqnames<-data.frame(seqnames$V1,seqnames$newspec,seqnames$taxid,"COIN5P")
-  newseqnames<-newseqnames[complete.cases(newseqnames),]
-  newseqnames
-}
-library(stringr)
-temp<-generate_newnames(taxids,me_wo_names)
-accessions<-temp$seqnames.V1
-me_wo_names<-readLines(file)
-accesion_old<-gsub(">", "",word(me_wo_names,1))
-accesion_old<-gsub(">","",accesion_old)
-accessions<-gsub(">","",accessions)
+
+notaxids_df<-data.frame(notaxids,as.character(x$name[x$code==3]),notaxids_info$taxid[notaxids_info$code != 3])
+write.csv(notaxids_df,"./notaxid_forgeneration.csv")
+
+# Post revisions the following has been superceded by a new method
+
+#generate_newnames<-function(taxidtable,seqnames){
+#  taxidtable$`preferred name`<-ifelse(taxidtable$`preferred name`==" ",
+#                                      taxidtable$name,taxidtable$`preferred name`)
+#  me_wo_uni<-unique(convert2name((seqnames)))
+#  me_wo_uni<-data.frame(me_wo_uni)
+#  me_wo_uni$newname<-taxidtable$`preferred name`[match(me_wo_uni$me_wo_uni,taxids$name)]
+#  me_wo_uni$taxid<-taxidtable$taxid[match(me_wo_uni$me_wo_uni,taxidtable$name)]
+ # seqnames$spec<-paste(seqnames$V2,seqnames$V3)
+  #seqnames$spec<-trimws(gsub("\\w*[0-9]+\\w*\\s*", "", seqnames$spec))
+  #seqnames$spec<-trimws(gsub("\\w*\\.+\\w*\\s*", "", seqnames$spec))
+  #seqnames$newspec<-me_wo_uni$newname[match(seqnames$spec,me_wo_uni$newname)]
+  #seqnames$taxid<-me_wo_uni$taxid[match(seqnames$spec,me_wo_uni$newname)]
+  #newseqnames<-data.frame(seqnames$V1,seqnames$newspec,seqnames$taxid,"COIN5P")
+  #newseqnames<-newseqnames[complete.cases(newseqnames),]
+  #newseqnames
+#}
+#library(stringr)
+#temp<-generate_newnames(taxids,me_wo_names)
+#accessions<-temp$seqnames.V1
+#me_wo_names<-readLines(file)
+#accesion_old<-gsub(">", "",word(me_wo_names,1))
+#accesion_old<-gsub(">","",accesion_old)
+#accessions<-gsub(">","",accessions)
 #View(intersect(accessions,accesion_old))
-x<-(me_wo_names[accesion_old %in% accessions])
-temp$oldname<-x[match(temp$seqnames.V1,word(x,1))]
-temp$newname<-with(temp, paste(seqnames.V1, seqnames.newspec, seqnames.taxid, X.COIN5P.,sep=" "))
-writeLines(temp$oldname,"seqs_oldnames.txt")
-writeLines(temp$newname,"seqs_newnames.txt")
+#x<-(me_wo_names[accesion_old %in% accessions])
+#temp$oldname<-x[match(temp$seqnames.V1,word(x,1))]
+#temp$newname<-with(temp, paste(seqnames.V1, seqnames.newspec, seqnames.taxid, X.COIN5P.,sep=" "))
+#writeLines(temp$oldname,"seqs_oldnames.txt")
+#writeLines(temp$newname,"seqs_newnames.txt")
