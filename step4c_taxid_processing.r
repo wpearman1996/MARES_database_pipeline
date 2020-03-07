@@ -1,3 +1,4 @@
+setwd("./taxid_process")
 library(stringr)
 convert2name<-function(seqnames){
   seqnames<-paste(seqnames$V2,seqnames$V3)
