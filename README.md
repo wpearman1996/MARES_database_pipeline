@@ -11,7 +11,7 @@ We suggest that users ensure their database is representative of not only the ta
 First, it is necessary to make a taxa.list file - this file contains the list of taxa that you're interested in. You can use different lists for BOLD or NCBI, or the same for both. You will need to modify a few scripts to make this work for you.
 Specifically, ebot_taxonomy3.plx needs to be modified on line 86 to include your email address.
 
-Additionally, you will need to modify the taxonomy_crawl_for_genus_species_list.plx to index the correct location of the nodes.dmp and names.dmp files from ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz At the same time you should modify step4b_taxid_generation.sh to modify the location of the nodes and names file (currently they are assumed to be in the home directory of the pipeline).
+Additionally, you will need to modify the taxonomy_crawl_for_genus_species_list.plx to index the correct location of the nodes.dmp and names.dmp files from ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz At the same time you should modify line 76 step4c_taxid_processing.r to modify the location of the nodes and names file (currently they are assumed to be in the home directory of the pipeline).
 
 You may wish to modify grab_many_gb_catch_errors_auto_CO1_year.plx to change the search terms to include additional genes, or keywords (line 29).
 
