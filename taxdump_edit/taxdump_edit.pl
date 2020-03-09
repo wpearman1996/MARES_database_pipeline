@@ -1,4 +1,5 @@
 #!/bin/env perl
+#Please cite https://zenodo.org/record/3701276 - who wrote this script
 use strict;
 use warnings;
 
