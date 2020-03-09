@@ -1,203 +1,143 @@
-# Taxdump Edit
+# Building custom reference databases for metabarcoding
 
-## Why?
-The taxdump files from NCBI, along with the 'nr' database, are often used in meta -genomics and -transcriptomics software to inform taxonomic identification of reads, contigs and ORFs. However, if you are working with organisms that have little to no representation in the NCBI databases then you may find yourself a bit stuck.
+These scripts support the MARES (MARine Eukaryote Species) pipeline used to create the MARES database of COI sequences for metabarcoding studies (presented in Arranz, Pearman, Aguirre, Liggins, in prep.). The scripts are designed to be run using a Linux OS, and were developed on Ubuntu 16.04. If you use windows, you may be able to use the Windows Linux subsystem (https://docs.microsoft.com/en-us/windows/wsl/install-win10) but you may have additional dependencies to install that aren't covered by the list below. 
 
-Many researchers in this situation will have custom databases of genomic/transcriptomic data and want to use it, but may still find their organism(s) unavailable within the NCBI taxonomy DB. If your organism does not have a valid TaxID in NCBI then you are unable to use many of the software packages that rely on 'taxdump' to extract taxonomic lineage and naming information with your custom DBs.
+![Flowchart](https://github.com/wpearman1996/custom_metabarcoding_databases/blob/master/Flowchart_metabarcodingdb.svg)
+*The MARES bioinformatic pipeline for generating a custom reference database combining sequences retrieved from the Barcode of Life Database (BOLD) and NCBI for a taxonomic group of interest. Shaded boxes detail the workflow within each step and the names of the scripts required. Smaller open boxes describe the subroutines including the functions, packages, and software required (in italics). Boxes with solid outlines indicate input files and boxes with dotted-lined boxes indicate the output files. Many of the scripts and functions used in the MARES pipeline were developed by others; asterisks denote the original contributions of the MARES pipeline.*
+## Data Processing and Database Construction
+We suggest that users ensure their database is representative of not only the taxa the may be encountered, but also of possible contaminants. One way to do this is to include potential contaminants in your taxa list. The other is to create a separate contaminant database. In our MARES database, we have opted for the latter. This is because this means you can choose to screen your data prior to analyses for potential contaminants, and remove them before processing your data through the primary database. Alternatively, you could merge these together easily by concatenating the two fasta files. We provide scripts that will trawl through your output data, and taxa list, and provide a list of reads or taxa that are potentially contaminants.
 
-## What?
-This tool will allow you to modify the 'taxdump' (appending new data to names.dmp and nodes.dmp) files from NCBI, to temporarily include your organisms - until they find represenration of their own in the NCBI taxonomy lineage.
+## Step 1: NCBI COI Retrieval
+First, it is necessary to make a taxa.list file - this file contains the list of taxa that you're interested in. You can use different lists for BOLD or NCBI, or the same for both. You will need to modify a few scripts to make this work for you.
+Specifically, ebot_taxonomy3.plx needs to be modified on line 86 to include your email address.
 
-## How?
-The script will automatically find the largest taxonomic ID in nodes.dmp and increment from that point (with a 10^length-1 addition) and assign it to your new taxa. This large addition is to avoid future conflicts with taxdump updates. Once added, you can then run *makeblastdb* with the '-taxid' option and your newly assigned TaxID.
+Additionally, you will need to modify the taxonomy_crawl_for_genus_species_list.plx to index the correct location of the nodes.dmp and names.dmp files from ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz At the same time you should modify line 76 step4c_taxid_processing.r to modify the location of the nodes and names file (currently they are assumed to be in the home directory of the pipeline).
 
-## Usage
-```
-	taxdump_edit.pl -names names.dmp -nodes nodes.dmp -taxa NAME -parent XXX -rank NAME -division X
+You may wish to modify grab_many_gb_catch_errors_auto_CO1_year.plx to change the search terms to include additional genes, or keywords (line 29).
 
-	Required Input:
-		-names names.dmp location
-		-nodes nodes.dmp location
-		-taxa new taxa/group name
-		-parent parent TaxID
-		-rank rank name (see -help)
-		-division division ID (see -help)
-	Optional Input
-		-override TaxID from previous
-	Optional Input (names.dmp):
-		unique name
-	Default Values (names.dmp):
-		name class (scientific name) (see -help)
-	Optional Input (nodes.dmp):
-		embl code
-		genetic code (1) (see -help)
-		mitochondria genetic code (1) (see -help)
-		comments
-	Default Values (nodes.dmp):
-		inherited div flag = 1
-		inherited GC flag = 1
-		inherited MGC flag = 1
-		GenBank hidden flag = 1
-		hidden subtree root flag = 1
-```
-## Example
-### New 'Species'
-Adding a new 'species' lineage, for example, MAST-4A. We know by looking at the NCBI Taxonomy that there is already a group for "Stramenopiles MAST-4" at TaxID:[1735725](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=1735725) with a lineage of "cellular organisms; Eukaryota; Stramenopiles; unclassified stramenopiles". This is correct for our new organism, so we need to note down the TaxID of '1735725'. Then use the script as below, this assumes some default options which have been noted in the [Usage](https://github.com/guyleonard/taxdump_edit/blob/master/README.md#usage) section above:
+Finally, you will want to modify NCBI_COI_Retrieval.sh on line 29 to change -j to the number of threads you wish to run. If you are not using an NCBI API key then you can probably only run 1 or 2 threads, as you will likely exceed the maximum requests per second without this API key.
 
-    taxdump_edit.pl -names names.dmp -nodes nodes.dmp -taxa MAST-4A -parent 1735725 -rank species -division 11
-We have given the script the location of both names.dmp and nodes.dmp, along with the new taxa name of 'MAST-4A'. We are saying that the parental lineage is TaxID:1735725 and that the rank of the organism is 'species'. The division number is from the [Division](https://github.com/guyleonard/taxdump_edit/blob/master/README.md#divisions) list below, and is 'Environmental Samples' - number 11 - to reflect the provenance of our sample and unlike many other Stramenopiles in NCBI which are listed as '4' - Plants and Fungi. :/ 
+Then, we want to run the NCBI_COI_Retrieval.sh script which does the following:
+1.	Converts your list of taxa (i.e. taxa.list) into a list of taxids for every species. For example, "Chordata" will be turned into a list of taxids for every species found in Chordata.
+2.	Converts taxids to binomial names that can be searched for in NCBI.
+3.	Searches NCBI and downloads all relevant genbank files (.gb format) .
 
-This will show the output:
 
-    Your calculated TaxID = 3304349. Please use this with makeblastdb and your fasta sequences.
-    Backing up orginal names.dmp
-    Appending new line
-    Done.
-    Backing up orginal nodes.dmp
-    Appending new line
-    Finished.
-Remember your new TaxID of '3304349', this is the ID you will need to use with *makeblastdb*.
+## Step 2: BOLD Retrieval
 
-At the end of the names.dmp file, you will now have a new record:
+For BOLD retrieval you will want to run the R script retrieve_bold.r. You may need to make modifications to this file. Specifically, this script takes a list of taxa and retrieves the BOLD data, and formats this data as a fasta file. This can take a while for large taxonomic groups, and may timeout when connecting to BOLD if you do not have large amounts of RAM.
 
-    3304349	|	MAST-4A	|		|	scientific name	|
-Along with the corresponding record in nodes.dmp
-    
-    3304349	|	1735725	|	species	|		|	11	|	1	|	1	|	1	|	1	|	1	|	1	|	1	|
-The original nodes.dmp and names.dmp have been backed up in the same location as nodes_backup.dmp and names_backup.dmp.
+If this does become problematic, it may be wise to remove this group from your taxlist, replacing it with the subtaxa for that group to avoid timing out. It is for this reason we have two taxlist_bold files in our example. You will want to specify the taxalist files you wish to use in this file on line 27 and 30 (or remove line 30)
 
-### New Group
-This is done much in the same way, but you will have to add the different lineage levels one-by-one in order to build the taxonomic relationships. However, we don't want the TaxID to keep on incrementing by 10^length-1, so we can use the -override variable to supply the script with the previous TaxID and it will increment it by 1. Add the 'lowest' rank of your new lineage first, e.g. kingdom before class and then finally genus and species.
+## Step 3: The BOLD_NCBI merger
 
-### Variable Options
-#### Divisions
-	0 -> Bacteria
-	1 -> Invertebrates
-	2 -> Mammals
-	3 -> Phages
-	4 -> Plants and Fungi
-	5 -> Primates
-	6 -> Rodents
-	7 -> Synthetic and Chimeric
-	~~8 -> Unassigned - Do Not Use~~
-	9 -> Viruses
-	10 -> Vertebrates
-	11 -> Environmental Samples
-#### Genetic Code
-	0 -> Unspecified
-	1 -> Standard
-	2 -> Vertebrate Mitochondrial
-	3 -> Yeast Mitochondrial
-	4 -> Mold Mitochondrial; Protozoan Mitochondrial; Coelenterate Mitochondrial; Mycoplasma; Spiroplasma
-	5 -> Invertebrate Mitochondrial
-	6 -> Ciliate Nuclear; Dasycladacean Nuclear; Hexamita Nuclear
-	9 -> Echinoderm Mitochondrial; Flatworm Mitochondrial
-	10 -> Euplotid Nuclear
-	11 -> Bacterial, Archaeal and Plant Plastid
-	12 -> Alternative Yeast Nuclear
-	13 -> Ascidian Mitochondrial
-	14 -> Alternative Flatworm Mitochondrial
-	15 -> Blepharisma Macronuclear
-	16 -> Chlorophycean Mitochondrial
-	21 -> Trematode Mitochondrial
-	22 -> Scenedesmus obliquus mitochondrial
-	23 -> Thraustochytrium mitochondrial code
-	24 -> Pterobranchia Mitochondrial
-	25 -> Candidate Division SR 1 and Gracilibacteria
-	26 -> Pachysolen tannophilus Nuclear
-	27 -> Karyorelict Nuclear
-	28 -> Condylostoma Nuclear
-	29 -> Mesodinium Nuclear
-	30 -> Peritrich Nuclear
-	31 -> Blastocrithidia Nuclear
-#### Name Class
-	Acronym
-	Anamorph
-	Authority
-	Blast Name
-	Common Name
-	Equivalent Name
-	Genbank Acronym
-	Genbank Anamorph
-	Genbank Common Name
-	Genbank Synonym
-	Includes
-	In-part
-	Misnomer
-	Misspelling
-	Scientific Name
-	Synonym
-	Teleomorph
-	Type Material
-#### Taxonomic Rank
-	no rank
-	superkingdom
-		kingdom
-			subkingdom
-	superphylum
-		phylum
-			subphylum
-	superclass
-		class
-			subclass
-				infraclass
-	cohort
-	superorder
-		order
-			suborder
-				infraorder
-					parvorder
-	superfamily
-		family
-			subfamily
-			tribe
-				subtribe
-		genus
-			subgenus
-	species group
-		species
-		species subgroup
-			subspecies
-				varietas
-					forma
+The BOLD_NCBI merger step is based largely on Macher J, Macher T, Leese F (2017) Combining NCBI and BOLD databases for OTU assignment in metabarcoding and metagenomic datasets: The BOLD_NCBI _Merger. Metabarcoding and Metagenomics 1: e22262. https://doi.org/10.3897/mbmg.1.22262
 
-# More Information 
-## Structure of \*.dmp files
-As per NCBI's taxdump_readme.txt:
-Each of the files store one record in the single line that are delimited by "\t|\n" (tab, vertical bar, and newline) characters. Each record consists of one or more fields delimited by "\t|\t" (tab, vertical bar, and tab) characters. The brief description of field position and meaning for each file follows.
+This process takes the BOLD file, ensures it is for the COI-5P region, and processes the names to enable dereplication of sequences and the merging of sequences into a single file. Last, the headers are reformatted, and the sequences converted to single line fasta format.
+You may need to modify Step3_merge_bold_ncbi.sh on line 6 to specify the taxon name for your reference database.
 
-## nodes.dmp
-This file represents taxonomy nodes. The description for each node includes the following fields:
+## Step 4: Normalise taxonomy IDs
+Note: You will need to modify the step4b_taxid_generation.sh file to update the location of the nodes and names dmp files.
+To normalise the taxonomic IDs we first need to export a list of sequence names from the merged database.
 
-	tax_id					-- node id in GenBank taxonomy database
- 	parent tax_id				-- parent node id in GenBank taxonomy database
- 	rank					-- rank of this node (superkingdom, kingdom, ...) 
- 	embl code				-- locus-name prefix; not unique
- 	division id				-- see division.dmp file
- 	inherited div flag  (1 or 0)		-- 1 if node inherits division from parent
- 	genetic code id				-- see gencode.dmp file
- 	inherited GC  flag  (1 or 0)		-- 1 if node inherits genetic code from parent
- 	mitochondrial genetic code id		-- see gencode.dmp file
- 	inherited MGC flag  (1 or 0)		-- 1 if node inherits mitochondrial gencode from parent
- 	GenBank hidden flag (1 or 0)            -- 1 if name is suppressed in GenBank entry lineage
- 	hidden subtree root flag (1 or 0)       -- 1 if this subtree has no sequence data yet
- 	comments				-- free-text comments and citations
+Many pipelines and software use lowest common ancestor approaches for taxonomic classification, and rely on the NCBI taxonomy to do this.  However, many species don't have taxids in NCBI or have been uploaded with synonyms as names, making the retrieval of reliable taxonomic classifications difficult.
 
-## names.dmp
-Taxonomy names file has these fields:
+In our pipeline, we identify any synonyms and consolidate them so that each taxon has only one name, and is provided with the appropriate taxid. If a taxon does not have a taxid assigned, we assign one based on the genus name and incorporate this into the nodes and names dmp files. This only occurs if the genus name is unique taxonomically (i.e "Acanthocephala" is both a genus of fly, and phylum of worms, as a result of ambiguous naming, we do not assign a taxid). If a taxid cannot be assigned because the genus was not able to be identified, then the sequence is removed from the database.
 
-	tax_id					-- the id of node associated with this name
-	name_txt				-- name itself
-	unique name				-- the unique variant of this name if name not unique
-	name class				-- (synonym, common name, ...)
+We then generate two lists of sequence names - the first is the original sequence names, for sequences that have taxids. The second is the new set of names for the sequences, that now are in a standardized format, with taxid included in the seq name. We use these lists to rename and generate a new fasta called Marine_Euk_BOLD_NCBI_sl_reformatted.fasta which is now our completed database.
+To do this step, use the taxid_addition.r script. You will need to edit this script to modify directories, as well as to ensure the appropriate packages are installed.
 
-## Taxdump Files
-```
-wget ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz
-tar zxvf taxdump.tar/gz
-```
+ 
 
-## Taxdump Readme
-```
-wget ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump_readme.txt
-```
+## Step 5: Format for taxonomy classifiers
+
+### 5a : Prepare to KRAKEN 
+At this point, we want to format our database for taxonomic classification using kraken. For this to work the header for each fasta needs to be reformatted to kraken:taxid|{taxid} and then provide instructions on how to build the database.  
+
+Note: At the time of writing, the conda installation of kraken2 was not compatible with this pipeline, due to changes in the NCBI taxonomy files . The recent version of Kraken2 on github has been updated  - so please use this installation.
+
+### 5b : Prepare to MEGAN 
+
+In this step, we built a local database from our custom reference database and blast it against your metabarcoding sample file.
+
+The fasta file containing your sample file (query.fasta) should be added to the custom_metabarcoding_database folder. Modify the blast parameters according to your preference in line 17.
+
+The output is a .txt file in the MEGAN_db folder that can be imported into MEGAN (Husson et al. 2007) for taxonomic assignment. 
+
+
+## Technical Validation
+
+To highlight the value and potential utility of our curated reference databases (MARES_COI_BAR and MARES_COI_NOBAR) we compared with previously published reference databases for the metabarcoding locus COI. 
+
+To compare the MARES databases with other published COI reference databases in terms of taxonomic composition, we used pairwise beta (β)‐diversity measures based on the presence and absence of taxa within each database. Additionally, we calculated the proportion of marine species out of the total of unique species names for each database.
+
+The scripts to reproduce our comparisons are in Technical validation folder. 
+
+The script *database_formatting.R* first re-format the species names of each database to find the unique species names after a quality control procedure for retaining fully identified taxa with binomial species names. For this step the sequence names of each reference databases are needed, it can be found in XXXX . Next, all the species names from all database were merged and a presence/absence species matrix was generated to use as input for the script bdiv_database_comparison.R. Lastly, the species list from all the databases was checked against WORMS database to identify the marine species and calculate the proportion present in each database.  
+
+The script *bdiv_database_comparison.R* include the calculations for the pairwise beta (β)‐diversity measures between databases. 
+
+Databases included in this comparison: 
+-	BOLD 
+-	Genbank
+-	MiDori-LONGEST
+-	db_COI_MBPK
+-	Anacapa CO1
+
+
+## Accessibility
+Copies of the MARES databases (as fasta files) and the list of taxa in each database (used in the technical validation) are available on the Open Science Framework with the following link: https://osf.io/8rdqk/
+
+# Dependency List
+## R packages
+`stringr`
+`rvest`
+`httr`
+`taxize`
+`dplyr`
+`bold`
+`betapart`
+`stingi`
+`qdapDictionaries`
+`splitstackshape`
+
+## Other dependencies
+`vsearch`
+`BLAST+`
+`cpanminus`
+`biopython`
+`Bio::Lite::Taxonomy::NCBI`
+`Bio::DB::EUtilities`
+`HTTP::Date`
+`LWP::Simple`
+`LWP::UserAgent`
+`parallel`
+`perl`
+`r`
+`python2`
+`seqtk`
+`Kraken`
+
+## Citations and Acknowledgements
+
+Macher, Jan-Niklas, Till-Hendrik Macher, and Florian Leese. "Combining NCBI and BOLD databases for OTU assignment in metabarcoding and metagenomic datasets: The BOLD_NCBI _Merger." Metabarcoding and Metagenomics 1 (2017): e22262.
+
+Porter, Teresita M., and Mehrdad Hajibabaei. "Over 2.5 million COI sequences in GenBank and growing." PloS one 13.9 (2018): e0200177.
+
+Please also cite: https://doi.org/10.5281/zenodo.3701276 if you're usage involved the addition of custom TaxIDs (this is included by default within the pipeline)
+
+The genbank_to_fasta.py script was developed by the Rocap Lab https://rocaplab.ocean.washington.edu/
+
+## Questions
+If there are any questions or issues - please email William Pearman (wpearman1996@gmail.com) or Vanessa Arranz (vanearranz@hotmail.com), or alternatively leave comment on this repository.
+
+
+# Suggested Citation
+
+Please refer to the publication: Arranz, Vanessa, Pearman, William S., Aguirre, J. David and Liggins, Libby. (2019). "MARES: a replicable pipeline and curated reference database for marine (COI) metabarcoding". Manuscript submitted for publication.
+
+
+In addition, if you make use of this pipeline, please also cite the following publications:
+Macher, Jan-Niklas, Till-Hendrik Macher, and Florian Leese. "Combining NCBI and BOLD databases for OTU assignment in metabarcoding and metagenomic datasets: The BOLD_NCBI _Merger." Metabarcoding and Metagenomics 1 (2017): e22262.
+
+Porter, Teresita M., and Mehrdad Hajibabaei. "Over 2.5 million COI sequences in GenBank and growing." PloS one 13.9 (2018): e0200177.
