@@ -124,6 +124,8 @@ Macher, Jan-Niklas, Till-Hendrik Macher, and Florian Leese. "Combining NCBI and 
 
 Porter, Teresita M., and Mehrdad Hajibabaei. "Over 2.5 million COI sequences in GenBank and growing." PloS one 13.9 (2018): e0200177.
 
+Please also cite: https://doi.org/10.5281/zenodo.3701276 if you're usage involved the addition of custom TaxIDs (this is included by default within the pipeline)
+
 The genbank_to_fasta.py script was developed by the Rocap Lab https://rocaplab.ocean.washington.edu/
 
 ## Questions
