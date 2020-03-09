@@ -72,7 +72,7 @@ parentdetails$GenusTaxid <- genus_taxids$taxid[match(parentdetails$Genus,genus_t
 parentdetails<-parentdetails[complete.cases(parentdetails),]
 write.table(parentdetails,"./notaxid_forgeneration.csv",row.names = F, col.names = F,quote = F,sep=",")
 write.table(parentdetails,"./notaxid_forgeneration.csv",row.names = F, col.names = F,quote = F,sep=",")
-parentdetails$command<-paste("perl ./taxdump_edit.pl -names names.dmp -nodes nodes.dmp -taxa ", paste0("\'",parentdetails$V1,"\'"),
+parentdetails$command<-paste("perl ./taxdump_edit/taxdump_edit.pl -names names.dmp -nodes nodes.dmp -taxa ", paste0("\'",parentdetails$V1,"\'"),
                              "-parent", parentdetails$V3, "-rank species -division 1")
 writeLines(as.character(parentdetails$command),"../taxid_commands_addition.txt")
 
