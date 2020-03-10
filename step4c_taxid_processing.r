@@ -30,7 +30,7 @@ newtaxids <- readLines("../newtaxids.txt")
 newtaxids <- word(newtaxids,5)
 newtaxids <- gsub('.{1}$', '', newtaxids)
 
-newtaxids<-data.frame("1",parentdetails$oldname," ",newtaxids)
+newtaxids<-data.frame("1",parentdetails$V1," ",newtaxids)
 colnames(newtaxids) <- colnames(taxids)
 taxids<-rbind(taxids,newtaxids)
 
@@ -45,5 +45,11 @@ accessions<-gsub(">","",accessions)
 x<-(me_wo_names[accesion_old %in% accessions])
 temp$oldname<-x[match(temp$seqnames.V1,word(x,1))]
 temp$newname<-with(temp, paste(seqnames.V1, seqnames.newspec, seqnames.taxid, X.COIN5P.,sep=" "))
+cust_accession2taxid <- temp[temp$seqnames.taxid %in% newtaxids$taxid,]
+cust_accession2taxid$seqnames.V1<-gsub(">","",cust_accession2taxid$seqnames.V1)
+cust_accession2taxid<-data.frame(cust_accession2taxid$seqnames.V1,paste0(cust_accession2taxid$seqnames.V1,".1")
+                                 ,cust_accession2taxid$seqnames.taxid,
+                                 paste0(cust_accession2taxid[,3],"gi"))
+write.table(cust_accession2taxid,"../cust_accession2taxid",row.names = F,col.names = F,quote = F,sep="\t")
 writeLines(temp$oldname,"seqs_oldnames.txt")
 writeLines(temp$newname,"seqs_newnames.txt")
