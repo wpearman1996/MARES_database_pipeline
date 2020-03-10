@@ -1,4 +1,5 @@
 #!/bin/bash
+cd ./taxid_process
 grep -P -o " [0-9]+ " newnames3.txt > kraken_taxids.txt
 sed -i 's/ //g' kraken_taxids.txt
 sed -i -e 's/^/>kraken:taxid|/' kraken_taxids.txt
