@@ -1,4 +1,5 @@
 setwd("./taxid_process")
+load("./step4a.RData")
 library(stringr)
 convert2name<-function(seqnames){
   seqnames<-paste(seqnames$V2,seqnames$V3)
@@ -29,8 +30,8 @@ library(stringr)
 newtaxids <- readLines("../newtaxids.txt")
 newtaxids <- word(newtaxids,5)
 newtaxids <- gsub('.{1}$', '', newtaxids)
-parentdetails <- read.csv("./notaxid_forgeneration.csv",head=F)
-newtaxids<-data.frame("1",parentdetails$V1," ",newtaxids)
+
+newtaxids<-data.frame("1",parentdetails$oldname," ",newtaxids)
 colnames(newtaxids) <- colnames(taxids)
 taxids<-rbind(taxids,newtaxids)
 
