@@ -29,7 +29,7 @@ library(stringr)
 newtaxids <- readLines("../newtaxids.txt")
 newtaxids <- word(newtaxids,5)
 newtaxids <- gsub('.{1}$', '', newtaxids)
-
+parentdetails <- read.csv("./notaxid_forgeneration.csv",head=F)
 newtaxids<-data.frame("1",parentdetails$V1," ",newtaxids)
 colnames(newtaxids) <- colnames(taxids)
 taxids<-rbind(taxids,newtaxids)
