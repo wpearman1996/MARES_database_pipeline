@@ -76,7 +76,7 @@ parentdetails$command<-paste("perl ./taxdump_edit/taxdump_edit.pl -names names.d
                              "-parent", parentdetails$GenusTaxid, "-rank species -division 1")
 writeLines(as.character(parentdetails$command),"../taxid_commands_addition.txt")
 write.table(taxids,"./old_taxids_step4a.csv",row.names = F, col.names = F,quote = F,sep=",")
-save.image("../step4a_rENV")
+save.image("./step4a.RData")
 # Post revisions the following has been superceded by a new method
 
 #generate_newnames<-function(taxidtable,seqnames){
