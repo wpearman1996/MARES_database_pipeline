@@ -75,7 +75,7 @@ write.table(parentdetails,"./notaxid_forgeneration.csv",row.names = F, col.names
 parentdetails$command<-paste("perl ./taxdump_edit/taxdump_edit.pl -names names.dmp -nodes nodes.dmp -taxa ", paste0("\'",parentdetails$GenusTaxid,"\'"),
                              "-parent", parentdetails$GenusTaxid, "-rank species -division 1")
 writeLines(as.character(parentdetails$command),"../taxid_commands_addition.txt")
-write.csv((taxids),"./old_taxids_step4a.csv")  
+write.table(taxids,"./old_taxids_step4a.csv",row.names = F, col.names = F,quote = F,sep=",")
 # Post revisions the following has been superceded by a new method
 
 #generate_newnames<-function(taxidtable,seqnames){
