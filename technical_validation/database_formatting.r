@@ -180,3 +180,16 @@ length(bold[bold %in% worms_spec$scientificName])/length(bold)
 length(mbpkdb2[mbpkdb2 %in% worms_spec$scientificName])/length(mbpkdb2)
 length(anacapa_spec[anacapa_spec %in% worms_spec$scientificName])/length(anacapa_spec)
 
+names<-split(all_spec, ceiling(seq_along(all_spec)/50000))
+names<-lapply(names,as.character)
+writeLines(names[[5]],"./allspec_names5.txt")
+#install.packages("splitstackshape")
+library(splitstackshape)
+out <- t(splitstackshape:::charMat(listOfValues = mget(c("midori_spec","bold","genbank",
+                                                         "mbpkdb2","mares_wo","mares_bar","anacapa_spec")), fill = 0L))
+
+fac<-c("midori_spec","bold","genbank",
+       "mbpkdb2","mares_wo","mares_bar","anacapa_spec")
+colnames(out)<-fac
+
+write.csv(out,"./presab_allspec_alldatabases.csv")
