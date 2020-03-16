@@ -1,6 +1,7 @@
 #!/bin/bash
 cd ./taxid_process
-grep -P -o " [0-9]+ " newnames3.txt > kraken_taxids.txt
+#grep -P -o " [0-9]+ " newnames3.txt > kraken_taxids.txt
+sed 's/[^0-9]*//g' newnames3.txt > kraken_taxids.txt
 sed -i 's/ //g' kraken_taxids.txt
 sed -i -e 's/^/>kraken:taxid|/' kraken_taxids.txt
 awk 'NR%2==0' MARES_BAR_BOLD_NCBI_sl_reformatted.fasta | paste -d'\n' kraken_taxids.txt - > MARES_BAR_BOLD_NCBI_sl_kraken.fasta
