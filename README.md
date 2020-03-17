@@ -50,12 +50,14 @@ In our pipeline, we identify any synonyms and consolidate them so that each taxo
 We then generate two lists of sequence names - the first is the original sequence names, for sequences that have taxids. The second is the new set of names for the sequences, that now are in a standardized format, with taxid included in the seq name. We use these lists to rename and generate a new fasta called Marine_Euk_BOLD_NCBI_sl_reformatted.fasta which is now our completed database.
 To do this step, use the taxid_addition.r script. You will need to edit this script to modify directories, as well as to ensure the appropriate packages are installed.
 
- 
+
 
 ## Step 5: Format for taxonomy classifiers
 
 ### 5a : Prepare to KRAKEN 
 At this point, we want to format our database for taxonomic classification using kraken. For this to work the header for each fasta needs to be reformatted to kraken:taxid|{taxid} and then provide instructions on how to build the database.  
+
+You will need to adjust the code on line 8 of step5_make_krakendb to reflect the location of the mares database.
 
 Note: At the time of writing, the conda installation of kraken2 was not compatible with this pipeline, due to changes in the NCBI taxonomy files . The recent version of Kraken2 on github has been updated  - so please use this installation.
 
