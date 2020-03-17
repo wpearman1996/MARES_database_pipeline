@@ -8,17 +8,17 @@ These scripts support the MARES (MARine Eukaryote Species) pipeline used to crea
 We suggest that users ensure their database is representative of not only the taxa the may be encountered, but also of possible contaminants. One way to do this is to include potential contaminants in your taxa list. The other is to create a separate contaminant database. In our MARES database, we have opted for the latter. This is because this means you can choose to screen your data prior to analyses for potential contaminants, and remove them before processing your data through the primary database. Alternatively, you could merge these together easily by concatenating the two fasta files. We provide scripts that will trawl through your output data, and taxa list, and provide a list of reads or taxa that are potentially contaminants.
 #### Please note that if you intend to use kraken2 to classify your samples, you should run:
         kraken2-build --download-taxonomy --db mares
-#### Prior to running the pipeline, and adjust location of the nodes and names dmp files throughout the pipeline to reflect the taxonomy location within mares. i.e /mares/taxonomy/names.dmp 
+#### Prior to running the pipeline, and adjust location of the nodes and names dmp files throughout the pipeline to reflect the taxonomy location within mares. i.e /mares/taxonomy/names.dmp
+## List of Files that need modification prior to running the script
+* ./coi_ret/ebot_taxonomy3.plx - line 86 requires email
+* ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx - line 32 requires email, you may also wish to modify the search terms here on line 29
+* ./coi_ret/taxonomy_crawl_for_genus_species_list.plx lines 29 and 30 require location of names and nodes dmp files (see note above about kraken usage)
+* step4a_taxid_addition.r - line 75, may need to change location of nodes and names dmp (see note above about kraken usage)
+* ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx - change the search terms to include additional genes, or keywords (line 29).
 ## Step 1: NCBI COI Retrieval
+Make sure you have completed the changes to the files outlined above. 
 
-First, it is necessary to make a taxa.list file - this file contains the list of taxa that you're interested in. You can use different lists for BOLD or NCBI, or the same for both. You will need to modify a few scripts to make this work for you.
-Specifically, ebot_taxonomy3.plx needs to be modified on line 86 to include your email address.
-
-Additionally, you will need to modify the taxonomy_crawl_for_genus_species_list.plx to index the correct location of the nodes.dmp and names.dmp files from ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz At the same time you should modify line 76 step4c_taxid_processing.r to modify the location of the nodes and names file (currently they are assumed to be in the home directory of the pipeline).
-
-You may wish to modify grab_many_gb_catch_errors_auto_CO1_year.plx to change the search terms to include additional genes, or keywords (line 29).
-
-Finally, you will want to modify NCBI_COI_Retrieval.sh on line 29 to change -j to the number of threads you wish to run. If you are not using an NCBI API key then you can probably only run 1 or 2 threads, as you will likely exceed the maximum requests per second without this API key.
+First, it is necessary to make a taxa.list file - this file contains the list of taxa that you're interested in. You can use different lists for BOLD or NCBI, or the same for both.
 
 Then, we want to run the NCBI_COI_Retrieval.sh script which does the following:
 1.	Converts your list of taxa (i.e. taxa.list) into a list of taxids for every species. For example, "Chordata" will be turned into a list of taxids for every species found in Chordata.
@@ -40,7 +40,6 @@ This process takes the BOLD file, ensures it is for the COI-5P region, and proce
 You may need to modify Step3_merge_bold_ncbi.sh on line 6 to specify the taxon name for your reference database.
 
 ## Step 4: Normalise taxonomy IDs
-Note: You will need to modify the step4b_taxid_generation.sh file to update the location of the nodes and names dmp files.
 To normalise the taxonomic IDs we first need to export a list of sequence names from the merged database.
 
 Many pipelines and software use lowest common ancestor approaches for taxonomic classification, and rely on the NCBI taxonomy to do this.  However, many species don't have taxids in NCBI or have been uploaded with synonyms as names, making the retrieval of reliable taxonomic classifications difficult.
@@ -59,7 +58,7 @@ At this point, we want to format our database for taxonomic classification using
 
 You will need to adjust the code on line 8 of step5_make_krakendb to reflect the location of the mares database.
 
-Note: At the time of writing, the conda installation of kraken2 was not compatible with this pipeline, due to changes in the NCBI taxonomy files . The recent version of Kraken2 on github has been updated  - so please use this installation.
+Note: At the time of writing, the conda installation of kraken2 was not compatible with this pipeline, due to changes in the NCBI taxonomy files. The recent version of Kraken2 on github has been updated  - so please use this installation.
 
 ### 5b : Prepare to MEGAN 
 
