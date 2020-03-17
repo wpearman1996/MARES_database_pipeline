@@ -75,17 +75,17 @@ if ( defined $override ) {
     $new_taxid = $override;
 }
 else {
-    $new_taxid = $largest_taxid + ( 10**( length($largest_taxid) - 1 ) );
+    $new_taxid = $largest_taxid + ( 10 );#**( length($largest_taxid) - 1 ) );
 }
 
 print "Your calculated TaxID = $new_taxid. Please use this with makeblastdb and your fasta sequences.\n";
 
 ## Edit Names.dmp
 # Backup original file
-my ( $file, $dir, $ext ) = fileparse $names, '\.dmp';
-my $names_backup = "$dir\/$file\_backup$ext";
-print "Backing up orginal names.dmp\n";
-copy( $names, $names_backup ), or die "Copy failed: $!";
+#my ( $file, $dir, $ext ) = fileparse 'names.dmp';
+#my $names_backup = "$dir\/$file\_backup$ext";
+#print "Backing up orginal names.dmp\n";
+#copy( $names, $names_backup ), or die "Copy failed: $!";
 
 # append new line
 print "Appending new line\n";
@@ -96,10 +96,10 @@ print "Done.\n";
 
 ## Edit Names.dmp
 # Backup original file
-( $file, $dir, $ext ) = fileparse $nodes, '\.dmp';
-my $nodes_backup = "$dir\/$file\_backup$ext";
-print "Backing up orginal nodes.dmp\n";
-copy( $nodes, $nodes_backup ), or die "Copy failed: $!";
+#( $file, $dir, $ext ) = fileparse $nodes, '\.dmp';
+#my $nodes_backup = "$dir\/$file\_backup$ext";
+#print "Backing up orginal nodes.dmp\n";
+#copy( $nodes, $nodes_backup ), or die "Copy failed: $!";
 
 # append new line
 print "Appending new line\n";
@@ -116,7 +116,7 @@ print "Finished.\n";
 # return the value in the first tab column
 # assumes file is sorted
 sub get_largest_tax_id {
-    my $filename = shift;
+    my $filename = $names;
     open my $fh, "<$filename" or die "Can't open: $filename $!\n";
 
     my $lastline;
@@ -139,7 +139,7 @@ sub help_message {
 
     print "$message\n";
     print "usage: $command -names names.dmp -nodes nodes.dmp -taxa NAME -parent XXX -rank NAME -division X\n";
-    print << "HELP"; 
+    print << "HELP";
 Required Input:
 \t-names names.dmp location
 \t-nodes nodes.dmp location
