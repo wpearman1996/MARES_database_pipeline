@@ -28,8 +28,8 @@ generate_newnames<-function(taxidtable,seqnames){
 }
 library(stringr)
 newtaxids <- readLines("../newtaxids.txt")
-newtaxids <- word(newtaxids,5)
-newtaxids <- gsub('.{1}$', '', newtaxids)
+#newtaxids <- word(newtaxids,5)
+#newtaxids <- gsub('.{1}$', '', newtaxids)
 
 newtaxids<-data.frame("1",parentdetails$oldname," ",newtaxids)
 colnames(newtaxids) <- colnames(taxids)
