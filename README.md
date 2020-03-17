@@ -6,8 +6,11 @@ These scripts support the MARES (MARine Eukaryote Species) pipeline used to crea
 *The MARES bioinformatic pipeline for generating a custom reference database combining sequences retrieved from the Barcode of Life Database (BOLD) and NCBI for a taxonomic group of interest. Shaded boxes detail the workflow within each step and the names of the scripts required. Smaller open boxes describe the subroutines including the functions, packages, and software required (in italics). Boxes with solid outlines indicate input files and boxes with dotted-lined boxes indicate the output files. Many of the scripts and functions used in the MARES pipeline were developed by others; asterisks denote the original contributions of the MARES pipeline.*
 ## Data Processing and Database Construction
 We suggest that users ensure their database is representative of not only the taxa the may be encountered, but also of possible contaminants. One way to do this is to include potential contaminants in your taxa list. The other is to create a separate contaminant database. In our MARES database, we have opted for the latter. This is because this means you can choose to screen your data prior to analyses for potential contaminants, and remove them before processing your data through the primary database. Alternatively, you could merge these together easily by concatenating the two fasta files. We provide scripts that will trawl through your output data, and taxa list, and provide a list of reads or taxa that are potentially contaminants.
-
+#### Please note that if you intend to use kraken2 to classify your samples, you should run:
+        kraken2-build --download-taxonomy --db mares
+#### Prior to running the pipeline, and adjust location of the nodes and names dmp files throughout the pipeline to reflect the taxonomy location within mares. i.e /mares/taxonomy/names.dmp 
 ## Step 1: NCBI COI Retrieval
+
 First, it is necessary to make a taxa.list file - this file contains the list of taxa that you're interested in. You can use different lists for BOLD or NCBI, or the same for both. You will need to modify a few scripts to make this work for you.
 Specifically, ebot_taxonomy3.plx needs to be modified on line 86 to include your email address.
 
