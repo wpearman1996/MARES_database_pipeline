@@ -20,7 +20,7 @@ mbpkdb2<-mbpkdb2[!grepl("\\.",mbpkdb2)]
 mbpk_acc<-mbpkdb2[grepl(">",mbpkdb2)]
 mbpk_acc <- gsub(">","",mbpk_acc)
 Sys.setenv(ENTREZ_KEY="#ENTREZKEY")## Insert your entrez key here
-acc_det<-genbank2uid(mbpk_acc)
+acc_det<-genbank2uid(mbpk_acc.key="ENTREZKEY")
 acc_det_tax<-do.call("rbind",acc_det)
 acc_det_tax<-acc_det_tax[!is.na(acc_det_tax)]
 taxnames_mbpkacc<-id2name(acc_det_tax,db="ncbi")
