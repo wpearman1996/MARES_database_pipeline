@@ -1,15 +1,18 @@
+
 # Database Comparisons
 library(stringr)
 library(taxize)
 library(stringi)
 library(qdapDictionaries)
 library(splitstackshape)
-
+library(taxizedb)
+db_download_ncbi()
+#src_ncbi <- src_ncbi()
 # Get species names and find the unique spp for each of the dataset to compare 
 
 ## 1. db_COI_MBPK_March (Wangensteen, Owen S., et al.  2018)
 
-mbpkdb2 <-read.delim("./Reference_db/MTBPK_seqnames.txt",head=F)
+mbpkdb2 <-read.delim("./MTBPK_seqnames.txt",head=F)
 mbpkdb2<-sub(".*species_name=", "", mbpkdb2$V1)
 mbpkdb2<-sub(';.*', '', mbpkdb2)
 mbpkdb2<-unique(mbpkdb2)
@@ -19,13 +22,14 @@ mbpkdb2<-gsub("'","",mbpkdb2)
 mbpkdb2<-mbpkdb2[!grepl("\\.",mbpkdb2)]
 mbpk_acc<-mbpkdb2[grepl(">",mbpkdb2)]
 mbpk_acc <- gsub(">","",mbpk_acc)
-Sys.setenv(ENTREZ_KEY="#ENTREZKEY")## Insert your entrez key here
-acc_det<-genbank2uid(mbpk_acc.key="ENTREZKEY")
+Sys.setenv(ENTREZ_KEY="3fe8284b58ebcaf28460422fc90764973208 ")## Insert your entrez key here
+acc_det<-genbank2uid(mbpk_acc,key = "3fe8284b58ebcaf28460422fc90764973208") 
 acc_det_tax<-do.call("rbind",acc_det)
 acc_det_tax<-acc_det_tax[!is.na(acc_det_tax)]
-taxnames_mbpkacc<-id2name(acc_det_tax,db="ncbi")
-taxnames<-do.call("rbind",taxnames_mbpkacc)
-mbpkdb2_acc<-taxnames$name[!grepl("\\.",taxnames$name)]
+#taxnames_mbpkacc<-id2name(acc_det_tax,db="ncbi")
+taxnames<- taxid2name(acc_det_tax) #id2name(acc_det_tax,db="ncbi")
+#taxnames<-do.call("rbind",taxnames_mbpkacc)
+mbpkdb2_acc<-taxnames[!grepl("\\.",taxnames)]
 mbpkdb2_acc<-unique(mbpkdb2_acc)
 mbpkdb2_acc<-gsub("_"," ",mbpkdb2_acc)
 mbpkdb2<-c(mbpkdb2,mbpkdb2_acc)
@@ -37,7 +41,6 @@ mbpkdb2<-(mbpkdb2[!grepl("\\d",mbpkdb2)])
 countSpaces <- function(s) { sapply(gregexpr(" ", s), function(p) { sum(p>=0) } ) }
 t<-countSpaces(mbpkdb2)
 mbpkdb2<-(mbpkdb2[t !=0])
-
 ## 2. Genbank Eukaryota COI without the Keyword = Barcode (Benson et al. 2015)
 
 genbank<-read.delim("./Reference_db//genbank_seqnames.txt",head=F,sep="|")
