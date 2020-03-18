@@ -104,6 +104,7 @@ Copies of the MARES databases (as fasta files) and the list of taxa in each data
 `stingi`
 `qdapDictionaries`
 `splitstackshape`
+`taxizedb`
 
 ## Other dependencies
 `vsearch`
