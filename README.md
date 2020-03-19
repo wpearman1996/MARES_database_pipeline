@@ -1,4 +1,5 @@
 # Building custom reference databases for metabarcoding
+This pipeline can be used to develop a de-contamination database (i.e used to create a database of potential contaminants), or as a database for general purpose metabarcoding. We have provided three databases - a very small database composed of common contaminants (i.e human, sheep, goat, flies etc), as well as two metabarcoding databases for marine eukaryotes. 
 
 These scripts support the MARES (MARine Eukaryote Species) pipeline used to create the MARES database of COI sequences for metabarcoding studies (presented in Arranz, Pearman, Aguirre, Liggins, in prep.). The scripts are designed to be run using a Linux OS, and were developed on Ubuntu 16.04. If you use windows, you may be able to use the Windows Linux subsystem (https://docs.microsoft.com/en-us/windows/wsl/install-win10) but you may have additional dependencies to install that aren't covered by the list below. 
 
