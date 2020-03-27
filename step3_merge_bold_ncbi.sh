@@ -10,7 +10,8 @@ taxon="Marine_Euk"
 
 mkdir tmp
 	#2.1. Write COI-5P (standard barcoding region) sequences into a new file: 
-cat ./taxaBOLD/*bold.fasta > tmp/${taxon}_BOLD.fasta
+cat ./taxaBOLD/*bold.fasta > tmp/${taxon}_BOLD_tmp.fasta
+sed -f commands.sed ${taxon}_BOLD_tmp.fasta > tmp/${taxon}_BOLD.fasta
 
 awk '/^>/ { ok=index($0,"COI-5P")!=0;} {if(ok) print;}'  tmp/${taxon}_BOLD.fasta > tmp/${taxon}_BOLD_COI.fasta
 
