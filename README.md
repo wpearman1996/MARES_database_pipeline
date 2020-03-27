@@ -26,7 +26,7 @@ Then, we want to run the NCBI_COI_Retrieval.sh script which does the following:
 2.	Converts taxids to binomial names that can be searched for in NCBI.
 3.	Searches NCBI and downloads all relevant genbank files (.gb format) .
 
-
+The last step removes a list of accessions that can be provided by a user - in case there are certain accessions (i.e ones that you know have the wrong species associated with the sequence) that you wish to remove from the database. Note that this is the accession number WITHOUT the version i.e AC1234 rather than AC1234.1.   
 ## Step 2: BOLD Retrieval
 
 For BOLD retrieval you will want to run the R script retrieve_bold.r. You may need to make modifications to this file. Specifically, this script takes a list of taxa and retrieves the BOLD data, and formats this data as a fasta file. This can take a while for large taxonomic groups, and may timeout when connecting to BOLD if you do not have large amounts of RAM.
