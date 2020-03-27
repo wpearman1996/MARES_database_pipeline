@@ -16,6 +16,7 @@ We suggest that users ensure their database is representative of not only the ta
 * ./coi_ret/taxonomy_crawl_for_genus_species_list.plx lines 29 and 30 require location of names and nodes dmp files (see note above about kraken usage)
 * step4a_taxid_addition.r - line 75, may need to change location of nodes and names dmp (see note above about kraken usage)
 * ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx - change the search terms to include additional genes, or keywords (line 29).
+* blacklisted_accessions.txt - this file contains a list of accessions that you do not want included in your database. This should include BOTH NCBI and BOLD accessions. For BOLD the accession should be formatted as ABCI122225-19 (example case), while NCBI accessions should be WITHOUT the version i.e AC1234 rather than AC1234.1.    
 ## Step 1: NCBI COI Retrieval
 Make sure you have completed the changes to the files outlined above. 
 
@@ -34,6 +35,7 @@ For BOLD retrieval you will want to run the R script retrieve_bold.r. You may ne
 If this does become problematic, it may be wise to remove this group from your taxlist, replacing it with the subtaxa for that group to avoid timing out. It is for this reason we have two taxlist_bold files in our example. You will want to specify the taxalist files you wish to use in this file on line 27 and 30 (or remove line 30)
 
 ## Step 3: The BOLD_NCBI merger
+The first step removes a list of accessions that can be provided by a user - in case there are certain accessions (i.e ones that you know have the wrong species associated with the sequence) that you wish to remove from the database. Note that this is the accession number WITHOUT the version i.e AC1234 rather than AC1234.1. This is the same file that removes accesions from the GenBank fasta, therefore it should also contain the BOLD accessions as well. 
 
 The BOLD_NCBI merger step is based largely on Macher J, Macher T, Leese F (2017) Combining NCBI and BOLD databases for OTU assignment in metabarcoding and metagenomic datasets: The BOLD_NCBI _Merger. Metabarcoding and Metagenomics 1: e22262. https://doi.org/10.3897/mbmg.1.22262
 
