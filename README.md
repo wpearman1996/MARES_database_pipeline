@@ -16,7 +16,8 @@ We suggest that users ensure their database is representative of not only the ta
 * ./coi_ret/taxonomy_crawl_for_genus_species_list.plx lines 29 and 30 require location of names and nodes dmp files (see note above about kraken usage)
 * step4a_taxid_addition.r - line 75, may need to change location of nodes and names dmp (see note above about kraken usage)
 * ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx - change the search terms to include additional genes, or keywords (line 29).
-* blacklisted_accessions.txt - this file contains a list of accessions that you do not want included in your database. This should include BOTH NCBI and BOLD accessions. For BOLD the accession should be formatted as ABCI122225-19 (example case), while NCBI accessions should be WITHOUT the version i.e AC1234 rather than AC1234.1.    
+* blacklisted_accessions.txt - this file contains a list of accessions that you do not want included in your database. This should include BOTH NCBI and BOLD accessions. For BOLD the accession should be formatted as ABCI122225-19 (example case), while NCBI accessions should be WITHOUT the version i.e AC1234 rather than AC1234.1.  
+* step6_marine_contaminants_checker.R - lines 5 & 6 to point to WoRMS taxon list & contaminant list, lines 10 or 34 to point to Kraken or Megan output, and line 24 to point to the names.dmp file.
 ## Step 1: NCBI COI Retrieval
 Make sure you have completed the changes to the files outlined above. 
 
