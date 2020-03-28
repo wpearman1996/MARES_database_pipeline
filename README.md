@@ -71,6 +71,15 @@ The fasta file containing your sample file (query.fasta) should be added to the 
 
 The output is a .txt file in the MEGAN_db folder that can be imported into MEGAN (Husson et al. 2007) for taxonomic assignment. 
 
+## Step 6
+If you want to check for contaminants or marine taxa you need the following:
+1) A list of contaminant taxa (this must be in your database, so as a result they should be included in your early taxa.list files
+2) The WoRMS local database
+
+Then modify lines 5 & 6 to point to the local WoRMS taxonlist, and your contaminant list.
+Also modify lines 10 or 34 to point to the Kraken or Megan output, and finally modify line 24 to the location of the names.dmp file.
+You can then use the *step6_marine_contaminants_checker.R* script on the output of MEGAN and Kraken2, and it will flag potential contaminants (based on a provided list of contaminants) or marine species (Based on the WoRMS local database). Please note, not all species of algae are in the local WoRMS download, so algal taxa may not be identified as marine.
+
 
 ## Technical Validation
 
