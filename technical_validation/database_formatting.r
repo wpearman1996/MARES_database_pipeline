@@ -43,7 +43,7 @@ t<-countSpaces(mbpkdb2)
 mbpkdb2<-(mbpkdb2[t !=0])
 ## 2. Genbank Eukaryota COI without the Keyword = Barcode (Benson et al. 2015)
 
-genbank<-read.delim("./Reference_db//genbank_seqnames.txt",head=F,sep="|")
+genbank<-read.delim("./genbank_seqnames.txt",head=F,sep="|")
 genbank<-unique(genbank$V2)
 genbank<-as.character(genbank)
 genbank<-(genbank[!grepl("\\d",genbank)])
@@ -63,7 +63,7 @@ genbank<-unique(genbank)
 
 ## 3. BOLD all taxon list (Ratnasingham and Hebert 2007)
 
-bold<-read.delim("./Reference_db//bold_seqnames.txt",head=F,sep="|")
+bold<-read.delim("./bold_seqnames.txt",head=F,sep="|")
 bold<-bold$V2
 bold<-as.character(unique(bold))
 bold<-(bold[!grepl("\\d",bold)])
@@ -78,7 +78,7 @@ bold<-unique(bold)
 
 ## 4. Anacapa COI BOLD all taxon list (Curd et al. 2019)
 
-anacapa<-read.delim("./Reference_db//anacapa_CO1_taxonomy.txt",head=F)
+anacapa<-read.delim("./anacapa_CO1_taxonomy.txt",head=F)
 anacapa_spec<-sub('.*\\;', '', anacapa$V2)
 anacapa_spec<-stringr::word(anacapa_spec,1,2)
 
@@ -91,7 +91,7 @@ anacapa_spec<-unique(anacapa_spec)
 
 ## 5. MIDORI COI_LONGEST (Machida et al. 2017)
 
-midori<-read.delim("./Reference_db//MIDORI_LONGEST_20180221_COI.taxon",
+midori<-read.delim("./MIDORI_LONGEST_20180221_COI.taxon",
                    head=F,sep=";")
 midori_spec<-(midori$V7)
 midori<-(midori[!grepl("\\d",midori)])
@@ -110,7 +110,7 @@ midori_spec[8]<-NA;midori_spec<-midori_spec[!is.na(midori_spec)]
 
 ## 6. MARES_wo_barcode
 
-mares_wo<-read.delim("./Reference_db//MARES_wo_barcodes_seqnames.txt",sep=" ",stringsAsFactors=FALSE,head=F)
+mares_wo<-read.delim("./mares_nobar_names.txt",sep=" ",stringsAsFactors=FALSE,head=F)
 mares_wo<-paste(mares_wo$V2,mares_wo$V3)
 mares_wo<-unique(mares_wo)
 mares_wo<-(mares_wo[!grepl("\\d",mares_wo)])
@@ -129,7 +129,7 @@ mares_wo<-mares_wo[!ifelse(word(mares_wo,2)=="sp",TRUE,FALSE)]
 
 ## 6. MARES_w_barcode
 
-mares_bar<-read.delim("./Reference_db/MARES_barcode_seqnames.txt",sep=" ",stringsAsFactors=FALSE,head=F)
+mares_bar<-read.delim("./mares_bar_names.txt",sep=" ",stringsAsFactors=FALSE,head=F)
 mares_bar<-paste(mares_bar$V2,mares_bar$V3)
 mares_bar<-unique(mares_bar)
 mares_bar<-(mares_bar[!grepl("\\d",mares_bar)])
