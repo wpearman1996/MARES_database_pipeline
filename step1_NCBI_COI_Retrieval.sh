@@ -52,6 +52,6 @@ done
 
 cat *.fasta > ../../genbank_coi.fasta
 cd ../../
-awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < genbank_coi.fasta > genbank_coi_sl_temp.fasta
-sed 's#\(.*\)#/\1/,+1d#' blacklisted_accessions.txt > commands.sed
-sed -f commands.sed genbank_coi_sl_temp.fasta > genbank_coi_sl.fasta
+#awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < genbank_coi.fasta > genbank_coi_sl_temp.fasta
+#sed 's#\(.*\)#/\1/,+1d#' blacklisted_accessions.txt > commands.sed
+#sed -f commands.sed genbank_coi_sl_temp.fasta > genbank_coi_sl.fasta
