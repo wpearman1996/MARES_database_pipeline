@@ -18,6 +18,11 @@ awk '/^>/ { ok=index($0,"COI-5P")!=0;} {if(ok) print;}'  tmp/${taxon}_BOLD.fasta
 	#3. Change BOLD & NCBI files so that usearch can dereplicate them without cutting the header:
 
 LC_CTYPE=C && LANG=C cat tmp/${taxon}_BOLD_COI.fasta | sed 's/ /|/g' | sed 's/\t/|/g' > tmp/${taxon}_BOLD_COI_usearch.fasta
+
+awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < genbank_coi.fasta > genbank_coi_sl_temp.fasta
+sed 's#\(.*\)#/\1/,+1d#' blacklisted_accessions.txt > commands.sed
+sed -f commands.sed genbank_coi_sl_temp.fasta > genbank_coi_sl.fasta
+
 mv genbank_coi_sl.fasta ./tmp/${taxon}_NCBI.fasta
 LC_CTYPE=C && LANG=C cat tmp/${taxon}_NCBI.fasta | sed 's/ /|/g' | sed 's/\t/|/g' > tmp/${taxon}_NCBI_usearch.fasta
 
