@@ -22,8 +22,8 @@ mbpkdb2<-gsub("'","",mbpkdb2)
 mbpkdb2<-mbpkdb2[!grepl("\\.",mbpkdb2)]
 mbpk_acc<-mbpkdb2[grepl(">",mbpkdb2)]
 mbpk_acc <- gsub(">","",mbpk_acc)
-Sys.setenv(ENTREZ_KEY="3fe8284b58ebcaf28460422fc90764973208 ")## Insert your entrez key here
-acc_det<-genbank2uid(mbpk_acc,key = "3fe8284b58ebcaf28460422fc90764973208") 
+Sys.setenv(ENTREZ_KEY="XXXXX")## Insert your entrez key here
+acc_det<-genbank2uid(mbpk_acc,key = "XXXXX") 
 acc_det_tax<-do.call("rbind",acc_det)
 acc_det_tax<-acc_det_tax[!is.na(acc_det_tax)]
 #taxnames_mbpkacc<-id2name(acc_det_tax,db="ncbi")
