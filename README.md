@@ -8,8 +8,8 @@ These scripts support the MARES (MARine Eukaryote Species) pipeline used to crea
 ## Data Processing and Database Construction
 We suggest that users ensure their database is representative of not only the taxa they expect to encounter, but also of possible contaminants. One way to do this is to include potential contaminants in your taxa list. The other way is to create a separate contaminant database. In our MARES database, we have opted for the latter. This enables you to screen your sequence reads for contaminants, and remove them, before processing and further analysing your data. Alternatively, you could merge these two databases (i.e. fasta files) together. In our workflow, we provide scripts that help trawl through your sequence reads, and taxa list, and provide a list of reads or taxa that are potentially contaminants.
 
-## Requesting a local copy of WoRMS 
-To request a local copy of WoRMS visit ...
+### Requesting a local copy of WoRMS 
+To request a local copy of WoRMS visit https://www.marinespecies.org/usersrequest.php and fill in the forms. We would encourage people who do this to consider financially supporting WoRMS during funding applications. 
 #### Please note that if you intend to use kraken2 to classify your samples, you should run:
         kraken2-build --download-taxonomy --db mares
 #### Because MARES relies on a local copy of the NCBI taxonomy, the locations of these files must be specified prior to running the pipeline. Where indicate below, you should adjust the scripts to point to the location of the nodes.dmp and names.dmp files from the NCBI taxdump file - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz.
