@@ -9,13 +9,13 @@ taxon="Marine_Euk"
 ###################################################################################################################################################################
 
 mkdir tmp
-	#2.1. Write COI-5P (standard barcoding region) sequences into a new file: 
+	# Write COI-5P (standard barcoding region) sequences into a new file: 
 cat ./taxaBOLD/*bold.fasta > tmp/${taxon}_BOLD_tmp.fasta
 sed -f commands.sed ${taxon}_BOLD_tmp.fasta > tmp/${taxon}_BOLD.fasta
 
 awk '/^>/ { ok=index($0,"COI-5P")!=0;} {if(ok) print;}'  tmp/${taxon}_BOLD.fasta > tmp/${taxon}_BOLD_COI.fasta
 
-	#3. Change BOLD & NCBI files so that usearch can dereplicate them without cutting the header:
+	# Change BOLD & NCBI files so that usearch can dereplicate them without cutting the header:
 
 LC_CTYPE=C && LANG=C cat tmp/${taxon}_BOLD_COI.fasta | sed 's/ /|/g' | sed 's/\t/|/g' > tmp/${taxon}_BOLD_COI_usearch.fasta
 
@@ -26,12 +26,12 @@ sed -f commands.sed genbank_coi_sl_temp.fasta > genbank_coi_sl.fasta
 mv genbank_coi_sl.fasta ./tmp/${taxon}_NCBI.fasta
 LC_CTYPE=C && LANG=C cat tmp/${taxon}_NCBI.fasta | sed 's/ /|/g' | sed 's/\t/|/g' > tmp/${taxon}_NCBI_usearch.fasta
 
-	#4. concatenate BOLD and NCBI files
+	# concatenate BOLD and NCBI files
 
 cat tmp/${taxon}_BOLD_COI_usearch.fasta tmp/${taxon}_NCBI_usearch.fasta > tmp/${taxon}_BOLD_NCBI_usearch.fasta
 
 
-	#5. Use vsearch to dereplicate the sequences
+	#5 Use vsearch to dereplicate the sequences
 
 LC_CTYPE=C && LANG=C tr '-' 'N' < tmp/${taxon}_BOLD_NCBI_usearch.fasta > tmp/${taxon}_BOLD_NCBI_COI_N_replaced.fasta
 # 5.1 Remove all the non-ascii characters
@@ -40,7 +40,7 @@ tr -cd "[:print:]\n" < ./tmp/${taxon}_BOLD_NCBI_COI_N_replaced.fasta > ./tmp/${t
 vsearch -derep_fulllength tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta --output tmp/${taxon}_BOLD_NCBI_derep.fasta
 
 
-	#6. Now change the headers so that Megan can read them later
+	# Now change the headers so that Megan can read them later
 mkdir database_${taxon}
 cd ./database_${taxon}
 LC_CTYPE=C && LANG=C tr '|' ' ' < ../tmp/${taxon}_BOLD_NCBI_derep.fasta > ./${taxon}_BOLD_NCBI_final.fasta
@@ -49,5 +49,3 @@ mkdir taxid_process
 awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < ./database_${taxon}/${taxon}_BOLD_NCBI_final.fasta > ./taxid_process/${taxon}_BOLD_NCBI_final_sl.fasta
 cd ./taxid_process
 grep -e ">" ${taxon}_BOLD_NCBI_final_sl.fasta > seqnames_${taxon}_nobarcode.txt
-
-
