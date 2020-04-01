@@ -139,13 +139,15 @@ Copies of the MARES databases (as fasta files) and the list of taxa in each data
 `seqtk`
 `Kraken`
 
-## Citations and Acknowledgements
+# Citations and Acknowledgements
 
 Macher, Jan-Niklas, Till-Hendrik Macher, and Florian Leese. "Combining NCBI and BOLD databases for OTU assignment in metabarcoding and metagenomic datasets: The BOLD_NCBI _Merger." Metabarcoding and Metagenomics 1 (2017): e22262.
 
 Porter, Teresita M., and Mehrdad Hajibabaei. "Over 2.5 million COI sequences in GenBank and growing." PloS one 13.9 (2018): e0200177.
 
 WoRMS Editorial Board (2020). World Register of Marine Species. Available from http://www.marinespecies.org at VLIZ. Accessed 2020-04-01. doi:10.14284/170
+
+Guiry, M.D. & Guiry, G.M. 2020. AlgaeBase. World-wide electronic publication, National University of Ireland, Galway. https://www.algaebase.org; searched on 01 April 2020.
 
 Please also cite: https://doi.org/10.5281/zenodo.3701276 if you're usage involved the addition of custom TaxIDs (this is included by default within the pipeline)
 
@@ -160,7 +162,7 @@ If there are any questions or issues - please email William Pearman (wpearman199
 Please refer to the publication: Arranz, Vanessa, Pearman, William S., Aguirre, J. David and Liggins, Libby. (2020). "MARES: a replicable pipeline and curated reference database for marine (COI) metabarcoding". Manuscript submitted for publication.
 
 
-In addition, if you make use of this pipeline, please also cite the following publications:
+## In addition, if you make use of this pipeline, please also cite the following publications:
 
 Macher, Jan-Niklas, Till-Hendrik Macher, and Florian Leese. "Combining NCBI and BOLD databases for OTU assignment in metabarcoding and metagenomic datasets: The BOLD_NCBI _Merger." Metabarcoding and Metagenomics 1 (2017): e22262.
 
@@ -168,8 +170,8 @@ Porter, Teresita M., and Mehrdad Hajibabaei. "Over 2.5 million COI sequences in 
 
 https://doi.org/10.5281/zenodo.3701276
 
-If you used the MARES marine database - please also cite:
+## If you used the MARES marine database - please also cite:
 WoRMS Editorial Board (2020). World Register of Marine Species. Available from http://www.marinespecies.org at VLIZ. Accessed 2020-04-01. doi:10.14284/170
-Guiry, M.D. & Guiry, G.M. 2020. AlgaeBase. World-wide electronic publication, National University of Ireland, Galway. https://www.algaebase.org
+Guiry, M.D. & Guiry, G.M. 2020. AlgaeBase. World-wide electronic publication, National University of Ireland, Galway. https://www.algaebase.org; searched on 01 April 2020.
 
 
