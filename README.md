@@ -21,6 +21,11 @@ To request a local copy of WoRMS visit https://www.marinespecies.org/usersreques
 * ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx - change the search terms to include additional genes, or keywords (line 29).
 * blacklisted_accessions.txt - this file contains a list of accessions that you do not want included in your database. This should include BOTH NCBI and BOLD accessions. For BOLD the accession should be formatted as ABCI122225-19 (example case), while NCBI accessions should be WITHOUT the version i.e AC1234 rather than AC1234.1.  
 * step6_marine_contaminants_checker.R - lines 5 & 6 to point to WoRMS taxon list & contaminant list, lines 10 or 34 to point to Kraken or Megan output, and line 24 to point to the names.dmp file.
+
+## Using our pre-compiled databases
+We would recommend users compile their own databases, as our databases will not necessarily be appropriate for every use case. However, in the event you wish to use our databases - they are accessible at the following link:
+There are two files - MARES_BAR.tar.gz and MARES_NOBAR.tar.gz. These represent whether "BARCODE" was used as a keyword during compilation of NCBI sequences. In the unzipped files, there are the appropriate names.dmp, nodes.dmp, and accession2taxid files required to use our database. 
+
 ## Step 1: NCBI COI Retrieval
 Make sure you have completed the changes to the files outlined above. 
 
