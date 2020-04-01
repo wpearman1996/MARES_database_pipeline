@@ -23,7 +23,8 @@ To request a local copy of WoRMS visit https://www.marinespecies.org/usersreques
 * step6_marine_contaminants_checker.R - lines 5 & 6 to point to WoRMS taxon list & contaminant list, lines 10 or 34 to point to Kraken or Megan output, and line 24 to point to the names.dmp file.
 
 ## Using our pre-compiled databases
-We would recommend users compile their own databases, as our databases will not necessarily be appropriate for every use case. However, in the event you wish to use our databases - they are accessible at the following link:
+We would recommend users compile their own databases, as our databases will not necessarily be appropriate for every use case. However, in the event you wish to use our databases - they are accessible at the following link: https://osf.io/8rdqk/
+
 There are two files - MARES_BAR.tar.gz and MARES_NOBAR.tar.gz. These represent whether "BARCODE" was used as a keyword during compilation of NCBI sequences. In the unzipped files, there are the appropriate names.dmp, nodes.dmp, and accession2taxid files required to use our database. 
 
 ## Step 1: NCBI COI Retrieval
@@ -108,10 +109,6 @@ Databases included in this comparison:
 -	MiDori-LONGEST
 -	db_COI_MBPK
 -	Anacapa CO1
-
-
-## Accessibility
-Copies of the MARES databases (as fasta files) and the list of taxa in each database (used in the technical validation) are available on the Open Science Framework with the following link: https://osf.io/8rdqk/
 
 # Dependency List
 ## R packages
