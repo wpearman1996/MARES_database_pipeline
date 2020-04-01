@@ -25,7 +25,7 @@ To request a local copy of WoRMS visit https://www.marinespecies.org/usersreques
 ## Using our pre-compiled databases
 We would recommend users compile their own databases, as our databases will not necessarily be appropriate for every use case. However, in the event you wish to use our databases - they are accessible at the following link: https://osf.io/8rdqk/
 
-There are two files - MARES_BAR.tar.gz and MARES_NOBAR.tar.gz. These represent whether "BARCODE" was used as a keyword during compilation of NCBI sequences. In the unzipped files, there are the appropriate names.dmp, nodes.dmp, and accession2taxid files required to use our database. 
+There are two files - MARES_BAR.tar.gz and MARES_NOBAR.tar.gz. These represent whether "BARCODE" was used as a keyword during compilation of NCBI sequences. In the unzipped files, there are the appropriate names.dmp, nodes.dmp, and the custom accession2taxid files required to use our database. You will still need to download the nucl_gb.accession2taxid & nucl_wgs.accession2taxid files - these are large and thus we have not included them with our pre-compiled databases.
 
 ## Step 1: NCBI COI Retrieval
 Make sure you have completed the changes to the files outlined above. 
