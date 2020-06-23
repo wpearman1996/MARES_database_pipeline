@@ -1,5 +1,5 @@
 If you're here and wanting to use MARES, i've compiled a brief tutorial here on how to get started. I've written this with the assumption that all the dependencies are installed, if there's interest - i'll try to try a tutorial on how to install the dependencies.
-**Set up and running** 
+***Set up and running*** 
 1) First run the following command to download MARES
 
 `git clone wpearman1996/MARES_database_pipeline` 
@@ -20,7 +20,8 @@ If you're here and wanting to use MARES, i've compiled a brief tutorial here on 
 
 `step6_marine_contaminants_checker.R` -  lines 5 & 6 to point to WoRMS taxon list & contaminant list, lines 10 or 34 to point to Kraken or Megan output, and line 24 to point to the names.dmp file.
 
-** Running the pipeline **
+*** Running the pipeline *** 
+
 1) Execute `step1_NCBI_COI_Retrieval.sh` - you may need to modify the permissions to make it executable using `chmod +x step1_NCBI_COI_Retrieval.sh` 
 
 2) Execute `step2_retrieve_bold.r` through `Rscript step2_retrieve_bold.r`. I personally prefer to run this through RStudio myself and execute it line by line, but that's a personal preference. If you're having issues with this, try running it line-by-line to work out where the issue is or file an issue and we'll try to resolve it.
