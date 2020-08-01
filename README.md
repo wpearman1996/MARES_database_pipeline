@@ -76,8 +76,8 @@ Note: To avoid compatibility issues, please ensure you use the most recent versi
 ### 5b : Prepare for MEGAN 
 
 In this step, we build a local database from our custom reference database and blast it against your metabarcoding sample file.
-
-The fasta file containing your sample file (query.fasta) should be added to the custom_metabarcoding_database folder. Modify the blast parameters according to your preference in line 17.
+This process first trims the fasta file names to just the accession, and creates a new file called taxid_map which will relate the accession number to a taxid for incorporation into the blast database. 
+Because BLAST imposes length limits on the sequence names, we have had to trim the sequence names down to just the accession. If you wish to retain that information after classification, then the information is available in the MARES_informative_name_table.tsv file - which should enable easy look up in R down the line.
 
 The output is a .txt file in the MEGAN_db folder that can be imported into MEGAN (Husson et al. 2007) for taxonomic assignment. 
 
