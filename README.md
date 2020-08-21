@@ -27,8 +27,10 @@ We would recommend users compile their own databases, as our databases will not 
 
 There are two files - MARES_BAR.tar.gz and MARES_NOBAR.tar.gz. These represent whether "BARCODE" was used as a keyword during compilation of NCBI sequences. In the unzipped files, there are the appropriate names.dmp, nodes.dmp, and the custom accession2taxid files required to use our database. You will still need to download the nucl_gb.accession2taxid & nucl_wgs.accession2taxid files - these are large and thus we have not included them with our pre-compiled databases.
 
-## Step 1: NCBI COI Retrieval
+## Step 1: NCBI COI Retrieval 
 Make sure you have completed the changes to the files outlined above. 
+Note - if there are no sequences in NCBI for any of your chosen taxa, this will return an error:
+"Use of uninitialized value $count in numeric lt (<) at ../../coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx line 58."
 
 First, it is necessary to make a taxa.list file - this file contains the list of taxa that you're interested in. You can use different lists for BOLD or NCBI, or the same for both. For the MARES databases, our list of taxa included all families known to have marine species (based on the World Registry of Marine Species, WoRMS, http://www.marinespecies.org/), and we additionally built a database that included common laboratory contaminants.
 
