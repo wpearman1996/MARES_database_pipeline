@@ -26,6 +26,32 @@ To request a local copy of WoRMS visit https://www.marinespecies.org/usersreques
 We would recommend users compile their own databases, as our databases will not necessarily be appropriate for every use case. However, in the event you wish to use our databases - they are accessible at the following link: https://osf.io/8rdqk/
 
 There are two files - MARES_BAR.tar.gz and MARES_NOBAR.tar.gz. These represent whether "BARCODE" was used as a keyword during compilation of NCBI sequences. In the unzipped files, there are the appropriate names.dmp, nodes.dmp, and the custom accession2taxid files required to use our database. You will still need to download the nucl_gb.accession2taxid & nucl_wgs.accession2taxid files - these are large and thus we have not included them with our pre-compiled databases.
+## Installation of dependencies for ubuntu 20.04 - please note this is an evolving section and may not work on all systems. 
+Installing some of the dependencies can be problematic. Generally we suggest not using conda to install the perl modules, as this seems to cause dependency issues. 
+We recommend against using conda to install the perl modules
+Thus you should install cpanminus using apt install
+Then the perl dependencies.
+The following commands should help you install the dependencies and get started.
+
+`sudo apt-get install cpanminus
+sudo apt-get install parallel
+conda install -c bioconda BioPython
+conda install -c bioconda seqtk
+wget https://cpan.metacpan.org/authors/id/M/MI/MIROD/XML-DOM-XPath-0.14.tar.gz
+tar xvzf ./XML-DOM-XPath-0.14.tar.gz
+Then modify the file at t/test_non_ascii.t and change line 9 from "use encoding 'utf8';" 
+to "use utf8;"
+rm XML-DOM-XPath-0.14.tar.gz 
+tar -czvf XML-DOM-XPath.tar.gz XML-DOM-XPath-0.14 
+cpanmn XML-DOM-XPath.tar.gz`
+
+Then install:
+`cpanm Encode
+sudo cpanm Bio::LITE::Taxonomy::NCBI
+sudo cpanm Bio::DB::EUtilities --force
+cpanm HTTP::Date
+cpanm LWP::Simple
+cpanm LWP::UserAgent`
 
 ## Step 1: NCBI COI Retrieval 
 Make sure you have completed the changes to the files outlined above. 
