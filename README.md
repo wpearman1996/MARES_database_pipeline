@@ -34,23 +34,36 @@ Then the perl dependencies.
 The following commands should help you install the dependencies and get started.
 
 `sudo apt-get install cpanminus
+
 sudo apt-get install parallel
+
 conda install -c bioconda BioPython
+
 conda install -c bioconda seqtk
+
 wget https://cpan.metacpan.org/authors/id/M/MI/MIROD/XML-DOM-XPath-0.14.tar.gz
-tar xvzf ./XML-DOM-XPath-0.14.tar.gz
+
+tar xvzf ./XML-DOM-XPath-0.14.tar.gz`
+
 Then modify the file at t/test_non_ascii.t and change line 9 from "use encoding 'utf8';" 
 to "use utf8;"
-rm XML-DOM-XPath-0.14.tar.gz 
+`rm XML-DOM-XPath-0.14.tar.gz 
+
 tar -czvf XML-DOM-XPath.tar.gz XML-DOM-XPath-0.14 
+
 cpanmn XML-DOM-XPath.tar.gz`
 
 Then install:
 `cpanm Encode
+
 sudo cpanm Bio::LITE::Taxonomy::NCBI
+
 sudo cpanm Bio::DB::EUtilities --force
+
 cpanm HTTP::Date
+
 cpanm LWP::Simple
+
 cpanm LWP::UserAgent`
 
 ## Step 1: NCBI COI Retrieval 
