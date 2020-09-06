@@ -41,11 +41,11 @@ The following commands should help you install the dependencies and get started.
         tar xvzf ./XML-DOM-XPath-0.14.tar.gz
 
 Then modify the file at t/test_non_ascii.t and change line 9 from "use encoding 'utf8';" 
-to "use utf8;"
+to "use utf8;" - https://stackoverflow.com/questions/47966512/error-installing-xmldomxpath
 
         rm XML-DOM-XPath-0.14.tar.gz 
         tar -czvf XML-DOM-XPath.tar.gz XML-DOM-XPath-0.14 
-        cpanmn XML-DOM-XPath.tar.gz
+        cpanm XML-DOM-XPath.tar.gz
 
 Then install:
 
