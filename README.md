@@ -31,7 +31,7 @@ Installing some of the dependencies can be problematic. Generally we suggest not
 We recommend against using conda to install the perl modules
 Thus you should install cpanminus using apt install
 Then the perl dependencies.
-The following commands should help you install the dependencies and get started.
+The following commands should help you install the dependencies and get started.If you don't have sudo access, then excude the cpanm commands without the `sudo` , and it will give you an explanation of how to install it without sudo access.
 
         sudo apt-get install cpanminus
         sudo apt-get install parallel
@@ -49,12 +49,11 @@ to "use utf8;" - https://stackoverflow.com/questions/47966512/error-installing-x
 
 Then install:
 
-        cpanm Encode
+        sudo cpanm Encode
         sudo cpanm Bio::LITE::Taxonomy::NCBI
-        sudo cpanm Bio::DB::EUtilities --force
-        cpanm HTTP::Date
-        cpanm LWP::Simple
-        cpanm LWP::UserAgent`
+        sudo cpanm Bio::DB::EUtilities
+        sudo cpanm LWP::Simple --force
+        sudo cpanm LWP::UserAgent --force
 
 ## Step 1: NCBI COI Retrieval 
 Make sure you have completed the changes to the files outlined above. 
