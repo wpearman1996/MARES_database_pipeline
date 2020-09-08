@@ -51,7 +51,7 @@ Then install:
 
         sudo cpanm Encode
         sudo cpanm Bio::LITE::Taxonomy::NCBI
-        sudo cpanm Bio::DB::EUtilities
+        conda install -c bioconda perl-bio-eutilities
         sudo cpanm LWP::Simple --force
         sudo cpanm LWP::UserAgent --force
 
