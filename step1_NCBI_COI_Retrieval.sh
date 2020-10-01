@@ -34,7 +34,7 @@ mkdir reformatted_taxids
 mv *.txt reformatted_taxids/.
 mv reformatted_taxids/Genus_species.txt .
 mkdir original_split_taxids
-mv x* original_split_taxids/.
+mv x* ./original_split_taxids/.
 cd reformatted_taxids
 
 #### Here we download all relevant genbank files
