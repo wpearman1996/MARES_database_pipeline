@@ -29,7 +29,7 @@ split -l 100 Genus_species.txt
 
 ### Now what we're doing is reformatting the list so that it works for NCBI Entrez and then doing
 ### some directory admin
-ls | grep '^x' | parallel -j 23 "perl ../coi_ret/reformat_list_for_entrez_taxonomy.plx {}"
+ls | grep '^x' | parallel -j 2 "perl ../coi_ret/reformat_list_for_entrez_taxonomy.plx {}"
 mkdir reformatted_taxids
 mv *.txt reformatted_taxids/.
 mv reformatted_taxids/Genus_species.txt .
