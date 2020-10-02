@@ -43,10 +43,10 @@ ls | grep .txt | parallel -j 1 "perl ../../coi_ret/grab_many_gb_catch_errors_aut
 gunzip *_seqs.gb.gz 
 #### Now we'll cat them together and convert to fasta using the script from: https://rocaplab.ocean.washington.edu/tools/genbank_to_fasta/
 
-for FILE in *gb
+for FILE in *.gb
 do
 echo $FILE 
-python3 ../../genbank_to_fasta.py -i $FILE -o ${FILE/gb/fasta} -s whole -d 'pipe' -a 'accessions,organism'
+python3 ../../genbank_to_fasta.py -i $FILE -o ${FILE/.gb/.fasta} -s whole -d 'pipe' -a 'accessions,organism'
 gzip $FILE
 done
 
