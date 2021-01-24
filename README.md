@@ -155,6 +155,7 @@ Databases included in this comparison:
 `qdapDictionaries`
 `splitstackshape`
 `taxizedb`
+`readr`
 
 ## Other dependencies
 `vsearch`
