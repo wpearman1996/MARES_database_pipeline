@@ -17,7 +17,7 @@ x$A<-ifelse(grepl("A",x$V2), parse_number(x$V2),
             ifelse(grepl("A",x$V3), parse_number(x$V3),
                    ifelse(grepl("A",x$V4), parse_number(x$V4),
                           ifelse(grepl("A",x$V5), parse_number(x$V5),parse_number(x$V6)))))
-            
+
 x$T<-ifelse(grepl("T",x$V2), parse_number(x$V2),
             ifelse(grepl("T",x$V3), parse_number(x$V3),
                    ifelse(grepl("T",x$V4), parse_number(x$V4),
@@ -40,4 +40,4 @@ x$N<-ifelse(grepl("N",x$V2), parse_number(x$V2),
 x$NPerc<-100*(x$N/(x$A+x$T + x$G + x$C + x$N))
 x$NPerc<-ifelse(is.na(x$NPerc),0,x$NPerc)
 x<-x[x$NPerc <= opt$percent,]
-write.table(x[,c(1)],"./NPercs.txt")
+write.table(x[,c(1)],"./NPercs.txt",quote = F,row.names = F,col.names = F)
