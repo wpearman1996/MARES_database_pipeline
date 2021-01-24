@@ -20,6 +20,7 @@ To request a local copy of WoRMS visit https://www.marinespecies.org/usersreques
 * step4a_taxid_addition.r - line 75, may need to change location of nodes and names dmp (see note above about kraken usage)
 * ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx - change the search terms to include additional genes, or keywords (line 29).
 * blacklisted_accessions.txt - this file contains a list of accessions that you do not want included in your database. This should include BOTH NCBI and BOLD accessions. For BOLD the accession should be formatted as ABCI122225-19 (example case), while NCBI accessions should be WITHOUT the version i.e AC1234 rather than AC1234.1.  
+* step4e_Ncorrection.sh - line 10, adjust to change percent of N you want to sequences to maximally contain. Any sequence containing >percent N will be removed. Currently defaults to 30%.
 * step6_marine_contaminants_checker.R - lines 5 & 6 to point to WoRMS taxon list & contaminant list, lines 10 or 34 to point to Kraken or Megan output, and line 24 to point to the names.dmp file.
 * step3_merge_bold_ncbi.sh - you may want to modify line 42 to a greater max sequence length, as vsearch defaults to 50KB (which means it is unlikely to get many plant or algal mitogenomes).
 
@@ -93,7 +94,7 @@ In our pipeline, we identify any synonyms and consolidate them so that each taxo
 We then generate two lists of sequence names - the first is the original sequence names, for sequences that have taxids. The second is the new set of names for the sequences, that now are in a standardized format, with taxid included in the seq name. We use these lists to rename and generate a new fasta called Marine_Euk_BOLD_NCBI_sl_reformatted.fasta which is now our completed database.
 To do this step, use the taxid_addition.r script. You will need to edit this script to modify directories, as well as to ensure the appropriate packages are installed.
 
-
+Finally, at step4e we remove sequences that have excessive numbers of ambiguous bases, and trim leading or trailing Ns. 
 
 ## Step 5: Format for taxonomy classifiers
 
