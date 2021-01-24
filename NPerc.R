@@ -10,7 +10,7 @@ if (is.null(opt$percent)){
   print_help(opt_parser)
   stop("Percent N is required", call.=FALSE)
 }
-x<-read.delim("../basecounts.txt",sep="\t",head=T,na.strings=c(" ",""))
+x<-read.delim("./basecounts.txt",sep="\t",head=T,na.strings=c(" ",""))
 
 x$NPerc<-100*x$N_perc
 names<-readLines("./seqnames_mares_reform.txt")
