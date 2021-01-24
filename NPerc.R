@@ -40,4 +40,4 @@ x$N<-ifelse(grepl("N",x$V2), parse_number(x$V2),
 x$NPerc<-100*(x$N/(x$A+x$T + x$G + x$C + x$N))
 x$NPerc<-ifelse(is.na(x$NPerc),0,x$NPerc)
 x<-x[x$NPerc <= opt$percent,]
-write.table(x[,c(1,12)],"./NPercs.txt")
+write.table(x[,c(1)],"./NPercs.txt")
