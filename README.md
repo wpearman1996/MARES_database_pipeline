@@ -20,7 +20,7 @@ To request a local copy of WoRMS visit https://www.marinespecies.org/usersreques
 * step4a_taxid_addition.r - line 75, may need to change location of nodes and names dmp (see note above about kraken usage)
 * ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx - change the search terms to include additional genes, or keywords (line 29).
 * blacklisted_accessions.txt - this file contains a list of accessions that you do not want included in your database. This should include BOTH NCBI and BOLD accessions. For BOLD the accession should be formatted as ABCI122225-19 (example case), while NCBI accessions should be WITHOUT the version i.e AC1234 rather than AC1234.1.  
-* step4e_Ncorrection.sh - line 10, adjust to change percent of N you want to sequences to maximally contain. Any sequence containing >percent N will be removed. Currently defaults to 30%.
+* step4e_Ncorrection.sh - line 10, adjust to change percent of N you want to sequences to maximally contain. Any sequence containing >percent N will be removed. Currently defaults to 10%.
 * step6_marine_contaminants_checker.R - lines 5 & 6 to point to WoRMS taxon list & contaminant list, lines 10 or 34 to point to Kraken or Megan output, and line 24 to point to the names.dmp file.
 * step3_merge_bold_ncbi.sh - you may want to modify line 42 to a greater max sequence length, as vsearch defaults to 50KB (which means it is unlikely to get many plant or algal mitogenomes).
 
