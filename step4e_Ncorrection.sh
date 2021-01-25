@@ -8,6 +8,6 @@ sed '1d' MARES_BAR_BOLD_NCBI_sl_reformatted.fasta > tmpfile; mv tmpfile MARES_BA
 perl perl_NCounter.pl MARES_BAR_BOLD_NCBI_sl_reformatted.fasta > basecounts.txt
 grep ">" MARES_BAR_BOLD_NCBI_sl_reformatted.fasta > seqnames_mares_reform.txt
 Rscript NPerc.R -p 10 #change to percent N you want to remove greater than
-grep -A1 -Ff NPercs.txt MARES_BAR_BOLD_NCBI_sl_reformatted.fasta > tmpfile.txt
+seqtk subseq MARES_BAR_BOLD_NCBI_sl_reformatted.fasta NPercs.txt > tmpfile.txt
 mv tmpfile.txt MARES_BAR_BOLD_NCBI_sl_reformatted.fasta
 
