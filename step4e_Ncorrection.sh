@@ -10,5 +10,4 @@ grep ">" MARES_BAR_BOLD_NCBI_sl_reformatted.fasta > seqnames_mares_reform.txt
 Rscript NPerc.R -p 30 #change to percent N you want to remove greater than
 grep -A1 -Ff NPercs.txt MARES_BAR_BOLD_NCBI_sl_reformatted.fasta > tmpfile.txt
 mv tmpfile.txt MARES_BAR_BOLD_NCBI_sl_reformatted.fasta
-awk 'BEGIN {RS = ">" ; ORS = ""} length($2) >= 20 {print ">"$0}' MARES_BAR_BOLD_NCBI_sl_reformatted.fasta > tmp.fa #minimum sequence length of 20
-mv tmp.fa MARES_BAR_BOLD_NCBI_sl_reformatted.fasta
+
