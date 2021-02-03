@@ -161,7 +161,7 @@ If there are any questions or issues - please email William Pearman (wpearman199
 
 # Suggested Citation
 
-Please refer to the publication: Arranz, Vanessa, Pearman, William S., Aguirre, J. David and Liggins, Libby. (2020). "MARES: a replicable pipeline and curated reference database for marine (COI) metabarcoding". Manuscript submitted for publication.
+Please refer to the publication: Arranz, V., Pearman, W.S., Aguirre, J.D. et al. MARES, a replicable pipeline and curated reference database for marine eukaryote metabarcoding. Sci Data 7, 209 (2020). https://doi.org/10.1038/s41597-020-0549-9
 
 
 ## In addition, if you make use of this pipeline, please also cite the following publications:
