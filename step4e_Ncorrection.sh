@@ -1,13 +1,9 @@
 #!/bin/bash
-seqkit -is replace -p "n+$" -r "" MARES_BAR_BOLD_NCBI_sl_reformatted.fasta > term_Ngone_seqkit.fasta
-awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < term_Ngone_seqkit.fasta > term_Ngone_seqkit_sl.fasta
-seqkit -is replace -p "^n+|n+$" -r "" term_Ngone_seqkit_sl.fasta > trail_Ngone_seqkit.fasta
-rm MARES_BAR_BOLD_NCBI_sl_reformatted.fasta
-awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < trail_Ngone_seqkit.fasta > MARES_BAR_BOLD_NCBI_sl_reformatted.fasta
-sed '1d' MARES_BAR_BOLD_NCBI_sl_reformatted.fasta > tmpfile; mv tmpfile MARES_BAR_BOLD_NCBI_sl_reformatted.fasta
-perl perl_NCounter.pl MARES_BAR_BOLD_NCBI_sl_reformatted.fasta > basecounts.txt
-grep ">" MARES_BAR_BOLD_NCBI_sl_reformatted.fasta > seqnames_mares_reform.txt
-Rscript NPerc.R -p 10 #change to percent N you want to remove greater than
-seqtk subseq MARES_BAR_BOLD_NCBI_sl_reformatted.fasta NPercs.txt > tmpfile.txt
+cd ./taxid_process
+sed '1d' Marine_Euk_BOLD_NCBI_final_sl.fasta > tmpfile; mv tmpfile Marine_Euk_BOLD_NCBI_final_sl.fasta 
+perl ../perl_NCounter.pl Marine_Euk_BOLD_NCBI_final_sl.fasta > basecounts.txt
+grep ">" Marine_Euk_BOLD_NCBI_final_sl.fasta > seqnames_mares_reform.txt
+Rscript ../NPerc.R -p 10 #change to percent N you want to remove greater than
+seqtk subseq Marine_Euk_BOLD_NCBI_final_sl.fasta NPercs.txt > tmpfile.txt
 mv tmpfile.txt MARES_BAR_BOLD_NCBI_sl_reformatted.fasta
 
