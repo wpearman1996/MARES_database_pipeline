@@ -35,10 +35,21 @@ cat tmp/${taxon}_BOLD_COI_usearch.fasta tmp/${taxon}_NCBI_usearch.fasta > tmp/${
 
 	#5 Use vsearch to dereplicate the sequences
 
-LC_CTYPE=C && LANG=C tr '-' 'N' < tmp/${taxon}_BOLD_NCBI_usearch.fasta > tmp/${taxon}_BOLD_NCBI_COI_N_replaced.fasta
+#LC_CTYPE=C && LANG=C tr '-' 'N' < tmp/${taxon}_BOLD_NCBI_usearch.fasta > tmp/${taxon}_BOLD_NCBI_COI_N_replaced.fasta
+sed -i "/^>/! {s/-/n/g; s/\(.*\)/\U\1/g}" tmp/${taxon}_BOLD_NCBI_usearch.fasta
+awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < tmp/${taxon}_BOLD_NCBI_usearch.fasta > tmp.fasta
+mv tmp.fasta tmp/${taxon}_BOLD_NCBI_usearch.fasta
+seqkit -is replace -p "n+$" -r "" tmp/${taxon}_BOLD_NCBI_usearch.fasta > tmp/term_Ngone_seqkit.fasta
+awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < tmp/term_Ngone_seqkit.fasta > tmp/term_Ngone_seqkit_sl.fasta
+seqkit -is replace -p "^n+|n+$" -r "" tmp/term_Ngone_seqkit_sl.fasta > tmp/trail_Ngone_seqkit.fasta
+
+awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < tmp/${taxon}_BOLD_NCBI_COI_N_replaced.fasta > tmp.fasta
+mv tmp.fasta tmp/${taxon}_BOLD_NCBI_COI_N_replaced.fasta
+
+### Fix till here
 # 5.1 Remove all the non-ascii characters
 tr -cd "[:print:]\n" < ./tmp/${taxon}_BOLD_NCBI_COI_N_replaced.fasta > ./tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta
-
+sed '1d' ./tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta > tmpfile; mv tmpfile ./tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta 
 vsearch -derep_fulllength tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta --output tmp/${taxon}_BOLD_NCBI_derep.fasta
 
 
