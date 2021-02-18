@@ -43,13 +43,13 @@ seqkit -is replace -p "n+$" -r "" tmp/${taxon}_BOLD_NCBI_usearch.fasta > tmp/ter
 awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < tmp/term_Ngone_seqkit.fasta > tmp/term_Ngone_seqkit_sl.fasta
 seqkit -is replace -p "^n+|n+$" -r "" tmp/term_Ngone_seqkit_sl.fasta > tmp/trail_Ngone_seqkit.fasta
 
-awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < tmp/${taxon}_BOLD_NCBI_COI_N_replaced.fasta > tmp.fasta
+awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < tmp/trail_Ngone_seqkit.fasta > tmp.fasta
 mv tmp.fasta tmp/${taxon}_BOLD_NCBI_COI_N_replaced.fasta
 
 ### Fix till here
 # 5.1 Remove all the non-ascii characters
 tr -cd "[:print:]\n" < ./tmp/${taxon}_BOLD_NCBI_COI_N_replaced.fasta > ./tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta
-#sed '1d' ./tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta > tmpfile; mv tmpfile ./tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta 
+sed '1d' ./tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta > tmpfile; mv tmpfile ./tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta
 vsearch -derep_fulllength tmp/${taxon}_BOLD_NCBI_COI_N_replaced_nonascci.fasta --output tmp/${taxon}_BOLD_NCBI_derep.fasta
 
 
