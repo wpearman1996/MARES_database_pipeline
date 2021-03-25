@@ -15,7 +15,7 @@ cat ./taxaBOLD/*bold.fasta > tmp/${taxon}_BOLD_tmp.fasta
 sed 's#\(.*\)#/\1/,+1d#' blacklisted_accessions.txt > commands.sed
 sed -f commands.sed ${taxon}_BOLD_tmp.fasta > tmp/${taxon}_BOLD.fasta
 
-awk '/^>/ { ok=index($0,"COI-5P")!=0;} {if(ok) print;}'  tmp/${taxon}_BOLD.fasta > tmp/${taxon}_BOLD_COI.fasta
+LC_ALL=C awk '/^>/ { ok=index($0,"COI-5P")!=0;} {if(ok) print;}'  tmp/${taxon}_BOLD.fasta > tmp/${taxon}_BOLD_COI.fasta
 
 	# Change BOLD & NCBI files so that usearch can dereplicate them without cutting the header:
 
