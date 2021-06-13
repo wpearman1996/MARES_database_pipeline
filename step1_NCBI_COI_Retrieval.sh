@@ -46,7 +46,7 @@ gunzip *_seqs.gb.gz
 for FILE in *.gb
 do
 echo $FILE 
-python3 ../../genbank_to_fasta.py -i $FILE -o ${FILE/.gb/.fasta} -s whole -d 'pipe' -a 'accessions,organism'
+python2 ../../genbank_to_fasta.py -i $FILE -o ${FILE/.gb/.fasta} -s whole -d 'pipe' -a 'accessions,organism'
 gzip $FILE
 done
 
