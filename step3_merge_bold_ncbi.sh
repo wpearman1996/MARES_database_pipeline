@@ -13,7 +13,7 @@ mkdir tmp
 cat ./taxaBOLD/*bold.fasta > tmp/${taxon}_BOLD_tmp.fasta
 	# Remove blacklisted accessions
 sed 's#\(.*\)#/\1/,+1d#' blacklisted_accessions.txt > commands.sed
-sed -f commands.sed ${taxon}_BOLD_tmp.fasta > tmp/${taxon}_BOLD.fasta
+sed -f commands.sed tmp/${taxon}_BOLD_tmp.fasta > tmp/${taxon}_BOLD.fasta
 
 LC_ALL=C awk '/^>/ { ok=index($0,"COI-5P")!=0;} {if(ok) print;}'  tmp/${taxon}_BOLD.fasta > tmp/${taxon}_BOLD_COI.fasta
 
