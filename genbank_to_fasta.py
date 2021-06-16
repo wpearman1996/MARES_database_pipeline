@@ -13,7 +13,6 @@ import sys
 import os.path
 from optparse import OptionParser
 from Bio import SeqIO
-from Bio.Alphabet import IUPAC
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.SeqIO import InsdcIO
@@ -212,7 +211,7 @@ def genbank_to_fasta(record, sequence_type, qualifier_list):
                 id = build_header(feature, qualifier_list), description = '')
             elif sequence_type == 'aa':
                 if "translation" in feature.qualifiers:
-                    temp_seq = Seq(feature.qualifiers["translation"][0], IUPAC.protein)
+                    temp_seq = Seq(feature.qualifiers["translation"][0])
                 else:               
                     if "transl_table" in feature.qualifiers:
                         translation_table = feature.qualifiers["transl_table"][0]
