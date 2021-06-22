@@ -87,7 +87,7 @@ RUN cd kraken2 \
 ENV PATH=${KRAKEN2_DIR}:$PATH
 
 # CLONING MARES REPO
-RUN git clone https://github.com/edgarvaldez/MARES_database_pipeline MARES
+RUN git clone https://github.com/wpearman1996/MARES_database_pipeline MARES
 
 # GETTING TAXDMP FILES
 RUN wget ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdmp.zip
