@@ -156,6 +156,7 @@ Databases included in this comparison:
 `splitstackshape`
 `taxizedb`
 `readr`
+`optparse`
 
 ## Other dependencies
 `vsearch`
@@ -172,7 +173,7 @@ Databases included in this comparison:
 `r`
 `python2`
 `seqtk`
-`Kraken`
+`Kraken2`
 
 # Citations and Acknowledgements
 
