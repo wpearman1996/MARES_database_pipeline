@@ -8,7 +8,10 @@ taxon="Marine_Euk"
 ######################################################     BOLD_NCBI_MERGER 0.1     #####################################################################
 ###################################################################################################################################################################
 
-mkdir tmp
+WORKING_DIR='tmp'
+if [ -d "$WORKING_DIR" ]; then rm -rf $WORKING_DIR; fi
+mkdir $WORKING_DIR
+
 	# Write COI-5P (standard barcoding region) sequences into a new file: 
 cat ./taxaBOLD/*bold.fasta > tmp/${taxon}_BOLD_tmp.fasta
 	# Remove blacklisted accessions
@@ -58,7 +61,11 @@ mkdir database_${taxon}
 cd ./database_${taxon}
 LC_CTYPE=C && LANG=C tr '|' ' ' < ../tmp/${taxon}_BOLD_NCBI_derep.fasta > ./${taxon}_BOLD_NCBI_final.fasta
 cd ..
-mkdir taxid_process
+
+WORKING_DIR='taxid_process'
+if [ -d "$WORKING_DIR" ]; then rm -rf $WORKING_DIR; fi
+mkdir $WORKING_DIR
+
 awk '/^>/ {printf("\n%s\n",$0);next; } { printf("%s",$0);}  END {printf("\n");}' < ./database_${taxon}/${taxon}_BOLD_NCBI_final.fasta > ./taxid_process/${taxon}_BOLD_NCBI_final_sl.fasta
 cd ./taxid_process
 grep -e ">" ${taxon}_BOLD_NCBI_final_sl.fasta > seqnames_${taxon}_nobarcode.txt
