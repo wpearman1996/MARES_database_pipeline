@@ -1,4 +1,6 @@
 library(bold)
+
+#Functions to retrieve the subtaxa of each family (get)subtaxa) and search in Bold and download the available sequences of each subtaxa (get_fasta)
 get_fasta<-function(taxon,filename){
   x<-bold_seqspec(taxon=taxon)
   x<-x[x$markercode=="COI-5P" | x$markercode=="COI-3P",]
@@ -24,11 +26,6 @@ get_fasta<-function(taxon,filename){
   writeLines(fastaLines,filename)
 }
 
-taxlist<-readLines(taxlist_bold1.txt)
-
-# Actinopterygii classes
-taxlist2<-readLines(taxlist_bold2.txt)
-
 get_subtaxa<-function(taxid){
   require(dplyr)
   require(rvest)
@@ -48,6 +45,7 @@ colnames(subtax)<-c("Taxa","Number of Records")
 subtax
 }
 
+taxlist<-readLines(file("taxa.list"))
 
 dir.create("./taxaBOLD")
 setwd("./taxaBOLD")

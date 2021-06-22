@@ -29,12 +29,12 @@ split -l 100 Genus_species.txt
 
 ### Now what we're doing is reformatting the list so that it works for NCBI Entrez and then doing
 ### some directory admin
-ls | grep '^x' | parallel -j 23 "perl ../coi_ret/reformat_list_for_entrez_taxonomy.plx {}"
+ls | grep '^x' | parallel -j 2 "perl ../coi_ret/reformat_list_for_entrez_taxonomy.plx {}"
 mkdir reformatted_taxids
 mv *.txt reformatted_taxids/.
 mv reformatted_taxids/Genus_species.txt .
 mkdir original_split_taxids
-mv x* original_split_taxids/.
+mv x* ./original_split_taxids/.
 cd reformatted_taxids
 
 #### Here we download all relevant genbank files
@@ -43,10 +43,12 @@ ls | grep .txt | parallel -j 1 "perl ../../coi_ret/grab_many_gb_catch_errors_aut
 gunzip *_seqs.gb.gz 
 #### Now we'll cat them together and convert to fasta using the script from: https://rocaplab.ocean.washington.edu/tools/genbank_to_fasta/
 
-for FILE in *gb
+for FILE in *.gb
 do
-echo $FILE 
-python2 ../../genbank_to_fasta.py -i $FILE -o ${FILE/gb/fasta} -s whole -d 'pipe' -a 'accessions,organism'
+echo $FILE
+outputFile=`echo "$FILE" | cut -d'.' -f1`
+outputFile="${outputFile}.fasta"
+python3 ../../genbank_to_fasta.py -i $FILE -o $outputFile -s 'whole' -d 'pipe' -a 'accessions,organism'
 gzip $FILE
 done
 

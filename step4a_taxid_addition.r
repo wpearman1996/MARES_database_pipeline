@@ -32,11 +32,19 @@ get_taxinfo<-function(taxnames){
                               match=1,
                               button="Save in file"))
     col[[i]]<-as.character(paste(col[[i]]))
+  }
+  for( i in 1:length(col)){
     col[[i]]<-strsplit(col[[i]], "\n")
+  }
+  col2<-list()
+  for( i in 1:length(col)){
     col[[i]]<-lapply(col[[i]][[1]],strsplit, "\\t|\t")
   }
-  col2<-do.call("rbind",col)
-  col2<-do.call("rbind",col2);col2<-do.call("rbind",col2)
+  coldat <-list()
+  for(i in 1:length(col)){
+    coldat[[i]]<-(do.call("rbind",(do.call("rbind",col[[i]][2:length(col[[i]])]))))
+  }
+  col2<-do.call("rbind",coldat)
   col2<-as.data.frame(col2)
   col2$V2<-NULL;col2$V4<-NULL;col2$V6<-NULL
   colnames(col2)<-c("code","name", "preferred name","taxid")

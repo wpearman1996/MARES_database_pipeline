@@ -20,15 +20,47 @@ To request a local copy of WoRMS visit https://www.marinespecies.org/usersreques
 * step4a_taxid_addition.r - line 75, may need to change location of nodes and names dmp (see note above about kraken usage)
 * ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx - change the search terms to include additional genes, or keywords (line 29).
 * blacklisted_accessions.txt - this file contains a list of accessions that you do not want included in your database. This should include BOTH NCBI and BOLD accessions. For BOLD the accession should be formatted as ABCI122225-19 (example case), while NCBI accessions should be WITHOUT the version i.e AC1234 rather than AC1234.1.  
+* step4e_Ncorrection.sh - line 10, adjust to change percent of N you want to sequences to maximally contain. Any sequence containing >percent N will be removed. Currently defaults to 10%.
 * step6_marine_contaminants_checker.R - lines 5 & 6 to point to WoRMS taxon list & contaminant list, lines 10 or 34 to point to Kraken or Megan output, and line 24 to point to the names.dmp file.
+* step3_merge_bold_ncbi.sh - you may want to modify line 42 to a greater max sequence length, as vsearch defaults to 50KB (which means it is unlikely to get many plant or algal mitogenomes).
 
 ## Using our pre-compiled databases
 We would recommend users compile their own databases, as our databases will not necessarily be appropriate for every use case. However, in the event you wish to use our databases - they are accessible at the following link: https://osf.io/8rdqk/
 
 There are two files - MARES_BAR.tar.gz and MARES_NOBAR.tar.gz. These represent whether "BARCODE" was used as a keyword during compilation of NCBI sequences. In the unzipped files, there are the appropriate names.dmp, nodes.dmp, and the custom accession2taxid files required to use our database. You will still need to download the nucl_gb.accession2taxid & nucl_wgs.accession2taxid files - these are large and thus we have not included them with our pre-compiled databases.
+## Installation of dependencies for ubuntu 20.04 - please note this is an evolving section and may not work on all systems. 
+Installing some of the dependencies can be problematic. Generally we suggest not using conda to install the perl modules, as this seems to cause dependency issues. 
+We recommend against using conda to install the perl modules
+Thus you should install cpanminus using apt install
+Then the perl dependencies.
+The following commands should help you install the dependencies and get started.If you don't have sudo access, then excude the cpanm commands without the `sudo` , and it will give you an explanation of how to install it without sudo access.
 
-## Step 1: NCBI COI Retrieval
+        sudo apt-get install cpanminus
+        sudo apt-get install parallel
+        conda install -c bioconda BioPython
+        conda install -c bioconda seqtk
+        wget https://cpan.metacpan.org/authors/id/M/MI/MIROD/XML-DOM-XPath-0.14.tar.gz
+        tar xvzf ./XML-DOM-XPath-0.14.tar.gz
+
+Then modify the file at t/test_non_ascii.t and change line 9 from "use encoding 'utf8';" 
+to "use utf8;" - https://stackoverflow.com/questions/47966512/error-installing-xmldomxpath
+
+        rm XML-DOM-XPath-0.14.tar.gz 
+        tar -czvf XML-DOM-XPath.tar.gz XML-DOM-XPath-0.14 
+        cpanm XML-DOM-XPath.tar.gz
+
+Then install:
+
+        sudo cpanm Encode
+        sudo cpanm Bio::LITE::Taxonomy::NCBI
+        conda install -c bioconda perl-bio-eutilities
+        sudo cpanm LWP::Simple --force
+        sudo cpanm LWP::UserAgent --force
+
+## Step 1: NCBI COI Retrieval 
 Make sure you have completed the changes to the files outlined above. 
+Note - if there are no sequences in NCBI for any of your chosen taxa, this will return an error:
+"Use of uninitialized value $count in numeric lt (<) at ../../coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx line 58."
 
 First, it is necessary to make a taxa.list file - this file contains the list of taxa that you're interested in. You can use different lists for BOLD or NCBI, or the same for both. For the MARES databases, our list of taxa included all families known to have marine species (based on the World Registry of Marine Species, WoRMS, http://www.marinespecies.org/), and we additionally built a database that included common laboratory contaminants.
 
@@ -62,7 +94,7 @@ In our pipeline, we identify any synonyms and consolidate them so that each taxo
 We then generate two lists of sequence names - the first is the original sequence names, for sequences that have taxids. The second is the new set of names for the sequences, that now are in a standardized format, with taxid included in the seq name. We use these lists to rename and generate a new fasta called Marine_Euk_BOLD_NCBI_sl_reformatted.fasta which is now our completed database.
 To do this step, use the taxid_addition.r script. You will need to edit this script to modify directories, as well as to ensure the appropriate packages are installed.
 
-
+Finally, at step4e we remove sequences that have excessive numbers of ambiguous bases, and trim leading or trailing Ns. 
 
 ## Step 5: Format for taxonomy classifiers
 
@@ -123,6 +155,7 @@ Databases included in this comparison:
 `qdapDictionaries`
 `splitstackshape`
 `taxizedb`
+`readr`
 
 ## Other dependencies
 `vsearch`

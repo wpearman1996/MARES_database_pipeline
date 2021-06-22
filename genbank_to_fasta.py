@@ -13,7 +13,6 @@ import sys
 import os.path
 from optparse import OptionParser
 from Bio import SeqIO
-from Bio.Alphabet import IUPAC
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.SeqIO import InsdcIO
@@ -86,7 +85,7 @@ parser.add_option("-u", "--user_header", dest="user_header", default=None,
 if options.in_file:
     in_file = os.path.abspath(options.in_file)
 else:   
-    print "You must specify an in_file. Use '-h' for help."
+    print("You must specify an in_file. Use '-h' for help.")
     sys.exit()
 
 (in_filePath, in_fileWholeName) = os.path.split(in_file)
@@ -132,17 +131,17 @@ file_format = options.file_format
 
 #Make sure no specified options conflict, or don't make sense
 if user_header and sequence_type != 'whole':
-    print "It doesn't make sense to set the user_header unless you are using the 'whole' " \
-    "sequence_type. Use '-h' for help."
+    print("It doesn't make sense to set the user_header unless you are using the 'whole' " \
+    "sequence_type. Use '-h' for help.")
     sys.exit()
 
 if file_format not in ['genbank', 'embl']:
-    print "Must specify either 'genbank' or 'embl' format for the in_file. Use '-h' for help."
+    print("Must specify either 'genbank' or 'embl' format for the in_file. Use '-h' for help.")
     sys.exit()
 
 if options.annotations  and sequence_type != 'whole':
-    print "It doesn't make sense to set the annotations unless you are using the 'whole' " \
-    "sequence_type. Use '-h' for help."
+    print("It doesn't make sense to set the annotations unless you are using the 'whole' " \
+    "sequence_type. Use '-h' for help.")
     sys.exit()
 
     
@@ -171,15 +170,15 @@ def build_header(feature, qualifier_list):
         elif item == 'location_long':
             header.append(location_long)
         else:
-            if not feature.qualifiers.has_key(item) and item == 'gene':
-                if feature.qualifiers.has_key('locus_tag'):
+            if item not in feature.qualifiers and item == 'gene':
+                if 'locus_tag' in feature.qualifiers:
                     item = 'locus_tag'
                 else:
                     item = 'db_xref'
-            elif not feature.qualifiers.has_key(item) and item == "locus_tag":
+            elif item not in feature.qualifiers and item == "locus_tag":
                 item == 'db_xref'
             #Finished with the special cases, now just getting plain old qualifiers
-            if feature.qualifiers.has_key(item):
+            if item in feature.qualifiers:
                 header_part = feature.qualifiers[item][0]
                 #Catch improper newline character in the middle of features.
                 header_part = header_part.replace("\n"," ")
@@ -204,17 +203,17 @@ def genbank_to_fasta(record, sequence_type, qualifier_list):
                 temp_record = SeqRecord(feature.extract(record.seq), id = build_header(feature, qualifier_list),\
                 description = '')
             elif sequence_type == 'taa':
-                if feature.qualifiers.has_key("transl_table"):
+                if "transl_table" in feature.qualifiers:
                     translation_table = feature.qualifiers["transl_table"][0]
                 else:
                     translation_table = 11
                 temp_record = SeqRecord(feature.extract(record.seq).translate(table = translation_table),\
                 id = build_header(feature, qualifier_list), description = '')
             elif sequence_type == 'aa':
-                if feature.qualifiers.has_key("translation"):
-                    temp_seq = Seq(feature.qualifiers["translation"][0], IUPAC.protein)
+                if "translation" in feature.qualifiers:
+                    temp_seq = Seq(feature.qualifiers["translation"][0])
                 else:               
-                    if feature.qualifiers.has_key("transl_table"):
+                    if "transl_table" in feature.qualifiers:
                         translation_table = feature.qualifiers["transl_table"][0]
                     else:
                         translation_table = 11
@@ -231,7 +230,7 @@ def genbank_to_fasta_whole(record, annotation_list, user_header, delimiter):
     else:
         header = []
         for item in annotation_list:
-            if record.annotations.has_key(item):
+            if item in record.annotations:
                 header_part = record.annotations[item]
                 if type(header_part) == type([]): #Some attributes are lists. Must turn into string
                     header_part = ' : '.join(header_part)
@@ -253,13 +252,13 @@ out_file_handle = open (out_file, 'w')
 record_iterator = SeqIO.parse(in_file_handle, file_format)
 
 for record in record_iterator:
-    print "Converting '%s' to fasta ..." % record.description
+    print(("Converting '%s' to fasta ..." % record.description))
     if sequence_type in ['nt', 'aa', 'taa']:
         fasta_records = genbank_to_fasta(record, sequence_type, qualifier_list)
     elif sequence_type == 'whole': #whole records are handled specially
         fasta_records = genbank_to_fasta_whole(record, annotation_list, user_header, delimiter)
     else:
-        print "Unrecognized sequence_type. Use '-h' for help."
+        print("Unrecognized sequence_type. Use '-h' for help.")
         sys.exit()
     SeqIO.write(fasta_records, out_file_handle, 'fasta')
 
