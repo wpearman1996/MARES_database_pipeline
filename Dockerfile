@@ -6,6 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Updating Ubuntu packages
 RUN apt-get update && yes| apt-get upgrade
 
+# INSTALLING OS DEPENDENCIES
 RUN apt-get install -y --no-install-recommends \
     libbio-eutilities-perl \
     git \
@@ -75,19 +76,20 @@ RUN cpanm Encode \
  && cpanm Bio::LITE::Taxonomy::NCBI \
  && cpanm Bio::DB::EUtilities
 
+# SETTING WORKING DIRECTORY
 WORKDIR /usr/local/src/
 
 # INSTALL KRAKEN2
 ENV KRAKEN2_DIR='/opt/kraken2'
-
 RUN git clone https://github.com/DerrickWood/kraken2
 RUN cd kraken2 \  
   && sh install_kraken2.sh ${KRAKEN2_DIR}
-
 ENV PATH=${KRAKEN2_DIR}:$PATH
 
+# CLONING MARES REPO
 RUN git clone https://github.com/edgarvaldez/MARES_database_pipeline MARES
 
+# GETTING TAXDMP FILES
 RUN wget ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdmp.zip
 RUN unzip taxdmp.zip -d taxdump
 RUN mv taxdump MARES
