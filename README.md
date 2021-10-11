@@ -9,9 +9,32 @@ These scripts support the MARES (MARine Eukaryote Species) pipeline used to crea
 ## Before using MARES pipeline 
 Installing some of the dependencies can be problematic. We provide two options to set up the dependencies in your computer before running the step-by-step MARES pipeline. 
 
-Chose one of the two Option below to set up the dependencies in your computer and move 
+Chose one of the two Option below to set up the dependencies in your computer: 
 
 ### OPTION 1. DOCKER container (recommended)
+
+**What is a Docker container-image?**
+
+"A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings." Learn more: https://www.docker.com/resources/what-container
+
+We have built a **Docker image for MARES** and you can pull it in your computer (regardless the operting system you have) with 3 main steps and... forget about installing dependencies locally. It will be all ready to go! You can follow the step-by-step MARES pipeline to create your own custom made reference sequence database.
+
+#### Steps to use MARES Docker image
+
+1. Install Docker : https://docs.docker.com/get-docker/
+2. Pull MARES Docker image from Docker Hub : https://hub.docker.com/r/vanearranz/mares
+```
+docker pull vanearranz/mares
+```
+3. Run the MARES container in interactive mode. This means you can execute commands inside the container while it is running.
+```
+docker container run -it vanearranz/mares /bin/bash
+```
+Make sure you are in MARES folder to follow the steps: 
+```
+cd MARES
+```
+
 
 ### OPTION 2. Install the dependencies locally in your computer 
 
@@ -81,13 +104,15 @@ Generally we suggest not using conda to install the perl modules, as this seems 
 
 # MARES pipeline
 
-Either you choose Option 1 or 2 to set up your dependencies, now you are ready to start running the MARES pipeline and build your own custom reference sequences database for taxonomic classification of your metabarcoding data! 
+Either you choose Option 1 or 2 to set up your dependencies, now you are ready to start running the step-by-step MARES pipeline and build your own custom reference sequences database for taxonomic classification of your metabarcoding data! 
 
-You need to run each of the following steps and choose different parameters to customise your database along the different steps of the pipeline. 
+You need to run each of the following steps in order and choose different parameters to customise your database in the different steps of the pipeline. 
 
-Download the contents of this repository if you chose running MARES pipeline locally (Option 2). If you chose Docker option (Option 1) the contents of the repository are already in the Docker image. 
+First, download the contents of this repository if you chose running MARES pipeline locally (Option 2). If you chose Docker contaoner option (Option 1) the contents of the repository are already in the Docker image. 
+Note: make sure you are in the same folder as the steps scripts to run the pipeline. 
 
 May the force be with you!
+
 
 ### List of Files that need modification prior to running the following steps
 
@@ -101,10 +126,10 @@ NCBI taxonomy - modify only if OPTION 2 was used to install dependencies.
 
 ## Step 1: NCBI COI Retrieval 
 
-First, it is necessary to modify the taxa.list file - this file contains the list of taxa that you are interested in. 
+First, it is necessary to modify the **taxa.list** file - this file contains the list of taxa that you are interested in. 
 You can use different lists for BOLD or NCBI, or the same for both. 
 
-Then, open the terminal and run the Step1 script 
+Then, from the terminal run the Step1 script :
 
 ```
 sh step1_NCBI_COI_Retrieval.sh  
@@ -117,7 +142,7 @@ which does the following:
 3. Searches NCBI and downloads all relevant genbank files (.gb format).
 4. Convert genbank files to fasta files 
 
-**IMPORTANT** : If you want to modify the search terms to include additional genes or keywords, modify line 29 in the following ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx script 
+**IMPORTANT** : If you want to modify the search terms to include additional genes or keywords, modify line 29 in the following script ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx  
 
 Note - if there are no sequences in NCBI for any of your chosen taxa, this will return an error:
 "Use of uninitialized value $count in numeric lt (<) at ../../coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx line 58."
@@ -239,6 +264,8 @@ Guiry, M.D. & Guiry, G.M. 2020. AlgaeBase. World-wide electronic publication, Na
 Please also cite: https://doi.org/10.5281/zenodo.3701276 if you're usage involved the addition of custom TaxIDs (this is included by default within the pipeline)
 
 The genbank_to_fasta.py script was developed by the Rocap Lab https://rocaplab.ocean.washington.edu/
+
+Special mention and acknowledgments to Edgar Valdez eho help creating the Docker image for MARES. 
 
 ## Questions
 
