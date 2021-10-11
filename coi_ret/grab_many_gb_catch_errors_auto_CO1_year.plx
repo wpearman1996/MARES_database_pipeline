@@ -26,7 +26,7 @@ open (IN, "<", $ARGV[0]) || die "Error cannot open infile: $!\n";
 $taxonlist = $in[0];
 chomp $taxonlist;
 
-$term = "(\"CO1\"[GENE] OR \"COI\"[GENE] OR \"COX1\"[GENE] OR \"COXI\"[GENE]) AND \"Eukaryota\"[ORGN] AND 2003:2019[PDAT] AND \"BARCODE\"[KYWD]) AND (".$taxonlist.")";
+$term = "(\"CO1\"[GENE] OR \"COI\"[GENE] OR \"COX1\"[GENE] OR \"COXI\"[GENE]) AND \"Eukaryota\"[ORGN] AND 2003:2021[PDAT] AND \"BARCODE\"[KYWD]) AND (".$taxonlist.")";
 
 $factory = Bio::DB::EUtilities -> new (-eutil => 'esearch',
 										-email => 'EMAIL@HERE', ### Add your email here
