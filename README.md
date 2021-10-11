@@ -142,7 +142,13 @@ which does the following:
 3. Searches NCBI and downloads all relevant genbank files (.gb format).
 4. Convert genbank files to fasta files 
 
-**IMPORTANT** : If you want to modify the search terms to include additional genes or keywords, modify line 29 in the following script ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx  
+**IMPORTANT**
+
+If you want to modify the search terms to include additional genes or keywords, modify line 29 in the following script ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx  
+
+*By default* : Script to grab COI records from NCBI nucleotide database using 4 COI search terms, for all Eukaryota, for one year at a time, without the BARCODE keyword
+- edit the search term below for one year or many years ex. 2017 or 2003:2021[PDAT]
+- edit whether you want to match the BARCODE in the keyword field ex. BARCODE[KYWD]
 
 Note - if there are no sequences in NCBI for any of your chosen taxa, this will return an error:
 "Use of uninitialized value $count in numeric lt (<) at ../../coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx line 58."
