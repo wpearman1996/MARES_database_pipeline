@@ -22,6 +22,9 @@ We have built a **Docker image for MARES** and you can pull it in your computer 
 #### Steps to use MARES Docker image
 
 1. Install Docker : https://docs.docker.com/get-docker/
+
+In the command-line:
+
 2. Pull MARES Docker image from Docker Hub : https://hub.docker.com/r/vanearranz/mares
 ```
 docker pull vanearranz/mares
@@ -35,6 +38,7 @@ Make sure you are in MARES folder to follow the steps:
 cd MARES
 ```
 
+*NOTE: The text editor installed in MARES image is ```vim```. More information on how to use vim text editor: https://www.arubacloud.com/tutorial/how-to-instal-and-use-vim-text-editor-on-linux-ubuntu.aspx*  
 
 ### OPTION 2. Install the dependencies locally in your computer 
 
@@ -102,11 +106,12 @@ Generally we suggest not using conda to install the perl modules, as this seems 
 #### Because MARES relies on a local copy of the NCBI taxonomy, the locations of these files must be specified prior to running the pipeline. Where indicate below, you should adjust the scripts to point to the location of the nodes.dmp and names.dmp files from the NCBI taxdump file - ftp://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz.
 
 
+
 # MARES pipeline
 
 Either you choose Option 1 or 2 to set up your dependencies, now you are ready to start running the step-by-step MARES pipeline and build your own custom reference sequences database for taxonomic classification of your metabarcoding data! 
 
-You need to run each of the following steps in order and choose different parameters to customise your database in the different steps of the pipeline. 
+You need to run each of the following steps in order and choose different parameters to customise your database in the different steps of the pipeline (see MODIFICATIONS in each step of the pipeline). 
 
 First, download the contents of this repository if you chose running MARES pipeline locally (Option 2). If you chose Docker contaoner option (Option 1) the contents of the repository are already in the Docker image. 
 Note: make sure you are in the same folder as the steps scripts to run the pipeline. 
@@ -114,15 +119,16 @@ Note: make sure you are in the same folder as the steps scripts to run the pipel
 May the force be with you!
 
 
-### List of Files that need modification prior to running the following steps
+### List of Files that need modification before running the step-by-step MARES pipeline
 
 Email authentification: 
 * ./coi_ret/ebot_taxonomy3.plx - line 86 requires email
-* ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx - line 32 requires email, you may also wish to modify the search terms here on line 29
+* ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx - line 32 requires email
 
 NCBI taxonomy - modify only if OPTION 2 was used to install dependencies. 
 * ./coi_ret/taxonomy_crawl_for_genus_species_list.plx lines 29 and 30 require location of names.dmp and nodes.dmp files
 * step4a_taxid_addition.r - line 75, may need to change location of nodes.dmp and names.dmp 
+
 
 ## Step 1: NCBI COI Retrieval 
 
@@ -142,51 +148,98 @@ which does the following:
 3. Searches NCBI and downloads all relevant genbank files (.gb format).
 4. Convert genbank files to fasta files 
 
-**IMPORTANT**
+**MODIFICATIONS**
 
-If you want to modify the search terms to include additional genes or keywords, modify line 29 in the following script ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx  
+- If you want to modify the search terms to include additional genes or keywords, modify line 29 in the following script ./coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx  
 
-*By default* : Script to grab COI records from NCBI nucleotide database using 4 COI search terms, for all Eukaryota, for one year at a time, without the BARCODE keyword
-- edit the search term below for one year or many years ex. 2017 or 2003:2021[PDAT]
-- edit whether you want to match the BARCODE in the keyword field ex. BARCODE[KYWD]
+- *By default* : Script to grab COI records from NCBI nucleotide database using 4 COI search terms, for all Eukaryota, from 2003 to 2021, with the BARCODE keyword
+        - edit the CO1 term to look for other barcode of interest ex. "COXI\"[GENE]
+        - edit the search term below for one year or many years ex. 2017 or 2003:2021[PDAT]
+        - edit whether you want to match the BARCODE in the keyword field or remove it ex. BARCODE[KYWD]
 
 Note - if there are no sequences in NCBI for any of your chosen taxa, this will return an error:
 "Use of uninitialized value $count in numeric lt (<) at ../../coi_ret/grab_many_gb_catch_errors_auto_CO1_year.plx line 58."
 
+
 ## Step 2: BOLD Retrieval
 
-For BOLD retrieval you will want to run the R script retrieve_bold.r. You may need to make modifications to this file. Specifically, this script takes a list of taxa and retrieves the BOLD data, and formats this data as a fasta file. This can take a while for large taxonomic groups, and may timeout when connecting to BOLD if you do not have large amounts of RAM.
+The Step2_retrieve_bold.r script takes a list of taxa from **taxa.list** and retrieves the BOLD genetic data, and formats this data as a fasta file. 
 
-If this does become problematic, it may be wise to remove this group from your taxlist, replacing it with the subtaxa for that group to avoid timing out. It is for this reason we have two taxlist_bold files in our example. You will want to specify the taxalist files you wish to use in this file on line 27 and 30 (or remove line 30)
+This can take a while for large taxonomic groups, and may timeout when connecting to BOLD if you do not have large amounts of RAM. If this does become problematic, it may be wise to remove this group from your taxlist, replacing it with the subtaxa for that group to avoid timing out. 
 
-**IMPORTANT** : If you want to modify the search terms to include additional genes, modify line 6 in the step2_retrieve_bold.r script 
+For BOLD retrieval, run the R script : 
+```
+r step2_retrieve_bold.r
+```
+
+**MODIFICATIONS**
+
+- *By default* it uses same **taxa.list** as in the previous step. If different, you have to specify the taxa list files you wish to use on line 48 in the step2_retrieve_bold.r script. 
+
+- If you want to modify the search terms to include additional genes (barcodes), you can specify on line 6 in the step2_retrieve_bold.r script.
+
 
 ## Step 3: The BOLD_NCBI merger
-*The step also removes a list of accessions that can be provided by a user - in case there are certain accessions (i.e ones that you know have the wrong species associated with the sequence) that you wish to remove from the database. Note that this is the accession number WITHOUT the version i.e AC1234 rather than AC1234.1. This is the blacklisted_accessions.txt file that removes accesions from the GenBank fasta, therefore it should also contain the BOLD accessions as well.* 
 
-* blacklisted_accessions.txt - this file contains a list of accessions that you do not want included in your database. This should include BOTH NCBI and BOLD accessions. For BOLD the accession should be formatted as ABCI122225-19 (example case), while NCBI accessions should be WITHOUT the version i.e AC1234 rather than AC1234.1.  
+The Step 3 BOLD_NCBI merger is based largely on Macher J, Macher T, Leese F (2017) Combining NCBI and BOLD databases for OTU assignment in metabarcoding and metagenomic datasets: The BOLD_NCBI _Merger. Metabarcoding and Metagenomics 1: e22262. https://doi.org/10.3897/mbmg.1.22262
 
-The BOLD_NCBI merger step is based largely on Macher J, Macher T, Leese F (2017) Combining NCBI and BOLD databases for OTU assignment in metabarcoding and metagenomic datasets: The BOLD_NCBI _Merger. Metabarcoding and Metagenomics 1: e22262. https://doi.org/10.3897/mbmg.1.22262
+This process takes the BOLD file, ensures it is for the COI-5P region, and processes the names to enable dereplication of sequences and the merging of sequences from NCBI and BOLD into a single file. Last, the headers are reformatted, and the sequences converted to single line fasta format.
 
-This process takes the BOLD file, ensures it is for the COI-5P region, and processes the names to enable dereplication of sequences and the merging of sequences into a single file. Last, the headers are reformatted, and the sequences converted to single line fasta format.
-You may need to modify Step3_merge_bold_ncbi.sh on line 6 to specify the taxon name for your reference database.
+Run the script : 
+```
+sh step3_merge_bold_ncbi.sh
+```
 
-* step3_merge_bold_ncbi.sh - you may want to modify line 42 to a greater max sequence length, as vsearch defaults to 50KB (which means it is unlikely to get many plant or algal mitogenomes).
+**MODIFICATIONS**
+
+- You may need to modify Step3_merge_bold_ncbi.sh on line 6 to specify the name for your reference database. *By default : "Marine_Euk".*
+
+- You may want to modify the script in line 42 to a greater max sequence length, as vsearch defaults to 50KB (which means it is unlikely to get many plant or algal mitogenomes).
+
+- The step also removes a list of accessions that can be provided by a user. This is the **blacklisted_accessions.txt** file that will allow removal of accesion numbers and corresponding DNA sequences. In case there are certain accessions (i.e ones that you know have the wrong species associated with the sequence) that you wish to remove from the database.
+
+**blacklisted_accessions.txt** - this file contains a list of accessions that you do not want included in your database. This should include BOTH NCBI and BOLD accessions. For BOLD the accession should be formatted as ABCI122225-19 (example case), while NCBI accessions should be WITHOUT the version i.e AC1234 rather than AC1234.1. 
 
 
 ## Step 4: Normalise taxonomy IDs
-To normalise the taxonomic IDs we first need to export a list of sequence names from the merged database.
 
-Many pipelines and software use lowest common ancestor approaches for taxonomic classification, and rely on the NCBI taxonomy to do this.  However, many species don't have taxids in NCBI or have been uploaded with synonyms as names, making the retrieval of reliable taxonomic classifications difficult.
+Many taxonomic classifiers software use lowest common ancestor (LCA) approaches for taxonomic classification, and rely on the NCBI taxonomy to do this. However, many species do not have taxonomic identification number (taxid) in NCBI or have been uploaded with synonym names, making the retrieval of reliable taxonomic classifications difficult.
 
-In our pipeline, we identify any synonyms and consolidate them so that each taxon has only one name, and is provided with the appropriate taxid. If a taxon does not have a taxid assigned, we assign one based on the genus name and incorporate this into the nodes and names dmp files. This only occurs if the genus name is unique taxonomically (i.e "Acanthocephala" is both a genus of fly, and phylum of worms, as a result of ambiguous naming, we do not assign a taxid). If a taxid cannot be assigned because the genus was not able to be identified, then the sequence is removed from the database.
+In our pipeline, we identify any synonyms and consolidate them so that each taxon has only one name, and is provided with the appropriate taxid. If a taxon does not have a taxid assigned, we will create a new one based on the genus name and incorporate this into the nodes and names dmp files. This only occurs if the genus name is unique taxonomically (i.e "Acanthocephala" is both a genus of fly, and phylum of worms, as a result of ambiguous naming, we do not assign a taxid). If a taxid cannot be assigned because the genus was not able to be identified, then the sequence is removed from the database.
 
-We then generate two lists of sequence names - the first is the original sequence names, for sequences that have taxids. The second is the new set of names for the sequences, that now are in a standardized format, with taxid included in the seq name. We use these lists to rename and generate a new fasta called Marine_Euk_BOLD_NCBI_sl_reformatted.fasta which is now our completed database.
-To do this step, use the taxid_addition.r script. You will need to edit this script to modify directories, as well as to ensure the appropriate packages are installed.
+To normalise the taxonomic IDs we first export a list of sequence names from the merged BOLD and NCBI database.
 
-Finally, at step4e we remove sequences that have excessive numbers of ambiguous bases, and trim leading or trailing Ns. 
+We then generate two lists of sequence names - the first is the original sequence names, for sequences that have taxids. The second is the new set of names for the sequences, that now are in a standardized format, with taxid included in the seq name. We use these lists to rename and generate a new fasta called *databasename*_BOLD_NCBI_sl_reformatted.fasta which is now our completed database.
 
-* step4e_Ncorrection.sh - line 10, adjust to change percent of N you want to sequences to maximally contain. Any sequence containing >percent N will be removed. Currently defaults to 10%.
+Run the following commands in order : 
+```
+r step4a_taxid_addition.r
+```
+```
+sh step4b_taxid_generation.sh
+```
+```
+r step4c_taxid_processing.r
+```
+```
+sh step4d_taxid_processing.sh
+```
+
+Optional, Step4e remove sequences that have excessive numbers of ambiguous bases, and trim leading or trailing Ns.
+
+```
+sh step4e_Ncorrection.sh
+```
+
+**MODIFICATIONS**
+
+step4a Modify the file name of the sequences in line 3 By default: seqnames_Marine_Euk_nobarcode.txt
+
+step4d change the taxon name to your database name. By default: Marine_Euk
+
+step4e change the taxon name to your database name. By default: Marine_Euk 
+
+step4e_Ncorrection.sh - line 10, adjust to change percent of N you want to sequences to maximally contain. Any sequence containing >percent N will be removed. Currently defaults to 10%.
 
 ## Step 5: Format for taxonomy classifiers
 
@@ -271,7 +324,7 @@ Please also cite: https://doi.org/10.5281/zenodo.3701276 if you're usage involve
 
 The genbank_to_fasta.py script was developed by the Rocap Lab https://rocaplab.ocean.washington.edu/
 
-Special mention and acknowledgments to Edgar Valdez eho help creating the Docker image for MARES. 
+Special mention and acknowledgments to Edgar Valdez who help creating the Docker image for MARES. 
 
 ## Questions
 
