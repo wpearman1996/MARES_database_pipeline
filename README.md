@@ -192,7 +192,7 @@ sh step3_merge_bold_ncbi.sh
 
 **MODIFICATIONS**
 
-- You may need to modify Step3_merge_bold_ncbi.sh on line 6 to specify the name for your reference database. *By default : "Marine_Euk".*
+- You may need to modify Step3_merge_bold_ncbi.sh on line 6 to specify the name for your reference database. *By default : "database".*
 
 - You may want to modify the script in line 42 to a greater max sequence length, as vsearch defaults to 50KB (which means it is unlikely to get many plant or algal mitogenomes).
 
@@ -225,7 +225,7 @@ r step4c_taxid_processing.r
 sh step4d_taxid_processing.sh
 ```
 
-Optional, Step4e remove sequences that have excessive numbers of ambiguous bases, and trim leading or trailing Ns.
+Optional, Step4e remove sequences that have excessive numbers of ambiguous bases (N), and trim leading or trailing Ns.
 
 ```
 sh step4e_Ncorrection.sh
@@ -233,30 +233,42 @@ sh step4e_Ncorrection.sh
 
 **MODIFICATIONS**
 
-step4a Modify the file name of the sequences in line 3 By default: seqnames_Marine_Euk_nobarcode.txt
+If you have changed the name of your database, you should also specify it in: 
 
-step4d change the taxon name to your database name. By default: Marine_Euk
+- step4a_taxid_addition.r: modify the file name of the sequences in line 3. *By default: seqnames_database_nobarcode.txt*
 
-step4e change the taxon name to your database name. By default: Marine_Euk 
+- step4d_taxid_processing.sh: modify the database name in line 3 to your chosen database name. *By default: database*
 
-step4e_Ncorrection.sh - line 10, adjust to change percent of N you want to sequences to maximally contain. Any sequence containing >percent N will be removed. Currently defaults to 10%.
+- step4e_Ncorrection.sh: modify the database name in line 3 to your chosen database name. *By default: database*
+
+In step4e_Ncorrection.sh you can adjust the percent of maximum ambiguous bases (N) that you sequences can contain in line 10. Any sequence containing > percent N will be removed. *By default : 10%.*
 
 ## Step 5: Format for taxonomy classifiers
 
-### 5a : Prepare for KRAKEN 
+### 5a : Prepare for KRAKEN
+
 At this point, we want to format our database for taxonomic classification using kraken. For this to work the header for each fasta needs to be reformatted to kraken:taxid|{taxid}. Scripts are then provided that generate the Kraken database using the MARES sequences.
 
 You will need to adjust the code on line 8 of step5_make_krakendb to reflect the location of the mares database.
 
+```
+sh step5_make_krakendb.sh
+```
+
 ### 5b : Prepare for MEGAN 
 
-In this step, we build a local database from our custom reference database and blast it against your metabarcoding sample file.
-This process first trims the fasta file names to just the accession, and creates a new file called taxid_map which will relate the accession number to a taxid for incorporation into the blast database. 
+In this step, we build a local database to use in MEGAN from our custom reference database. 
+This process first trims the fasta file names to just the accession, and creates a new file called **taxid_map** which will relate the accession number to a taxid for incorporation into the blast database. 
 Because BLAST imposes length limits on the sequence names, we have had to trim the sequence names down to just the accession. If you wish to retain that information after classification, then the information is available in the MARES_informative_name_table.tsv file - which should enable easy look up in R down the line.
+
+Before import it to MEGAN you should blast it against your metabarcoding data sample file .
 
 The output is a .txt file in the MEGAN_db folder that can be imported into MEGAN (Husson et al. 2007) for taxonomic assignment. 
 
-## Step 6 : Marine and contaminants check 
+
+
+## Step 6 : Marine and contaminants check
+
 We suggest that users ensure their database is representative of not only the taxa they expect to encounter, but also of possible contaminants. One way to do this is to include potential contaminants in your taxa list. The other way is to create a separate contaminant list. In our MARES database, we have opted for the latter. This enables you to screen your sequence reads for contaminants, and remove them, before processing and further analysing your data. Alternatively, you could merge these two databases (i.e. fasta files) together. 
 
 In our workflow, we provide scripts that help trawl through your sequence reads, and taxa list, and provide a list of reads or taxa that are potentially contaminants and/or marine species.
