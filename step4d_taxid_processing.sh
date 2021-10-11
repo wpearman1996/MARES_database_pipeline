@@ -1,6 +1,6 @@
 #!/bin/bash
 
-database="Marine_Euk"
+database="database"
 
 cd ./taxid_process
 #After executing the R script - we then process the sequences
