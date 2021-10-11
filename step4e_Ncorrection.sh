@@ -1,6 +1,6 @@
 #!/bin/bash
 
-database="Marine_Euk"
+database="database"
 
 cd ./taxid_process
 #sed '1d' ${database}_BOLD_NCBI_sl_reformatted.fas.fasta > tmpfile; mv tmpfile ${database}_BOLD_NCBI_final_sl.fasta
