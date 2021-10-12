@@ -231,11 +231,6 @@ Optional, Step4e remove sequences that have excessive numbers of ambiguous bases
 sh step4e_Ncorrection.sh
 ```
 
-**YOUR CUSTOM REFERENCE DATABASE IS COMPLETED!!**
-
-You can find it in **MARES_database_pipeline/database_db.fasta**
-Feel free to use this reference sequence database fasta file OR move to the next Step 5 (5a. Kraken2 or 5b.MEGAN) to format the fasta file for taxomic classifiers. 
-
 **MODIFICATIONS**
 
 If you have changed the name of your database, you should also specify it in: 
@@ -247,6 +242,17 @@ If you have changed the name of your database, you should also specify it in:
 - step4e_Ncorrection.sh: modify the database name in line 3 to your chosen database name. *By default: database*
 
 In step4e_Ncorrection.sh you can adjust the percent of maximum ambiguous bases (N) that you sequences can contain in line 10. Any sequence containing > percent N will be removed. *By default : 10%.*
+
+
+
+**YOUR CUSTOM REFERENCE DATABASE IS COMPLETED!!**
+---
+You can find it in the main folder of the repository **MARES_database_pipeline/yourdatabasename_db.fasta**
+OR
+In Docker **MARES/yourdatabasename_db.fasta**
+
+Feel free to use this reference sequence database fasta file OR move to the next Step 5 (5a. Kraken2 or 5b.MEGAN) to format the fasta file for taxomic classifiers. 
+
 
 
 ## Step 5: Format for taxonomy classifiers
