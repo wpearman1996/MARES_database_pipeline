@@ -11,5 +11,6 @@ paste ${database}_seqnames.txt ${database}_taxids.txt > cust_taxid_map
 
 makeblastdb -in ${database}_BOLD_NCBI_sl_reformatted_blast.fasta -dbtype nucl -taxid_map cust_taxid_map -parse_seqids -out ${database}.db
 mkdir ../${database}_MEGAN
-cp ${database}_BOLD_NCBI_sl_reformatted.fasta
+cp ${database}_BOLD_NCBI_sl_reformatted.fasta ../${database}_MEGAN
+cp ${database}_informative_name_table.tsv ../${database}_MEGAN
 mv ${database}.db* ../${database}_MEGAN
