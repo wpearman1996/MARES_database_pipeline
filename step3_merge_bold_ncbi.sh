@@ -1,7 +1,7 @@
 #!/bin/bash
 ### A large part of this script has copied and modified from https://doi.org/10.3897/mbmg.1.22262
 ### Modifications include removal of non-ascii characters to allow error free dereplication, and modification of sed scripts on line 14 and 16
-## First specify the taxa of interest here - your bold and ncbi files must be names like ${taxon}_BOLD.fasta or  ${taxon}_NCBI.fasta
+## First specify the taxa of interest here - your bold and ncbi files must be names like ${database}_BOLD.fasta or  ${database}_NCBI.fasta
 
 database="database"
 ###################################################################################################################################################################
@@ -13,7 +13,7 @@ if [ -d "$WORKING_DIR" ]; then rm -rf $WORKING_DIR; fi
 mkdir $WORKING_DIR
 
 	# Write COI-5P (standard barcoding region) sequences into a new file: 
-cat ./taxaBOLD/*bold.fasta > tmp/${taxon}_BOLD_tmp.fasta
+cat ./taxaBOLD/*bold.fasta > tmp/${database}_BOLD_tmp.fasta
 	# Remove blacklisted accessions
 sed 's#\(.*\)#/\1/,+1d#' blacklisted_accessions.txt > commands.sed
 sed -f commands.sed tmp/${database}_BOLD_tmp.fasta > tmp/${database}_BOLD.fasta
