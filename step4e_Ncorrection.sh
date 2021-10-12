@@ -11,4 +11,4 @@ seqtk subseq ${database}_BOLD_NCBI_sl_reformatted.fasta NPercs.txt > tmpfile.txt
 mv tmpfile.txt ${database}_BOLD_NCBI_sl_reformatted.fasta
 
 mkdir ../${database}
-cp Lunella_BOLD_NCBI_sl_reformatted.fasta ../${database}/${database}_db.fasta
+cp ${database}_BOLD_NCBI_sl_reformatted.fasta ../${database}/${database}_db.fasta
