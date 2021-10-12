@@ -10,5 +10,5 @@ awk 'NR%2==0' ${database}_BOLD_NCBI_sl_reformatted.fasta | paste -d'\n' kraken_t
 cd ..
 kraken2-build --download-taxonomy --db ${database}_kraken_db 
 cp ./cust_accession2taxid ./mares/taxonomy/cust.accession2taxid
-kraken2-build --add-to-library ./taxid_process/${database}_BOLD_NCBI_sl_kraken.fasta --db mares
+kraken2-build --add-to-library ./taxid_process/${database}_BOLD_NCBI_sl_kraken.fasta --db ${database}
 kraken2-build --build --db ${database}_kraken
