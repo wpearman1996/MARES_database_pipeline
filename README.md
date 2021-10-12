@@ -209,7 +209,7 @@ In our pipeline, we identify any synonyms and consolidate them so that each taxo
 
 To normalise the taxonomic IDs we first export a list of sequence names from the merged BOLD and NCBI database.
 
-We then generate two lists of sequence names - the first is the original sequence names, for sequences that have taxids. The second is the new set of names for the sequences, that now are in a standardized format, with taxid included in the seq name. We use these lists to rename and generate a new fasta called *databasename*_BOLD_NCBI_sl_reformatted.fasta which is now our completed database.
+We then generate two lists of sequence names - the first is the original sequence names, for sequences that have taxids. The second is the new set of names for the sequences, that now are in a standardized format, with taxid included in the seq name. We use these lists to rename and generate a new fasta called *databasename_BOLD_NCBI_sl_reformatted.fasta* which is now our completed database.
 
 Run the following commands in order : 
 ```
@@ -231,6 +231,11 @@ Optional, Step4e remove sequences that have excessive numbers of ambiguous bases
 sh step4e_Ncorrection.sh
 ```
 
+**YOUR CUSTOM REFERENCE DATABASE IS COMPLETED!!**
+
+You can find it in **MARES_database_pipeline/database_db.fasta**
+Feel free to use this reference sequence database fasta file OR move to the next Step 5 (5a. Kraken2 or 5b.MEGAN) to format the fasta file for taxomic classifiers. 
+
 **MODIFICATIONS**
 
 If you have changed the name of your database, you should also specify it in: 
@@ -243,29 +248,55 @@ If you have changed the name of your database, you should also specify it in:
 
 In step4e_Ncorrection.sh you can adjust the percent of maximum ambiguous bases (N) that you sequences can contain in line 10. Any sequence containing > percent N will be removed. *By default : 10%.*
 
+
 ## Step 5: Format for taxonomy classifiers
 
-### 5a : Prepare for KRAKEN
+### 5a : Prepare for KRAKEN2
 
-At this point, we want to format our database for taxonomic classification using kraken. For this to work the header for each fasta needs to be reformatted to kraken:taxid|{taxid}. Scripts are then provided that generate the Kraken database using the MARES sequences.
-
-You will need to adjust the code on line 8 of step5_make_krakendb to reflect the location of the mares database.
+At this point, we want to format our database for taxonomic classification using Kraken2. For this to work the header for each fasta needs to be reformatted to kraken:taxid|{taxid}. Run the following script to generate the Kraken2 database: 
 
 ```
 sh step5_make_krakendb.sh
 ```
+You will need to adjust the code on line 3 of step5_make_krakendb if you have changed the name of your database. *By default: database.*
+
+More information on how to use KRAKEN2 : https://github.com/DerrickWood/kraken2/wiki/Manual#kraken-2-databases
+Citation: Wood DE, Lu J, Langmead B. Improved metagenomic analysis with Kraken 2 (2019). Genome Biology. 2019 Nov;p. 76230. https://doi.org/10.1186/s13059-019-1891-0
 
 ### 5b : Prepare for MEGAN 
 
-In this step, we build a local database to use in MEGAN from our custom reference database. 
-This process first trims the fasta file names to just the accession, and creates a new file called **taxid_map** which will relate the accession number to a taxid for incorporation into the blast database. 
-Because BLAST imposes length limits on the sequence names, we have had to trim the sequence names down to just the accession. If you wish to retain that information after classification, then the information is available in the MARES_informative_name_table.tsv file - which should enable easy look up in R down the line.
+In this step, we build a BLAST database with our custom made reference sequences. More information: https://www.ncbi.nlm.nih.gov/books/NBK569841/
 
-Before import it to MEGAN you should blast it against your metabarcoding data sample file .
+```
+sh step5b_prepare_to_MEGAN.sh
+```
 
-The output is a .txt file in the MEGAN_db folder that can be imported into MEGAN (Husson et al. 2007) for taxonomic assignment. 
+Specifically, our script : 
+- Trims the fasta file names to just the accession.
+Because BLAST imposes length limits on the sequence names, we trim the sequence names down to just the accession. If you wish to retain that information after classification, then the information is available in the *yourdatbase*_informative_name_table.tsv file. 
+- Generates an additional file mapping the accesion numbers to taxids, called **cust_taxid_map**.
+- Use ```makeblastdb``` to build a BLAST database with your custom made reference sequences.  
 
+- Create a new folder with the relevant files to use your CUSTOM MADE REFERENCE DATABASE for taxonomic assignment. 
 
+**NOTE**: At this point you can export the relevant database files from the Docker container to your local computer to use YOUR CUSTOM MADE REFERENCE DATABASE for taxonomic assignment. 
+
+In your local command-line: 
+```
+docker cp <containerId>:/file/path/within/container /host/path/target
+```
+
+**ADDITIONAL NOTES**
+Before import it to MEGAN you should Blast the fasta file containing your metabarcoding sequences against the database you just built. Adjust blast settings according to your needs. More information: https://www.ncbi.nlm.nih.gov/books/NBK279684/
+
+```
+# Example
+blastn -db yourcustommadedatabase -query yourmetabarcodingreads.fasta -evalue 1e-60 -outfmt 5 -out yourdesiredpath/megan.txt -num_threads 8
+```
+The output is a XML Blast output that can be imported into MEGAN (Husson et al. 2007) for taxonomic assignment using Lower Common Ancestor (LCA) algorithm. 
+
+MEGAN is freely available at http://www-ab.informatik.uni-tuebingen.de/software/megan.
+Citation : Huson, D. H., Auch, A. F., Qi, J., & Schuster, S. C. (2007). MEGAN analysis of metagenomic data. Genome research, 17(3), 377-386. https://doi.org/10.1101/gr.5969107
 
 ## Step 6 : Marine and contaminants check
 
@@ -273,7 +304,9 @@ We suggest that users ensure their database is representative of not only the ta
 
 In our workflow, we provide scripts that help trawl through your sequence reads, and taxa list, and provide a list of reads or taxa that are potentially contaminants and/or marine species.
 
-You can then use the *step6_marine_contaminants_checker.R* script on the taxonomically classied sequences output from MEGAN and Kraken2, and it will flag potential contaminants (based on a provided list of contaminants) or marine species (Based on the WoRMS local database). Please note, not all species of algae are in the local WoRMS download, so algal taxa may not be identified as marine.
+> Run the the R script step6_marine_contaminants_checker.R in R. 
+
+You can then use the *step6_marine_contaminants_checker.R* script on the taxonomically classified sequences output from MEGAN and Kraken2, and it will flag potential contaminants (based on a provided list of contaminants) or marine species (Based on the WoRMS local database). Please note, not all species of algae are in the local WoRMS download, so algal taxa may not be identified as marine.
 
 If you want to check for contaminants or marine taxa you need the following:
 1) A list of contaminant taxa (taxa_contam.list)
@@ -297,10 +330,6 @@ There are two files - MARES_BAR.tar.gz and MARES_NOBAR.tar.gz.
 
 These represent whether "BARCODE" was used as a keyword during compilation of NCBI sequences. In the unzipped files, there are the appropriate names.dmp, nodes.dmp, and the custom accession2taxid files required to use our database. You will still need to download the nucl_gb.accession2taxid & nucl_wgs.accession2taxid files - these are large and thus we have not included them with our pre-compiled databases.
 
-#### Please note that if you intend to use kraken2 to classify your samples, you should run:
-        kraken2-build --download-taxonomy --db mares
-
-Note: To avoid compatibility issues, please ensure you use the most recent version of Kraken2 on github.
 
 ## Technical Validation
 
